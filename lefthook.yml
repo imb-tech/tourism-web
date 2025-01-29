@@ -1,0 +1,6 @@
+pre-commit:
+    commands:
+        check:
+            glob: "**/*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc,css,md,html}"
+            run: npx eslint {staged_files} && npx prettier --write --ignore-unknown {staged_files}
+            stage_fixed: true
