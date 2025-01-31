@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Pencil, Trash2 } from "lucide-react"
+import { Eye } from "lucide-react"
+import { PackCardMenu } from "./pack-card-menu"
 import { Progress } from "./progress"
 
 interface PackCardProps {
@@ -23,20 +24,22 @@ export default function PackCard({
     duration,
     client,
     manager,
-    onEdit,
-    onDelete,
 }: PackCardProps) {
     return (
         <Card className="w-full max-w-sm p-4 shadow-none">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardHeader className="flex flex-row items-center justify-between">
                 <div className="text-sm text-muted-foreground">#{id}</div>
                 <div className="font-medium">{destination}</div>
             </CardHeader>
-            <Progress/>
             <CardContent className="space-y-4 p-0">
-                <div className="flex justify-between text-sm">
-                    <span>{startDate}</span>
-                    <span>{endDate}</span>
+                <div className="flex flex-col gap-1">
+                    <Progress size={4} finished={1} />
+                    <div className="flex justify-between text-sm">
+                        <span className="text-muted-foreground">
+                            {startDate}
+                        </span>
+                        <span className="text-muted-foreground">{endDate}</span>
+                    </div>
                 </div>
                 <div className="space-y-2">
                     <div className="flex justify-between">
@@ -55,23 +58,11 @@ export default function PackCard({
                     </div>
                 </div>
                 <div className="flex gap-2">
-                    <Button className="flex-1">Tur paketlar</Button>
-                    <Button
-                        variant="outline"
-                        size="icon"
-                        className="shrink-0"
-                        onClick={onEdit}
-                    >
-                        <Pencil className="h-4 w-4" />
+                    <Button className="flex-1 gap-1 font-light">
+                        <Eye size={18} className="font-light" />
+                        Tur paketlar
                     </Button>
-                    <Button
-                        variant="outline"
-                        size="icon"
-                        className="shrink-0 text-destructive"
-                        onClick={onDelete}
-                    >
-                        <Trash2 className="h-4 w-4" />
-                    </Button>
+                    <PackCardMenu />
                 </div>
             </CardContent>
         </Card>

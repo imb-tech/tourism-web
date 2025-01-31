@@ -33,6 +33,7 @@ export default function FormDatePicker<IForm extends FieldValues>({
     format,
     placeholder,
     required = false,
+    wrapperClassName,
     ...calendarProps
 }: IProps<IForm> & CalendarProps) {
     const {
@@ -49,7 +50,7 @@ export default function FormDatePicker<IForm extends FieldValues>({
         },
     })
     return (
-        <fieldset className="flex flex-col gap-1">
+        <fieldset className={cn("flex flex-col gap-1", wrapperClassName)}>
             {label && (
                 <Label
                     htmlFor={name}
@@ -78,6 +79,10 @@ export default function FormDatePicker<IForm extends FieldValues>({
                                 )
                             :   new Date()
                         }
+                        style={{
+                            pointerEvents:
+                                field.disabled || disabled ? "none" : "auto",
+                        }}
                     />
                 )}
             />

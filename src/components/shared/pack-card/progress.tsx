@@ -1,8 +1,23 @@
-const Progress = () => {
-    return <div>
-        <span>50%</span>
-        <progress value="10" max="100" ></progress>
-    </div>
+import { cn } from "@/lib/utils"
+
+type Props = {
+    size: number
+    finished: number
+}
+
+const Progress = ({ size, finished }: Props) => {
+    return (
+        <div className="flex gap-1 w-full">
+            {Array(size)
+                .fill(0)
+                .map((_, i) => (
+                    <div
+                        key={i}
+                        className={cn("w-full p-1 rounded-md bg-secondary", finished > i && "bg-primary")}
+                    ></div>
+                ))}
+        </div>
+    )
 }
 
 export { Progress }
