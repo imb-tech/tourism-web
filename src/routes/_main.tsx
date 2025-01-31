@@ -45,7 +45,7 @@ export const Route = createFileRoute("/_main")({
 function RouteComponent() {
     return (
         <SidebarProvider defaultOpen={false}>
-            <AppSidebar className="shadow-none border-none bg-background"  />
+            <AppSidebar className="shadow-none border-none bg-background" />
             <SidebarInset className="bg-primary-foreground overflow-auto">
                 <SidebarTrigger
                     variant={"default"}
@@ -54,7 +54,7 @@ function RouteComponent() {
                     <Menu className="text-white" />
                 </SidebarTrigger>
 
-                <div className="relative min-h-svh max-h-svh overflow-y-auto">
+                <div className="relative min-h-svh max-h-svh overflow-y-auto bg-secondary">
                     <Outlet />
                 </div>
             </SidebarInset>

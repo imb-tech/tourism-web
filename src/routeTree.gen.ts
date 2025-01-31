@@ -15,11 +15,11 @@ import { Route as LoginImport } from './routes/login'
 import { Route as MainImport } from './routes/_main'
 import { Route as MainIndexImport } from './routes/_main/index'
 import { Route as MainSettingsImport } from './routes/_main/settings'
-import { Route as MainPacksImport } from './routes/_main/packs'
 import { Route as MainCostImport } from './routes/_main/cost'
 import { Route as MainChangesImport } from './routes/_main/changes'
 import { Route as MainBankImport } from './routes/_main/bank'
 import { Route as MainAdminImport } from './routes/_main/admin'
+import { Route as MainPacksIndexImport } from './routes/_main/packs/index'
 
 // Create/Update Routes
 
@@ -46,12 +46,6 @@ const MainSettingsRoute = MainSettingsImport.update({
   getParentRoute: () => MainRoute,
 } as any)
 
-const MainPacksRoute = MainPacksImport.update({
-  id: '/packs',
-  path: '/packs',
-  getParentRoute: () => MainRoute,
-} as any)
-
 const MainCostRoute = MainCostImport.update({
   id: '/cost',
   path: '/cost',
@@ -73,6 +67,12 @@ const MainBankRoute = MainBankImport.update({
 const MainAdminRoute = MainAdminImport.update({
   id: '/admin',
   path: '/admin',
+  getParentRoute: () => MainRoute,
+} as any)
+
+const MainPacksIndexRoute = MainPacksIndexImport.update({
+  id: '/packs/',
+  path: '/packs/',
   getParentRoute: () => MainRoute,
 } as any)
 
@@ -122,13 +122,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainCostImport
       parentRoute: typeof MainImport
     }
-    '/_main/packs': {
-      id: '/_main/packs'
-      path: '/packs'
-      fullPath: '/packs'
-      preLoaderRoute: typeof MainPacksImport
-      parentRoute: typeof MainImport
-    }
     '/_main/settings': {
       id: '/_main/settings'
       path: '/settings'
@@ -143,6 +136,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainIndexImport
       parentRoute: typeof MainImport
     }
+    '/_main/packs/': {
+      id: '/_main/packs/'
+      path: '/packs'
+      fullPath: '/packs'
+      preLoaderRoute: typeof MainPacksIndexImport
+      parentRoute: typeof MainImport
+    }
   }
 }
 
@@ -153,9 +153,9 @@ interface MainRouteChildren {
   MainBankRoute: typeof MainBankRoute
   MainChangesRoute: typeof MainChangesRoute
   MainCostRoute: typeof MainCostRoute
-  MainPacksRoute: typeof MainPacksRoute
   MainSettingsRoute: typeof MainSettingsRoute
   MainIndexRoute: typeof MainIndexRoute
+  MainPacksIndexRoute: typeof MainPacksIndexRoute
 }
 
 const MainRouteChildren: MainRouteChildren = {
@@ -163,9 +163,9 @@ const MainRouteChildren: MainRouteChildren = {
   MainBankRoute: MainBankRoute,
   MainChangesRoute: MainChangesRoute,
   MainCostRoute: MainCostRoute,
-  MainPacksRoute: MainPacksRoute,
   MainSettingsRoute: MainSettingsRoute,
   MainIndexRoute: MainIndexRoute,
+  MainPacksIndexRoute: MainPacksIndexRoute,
 }
 
 const MainRouteWithChildren = MainRoute._addFileChildren(MainRouteChildren)
@@ -177,9 +177,9 @@ export interface FileRoutesByFullPath {
   '/bank': typeof MainBankRoute
   '/changes': typeof MainChangesRoute
   '/cost': typeof MainCostRoute
-  '/packs': typeof MainPacksRoute
   '/settings': typeof MainSettingsRoute
   '/': typeof MainIndexRoute
+  '/packs': typeof MainPacksIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -188,9 +188,9 @@ export interface FileRoutesByTo {
   '/bank': typeof MainBankRoute
   '/changes': typeof MainChangesRoute
   '/cost': typeof MainCostRoute
-  '/packs': typeof MainPacksRoute
   '/settings': typeof MainSettingsRoute
   '/': typeof MainIndexRoute
+  '/packs': typeof MainPacksIndexRoute
 }
 
 export interface FileRoutesById {
@@ -201,9 +201,9 @@ export interface FileRoutesById {
   '/_main/bank': typeof MainBankRoute
   '/_main/changes': typeof MainChangesRoute
   '/_main/cost': typeof MainCostRoute
-  '/_main/packs': typeof MainPacksRoute
   '/_main/settings': typeof MainSettingsRoute
   '/_main/': typeof MainIndexRoute
+  '/_main/packs/': typeof MainPacksIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -215,9 +215,9 @@ export interface FileRouteTypes {
     | '/bank'
     | '/changes'
     | '/cost'
-    | '/packs'
     | '/settings'
     | '/'
+    | '/packs'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
@@ -225,9 +225,9 @@ export interface FileRouteTypes {
     | '/bank'
     | '/changes'
     | '/cost'
-    | '/packs'
     | '/settings'
     | '/'
+    | '/packs'
   id:
     | '__root__'
     | '/_main'
@@ -236,9 +236,9 @@ export interface FileRouteTypes {
     | '/_main/bank'
     | '/_main/changes'
     | '/_main/cost'
-    | '/_main/packs'
     | '/_main/settings'
     | '/_main/'
+    | '/_main/packs/'
   fileRoutesById: FileRoutesById
 }
 
@@ -273,9 +273,9 @@ export const routeTree = rootRoute
         "/_main/bank",
         "/_main/changes",
         "/_main/cost",
-        "/_main/packs",
         "/_main/settings",
-        "/_main/"
+        "/_main/",
+        "/_main/packs/"
       ]
     },
     "/login": {
@@ -297,16 +297,16 @@ export const routeTree = rootRoute
       "filePath": "_main/cost.tsx",
       "parent": "/_main"
     },
-    "/_main/packs": {
-      "filePath": "_main/packs.tsx",
-      "parent": "/_main"
-    },
     "/_main/settings": {
       "filePath": "_main/settings.tsx",
       "parent": "/_main"
     },
     "/_main/": {
       "filePath": "_main/index.tsx",
+      "parent": "/_main"
+    },
+    "/_main/packs/": {
+      "filePath": "_main/packs/index.tsx",
       "parent": "/_main"
     }
   }

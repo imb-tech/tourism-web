@@ -37,7 +37,7 @@ export function HeaderCrumb({ links }: Props) {
                     <BreadcrumbItem>
                         <BreadcrumbPage
                             className={cn(
-                                "max-w-20 truncate md:max-w-none font-medium",
+                                "max-w-20 truncate md:max-w-none font-light",
                             )}
                         >
                             {links.at(-1)?.label}
@@ -45,7 +45,7 @@ export function HeaderCrumb({ links }: Props) {
                     </BreadcrumbItem>
                 )}
                 {links.length === 1 && (
-                    <CardTitle className="text-foreground text-xl md:text-2xl">
+                    <CardTitle className="text-foreground text-xl md:text-xl font-light">
                         {links.at(-1)?.label}
                     </CardTitle>
                 )}
