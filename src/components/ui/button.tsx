@@ -24,7 +24,7 @@ const buttonVariants = cva(
                 warning:
                     "bg-warning text-warning-foreground shadow hover:bg-warning/80",
                 "primary-muted":
-                    "bg-primary/10 text-primary border border-primary hover:bg-background",
+                    "bg-primary/5 text-primary border border-primary/30 hover:bg-background",
                 "destructive-muted":
                     "bg-destructive/5 text-destructive border border-destructive/50 hover:bg-background",
                 "success-muted":

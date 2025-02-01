@@ -18,7 +18,7 @@ export default function AddButton({
         <div className={cn("h-full", className)}>
             <button
                 onClick={onClick}
-                className="w-full h-full flex flex-col items-center justify-center p-8 border-2 border-dashed border-primary rounded-lg hover:bg-gray-50 transition-colors bg-background"
+                className="w-full h-full flex flex-col items-center justify-center p-8 border-[1px] border-dashed border-primary rounded-lg hover:bg-gray-50 transition-colors bg-background"
             >
                 <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mb-4">
                     <Icon className="text-primary font-light" size={32} />

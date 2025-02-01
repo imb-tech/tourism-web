@@ -4,8 +4,8 @@ export const useModal = (key = "default") => {
     const { modals, openModal, closeModal } = useModalContext()
 
     return {
-        isOpen: modals[key],
-        openModal: () => openModal(key),
-        closeModal: () => closeModal(key),
+        isOpen: modals["modal" + key],
+        openModal: () => openModal("modal" + key),
+        closeModal: () => closeModal("modal" + key),
     }
 }

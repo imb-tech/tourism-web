@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { Link } from "@tanstack/react-router"
 import { Eye } from "lucide-react"
-import { PackCardMenu } from "./pack-card-menu"
-import { Progress } from "./progress"
+import { memo } from "react"
+import PackCardMenu from "./pack-card-menu"
+import Progress from "./progress"
 
 interface PackCardProps {
     id: string
@@ -16,7 +18,7 @@ interface PackCardProps {
     onDelete?: () => void
 }
 
-export default function PackCard({
+function PackCard({
     id,
     destination,
     startDate,
@@ -58,13 +60,21 @@ export default function PackCard({
                     </div>
                 </div>
                 <div className="flex gap-2">
-                    <Button className="flex-1 gap-1 font-light">
-                        <Eye size={18} className="font-light" />
-                        Tur paketlar
-                    </Button>
+                    <Link
+                        className="flex-1"
+                        to="/packs/$pack"
+                        params={{ pack: id }}
+                    >
+                        <Button className="w-full gap-1 font-light">
+                            <Eye size={18} className="font-light" />
+                            Tur paketlar
+                        </Button>
+                    </Link>
                     <PackCardMenu />
                 </div>
             </CardContent>
         </Card>
     )
 }
+
+export default memo(PackCard, (prev, next) => prev.id === next.id)

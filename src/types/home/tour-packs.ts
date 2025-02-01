@@ -1,4 +1,4 @@
-type CreateTourPack = {
+type CreatePack = {
     name: string
     manager: number
     country: number
@@ -6,4 +6,11 @@ type CreateTourPack = {
     end_date: string
     days: number
     nights: number
+}
+
+type TourItem = {
+    id: number
+    users: number
+    leaders: number
+    hotel_type: number
 }

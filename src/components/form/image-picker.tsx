@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils"
+import { ImageUp } from "lucide-react"
 import {
     Controller,
     FieldValues,
@@ -21,6 +22,7 @@ export default function FormImagePicker<IForm extends FieldValues>({
     required = false,
     className,
     avatar,
+    labelClassName,
 }: ImagePickerProps<IForm>) {
     const {
         field,
@@ -123,10 +125,15 @@ export default function FormImagePicker<IForm extends FieldValues>({
             {label && (
                 <Label
                     htmlFor={name}
-                    className={cn(!!error && "text-destructive", "pt-2")}
+                    className={cn(
+                        !!error && "text-destructive",
+                        "pt-2",
+                        labelClassName,
+                    )}
                     required={required}
                 >
-                    {label}
+                    <ImageUp size={36} className="mx-auto text-primary" />
+                    <span>{label}</span>
                 </Label>
             )}
             {!!error && !hideError && (
@@ -147,4 +154,5 @@ interface ImagePickerProps<IForm extends FieldValues> {
     hideError?: boolean
     className?: ClassNameValue
     avatar?: boolean
+    labelClassName?: ClassNameValue
 }

@@ -20,6 +20,8 @@ import { Route as MainChangesImport } from './routes/_main/changes'
 import { Route as MainBankImport } from './routes/_main/bank'
 import { Route as MainAdminImport } from './routes/_main/admin'
 import { Route as MainPacksIndexImport } from './routes/_main/packs/index'
+import { Route as MainPacksPackIndexImport } from './routes/_main/packs/$pack/index'
+import { Route as MainPacksPackIdImport } from './routes/_main/packs/$pack/$id'
 
 // Create/Update Routes
 
@@ -73,6 +75,18 @@ const MainAdminRoute = MainAdminImport.update({
 const MainPacksIndexRoute = MainPacksIndexImport.update({
   id: '/packs/',
   path: '/packs/',
+  getParentRoute: () => MainRoute,
+} as any)
+
+const MainPacksPackIndexRoute = MainPacksPackIndexImport.update({
+  id: '/packs/$pack/',
+  path: '/packs/$pack/',
+  getParentRoute: () => MainRoute,
+} as any)
+
+const MainPacksPackIdRoute = MainPacksPackIdImport.update({
+  id: '/packs/$pack/$id',
+  path: '/packs/$pack/$id',
   getParentRoute: () => MainRoute,
 } as any)
 
@@ -143,6 +157,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainPacksIndexImport
       parentRoute: typeof MainImport
     }
+    '/_main/packs/$pack/$id': {
+      id: '/_main/packs/$pack/$id'
+      path: '/packs/$pack/$id'
+      fullPath: '/packs/$pack/$id'
+      preLoaderRoute: typeof MainPacksPackIdImport
+      parentRoute: typeof MainImport
+    }
+    '/_main/packs/$pack/': {
+      id: '/_main/packs/$pack/'
+      path: '/packs/$pack'
+      fullPath: '/packs/$pack'
+      preLoaderRoute: typeof MainPacksPackIndexImport
+      parentRoute: typeof MainImport
+    }
   }
 }
 
@@ -156,6 +184,8 @@ interface MainRouteChildren {
   MainSettingsRoute: typeof MainSettingsRoute
   MainIndexRoute: typeof MainIndexRoute
   MainPacksIndexRoute: typeof MainPacksIndexRoute
+  MainPacksPackIdRoute: typeof MainPacksPackIdRoute
+  MainPacksPackIndexRoute: typeof MainPacksPackIndexRoute
 }
 
 const MainRouteChildren: MainRouteChildren = {
@@ -166,6 +196,8 @@ const MainRouteChildren: MainRouteChildren = {
   MainSettingsRoute: MainSettingsRoute,
   MainIndexRoute: MainIndexRoute,
   MainPacksIndexRoute: MainPacksIndexRoute,
+  MainPacksPackIdRoute: MainPacksPackIdRoute,
+  MainPacksPackIndexRoute: MainPacksPackIndexRoute,
 }
 
 const MainRouteWithChildren = MainRoute._addFileChildren(MainRouteChildren)
@@ -180,6 +212,8 @@ export interface FileRoutesByFullPath {
   '/settings': typeof MainSettingsRoute
   '/': typeof MainIndexRoute
   '/packs': typeof MainPacksIndexRoute
+  '/packs/$pack/$id': typeof MainPacksPackIdRoute
+  '/packs/$pack': typeof MainPacksPackIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -191,6 +225,8 @@ export interface FileRoutesByTo {
   '/settings': typeof MainSettingsRoute
   '/': typeof MainIndexRoute
   '/packs': typeof MainPacksIndexRoute
+  '/packs/$pack/$id': typeof MainPacksPackIdRoute
+  '/packs/$pack': typeof MainPacksPackIndexRoute
 }
 
 export interface FileRoutesById {
@@ -204,6 +240,8 @@ export interface FileRoutesById {
   '/_main/settings': typeof MainSettingsRoute
   '/_main/': typeof MainIndexRoute
   '/_main/packs/': typeof MainPacksIndexRoute
+  '/_main/packs/$pack/$id': typeof MainPacksPackIdRoute
+  '/_main/packs/$pack/': typeof MainPacksPackIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -218,6 +256,8 @@ export interface FileRouteTypes {
     | '/settings'
     | '/'
     | '/packs'
+    | '/packs/$pack/$id'
+    | '/packs/$pack'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
@@ -228,6 +268,8 @@ export interface FileRouteTypes {
     | '/settings'
     | '/'
     | '/packs'
+    | '/packs/$pack/$id'
+    | '/packs/$pack'
   id:
     | '__root__'
     | '/_main'
@@ -239,6 +281,8 @@ export interface FileRouteTypes {
     | '/_main/settings'
     | '/_main/'
     | '/_main/packs/'
+    | '/_main/packs/$pack/$id'
+    | '/_main/packs/$pack/'
   fileRoutesById: FileRoutesById
 }
 
@@ -275,7 +319,9 @@ export const routeTree = rootRoute
         "/_main/cost",
         "/_main/settings",
         "/_main/",
-        "/_main/packs/"
+        "/_main/packs/",
+        "/_main/packs/$pack/$id",
+        "/_main/packs/$pack/"
       ]
     },
     "/login": {
@@ -307,6 +353,14 @@ export const routeTree = rootRoute
     },
     "/_main/packs/": {
       "filePath": "_main/packs/index.tsx",
+      "parent": "/_main"
+    },
+    "/_main/packs/$pack/$id": {
+      "filePath": "_main/packs/$pack/$id.tsx",
+      "parent": "/_main"
+    },
+    "/_main/packs/$pack/": {
+      "filePath": "_main/packs/$pack/index.tsx",
       "parent": "/_main"
     }
   }
