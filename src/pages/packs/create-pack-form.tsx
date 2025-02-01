@@ -6,9 +6,9 @@ import SelectField from "@/components/form/select-field"
 import { useForm } from "react-hook-form"
 
 export default function CreatePackForm() {
-    const form = useForm<CreateTourPack>()
+    const form = useForm<CreatePack>()
 
-    function handleSubmit(vals: CreateTourPack) {
+    function handleSubmit(vals: CreatePack) {
         console.log(vals)
     }
 

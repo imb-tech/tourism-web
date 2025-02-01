@@ -7,8 +7,9 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { CheckCheck, EllipsisVertical, Pencil, Trash } from "lucide-react"
+import { memo } from "react"
 
-export function PackCardMenu() {
+function PackCardMenu() {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -35,3 +36,5 @@ export function PackCardMenu() {
         </DropdownMenu>
     )
 }
+
+export default memo(PackCardMenu)

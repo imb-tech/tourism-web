@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils"
+import { memo } from "react"
 
 type Props = {
     size: number
@@ -13,11 +14,14 @@ const Progress = ({ size, finished }: Props) => {
                 .map((_, i) => (
                     <div
                         key={i}
-                        className={cn("w-full p-1 rounded-md bg-secondary", finished > i && "bg-primary")}
+                        className={cn(
+                            "w-full p-1 rounded-md bg-secondary",
+                            finished > i && "bg-primary",
+                        )}
                     ></div>
                 ))}
         </div>
     )
 }
 
-export { Progress }
+export default memo(Progress)
