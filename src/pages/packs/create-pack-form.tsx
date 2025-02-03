@@ -3,19 +3,51 @@ import FormDatePicker from "@/components/form/date-picker"
 import FormInput from "@/components/form/input"
 import FormNumberInput from "@/components/form/number-input"
 import SelectField from "@/components/form/select-field"
-import { TOUR } from "@/constants/api-endpoints"
-import { useGet, usePost } from "@/services/default-requests"
+import { COUNTRIES, LIGHT, TOUR } from "@/constants/api-endpoints"
+import { TOUR_DATA } from "@/constants/localstorage-keys"
+import { useModal } from "@/hooks/use-modal"
+import { useStore } from "@/hooks/use-store"
+import { useGet, usePatch, usePost } from "@/services/default-requests"
+import { useQueryClient } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
 
 export default function CreatePackForm() {
-    const form = useForm<CreatePack>()
-    const { data: countries } = useGet<Country[]>("common/countries")
-    const { data: managers } = useGet<Manager[]>("users/light")
+    const queryClient = useQueryClient()
+    const { closeModal } = useModal()
 
-    const { mutate, isPending } = usePost({})
+    const { store } = useStore<PackItem | undefined>(TOUR_DATA)
+
+    const form = useForm<CreatePack>({
+        defaultValues:
+            store ?
+                {
+                    ...store,
+                    manager: store.manager?.id,
+                    country: store.country?.id,
+                }
+            :   {},
+    })
+
+    const { data: countries, isLoading } = useGet<Country[]>(COUNTRIES)
+    const { data: managers, isLoading: isManagersLoading } =
+        useGet<Manager[]>(LIGHT)
+
+    function onSuccess() {
+        closeModal()
+        queryClient.removeQueries({
+            queryKey: [TOUR],
+        })
+    }
+
+    const { mutate, isPending } = usePost({ onSuccess })
+    const { mutate: update, isPending: isUpdating } = usePatch({ onSuccess })
 
     function handleSubmit(vals: CreatePack) {
-        mutate(TOUR, vals)
+        if (store?.id) {
+            update(TOUR + `/${store.id}`, vals)
+        } else {
+            mutate(TOUR, vals)
+        }
     }
 
     return (
@@ -23,11 +55,13 @@ export default function CreatePackForm() {
             onSubmit={form.handleSubmit(handleSubmit)}
             className="flex flex-col gap-4"
         >
-            <FormInput methods={form} name="client" label="Mijoz" />
+            <FormInput required methods={form} name="client" label="Mijoz" />
 
             <SelectField
                 name="manager"
                 label="Manager"
+                required
+                isLoading={isManagersLoading}
                 methods={form}
                 options={
                     managers?.map((m) => ({
@@ -40,13 +74,16 @@ export default function CreatePackForm() {
             <SelectField
                 name="country"
                 label="Davlat"
+                required
                 methods={form}
+                isLoading={isLoading}
                 options={countries || []}
             />
 
             <div className="flex gap-3 w-full">
                 <FormDatePicker
                     format="yyyy-MM-dd"
+                    required
                     methods={form}
                     name="start"
                     label="Kelish sanasi"
@@ -66,6 +103,7 @@ export default function CreatePackForm() {
             <div className="flex gap-3 w-full">
                 <FormNumberInput
                     methods={form}
+                    required
                     name="days"
                     label="Kun"
                     placeholder="Necha kun turishadi"
@@ -74,6 +112,7 @@ export default function CreatePackForm() {
 
                 <FormNumberInput
                     methods={form}
+                    required
                     name="nights"
                     label="Tun"
                     placeholder="Necha tun turishadi"
@@ -81,7 +120,7 @@ export default function CreatePackForm() {
                 />
             </div>
 
-            <FormAction loading={isPending} />
+            <FormAction loading={isPending || isUpdating} />
         </form>
     )
 }

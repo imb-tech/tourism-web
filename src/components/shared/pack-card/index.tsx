@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { calcProgress } from "@/lib/calc-progress"
 import { Link } from "@tanstack/react-router"
 import { Eye } from "lucide-react"
-import { memo } from "react"
+import { memo, useMemo } from "react"
 import PackCardMenu from "./pack-card-menu"
 import Progress from "./progress"
 
@@ -20,16 +21,23 @@ function PackCard({
     nights,
     end,
     start,
+    onDelete,
+    onEdit,
 }: PackCardProps) {
+    const { total, current } = useMemo(
+        () => calcProgress(start, end),
+        [start, end],
+    )
+
     return (
         <Card className="w-full max-w-sm p-4 shadow-none">
             <CardHeader className="flex flex-row items-center justify-between">
                 <div className="text-sm text-muted-foreground">#{id}</div>
-                <div className="font-medium">{country}</div>
+                <div className="font-medium">{country.name}</div>
             </CardHeader>
             <CardContent className="space-y-4 p-0">
                 <div className="flex flex-col gap-1">
-                    <Progress size={4} finished={1} />
+                    <Progress size={total} finished={current} />
                     <div className="flex justify-between text-sm">
                         <span className="text-muted-foreground">{start}</span>
                         <span className="text-muted-foreground">{end}</span>
@@ -66,7 +74,7 @@ function PackCard({
                             Tur paketlar
                         </Button>
                     </Link>
-                    <PackCardMenu />
+                    <PackCardMenu onDelete={onDelete} onEdit={onEdit} />
                 </div>
             </CardContent>
         </Card>

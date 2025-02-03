@@ -7,27 +7,41 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { CheckCheck, EllipsisVertical, Pencil, Trash } from "lucide-react"
-import { memo } from "react"
+import { memo, useRef } from "react"
 
-function PackCardMenu() {
+type Props = {
+    onDelete?: () => void
+    onEdit?: () => void
+}
+
+function PackCardMenu({ onDelete, onEdit }: Props) {
+    const ref = useRef<HTMLDivElement>(null)
     return (
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
                 <Button variant="primary-muted" size={"icon"}>
                     <EllipsisVertical />
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56" align="end" side="top">
+            <DropdownMenuContent
+                ref={ref}
+                className="w-56"
+                align="end"
+                side="top"
+            >
                 <DropdownMenuGroup>
                     <DropdownMenuItem className="text-success">
                         <CheckCheck />
                         Yakunlash
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="text-primary">
+                    <DropdownMenuItem className="text-primary" onClick={onEdit}>
                         <Pencil />
                         Tahrirlash
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="text-destructive">
+                    <DropdownMenuItem
+                        className="text-destructive"
+                        onClick={onDelete}
+                    >
                         <Trash />
                         O'chirish
                     </DropdownMenuItem>

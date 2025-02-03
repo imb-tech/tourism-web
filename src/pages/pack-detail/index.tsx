@@ -6,6 +6,7 @@ import { TOUR_DATA } from "@/constants/localstorage-keys"
 import { useModal } from "@/hooks/use-modal"
 import { useStore } from "@/hooks/use-store"
 import { useGet } from "@/services/default-requests"
+import { useParams } from "@tanstack/react-router"
 import { Grid2x2PlusIcon } from "lucide-react"
 import CreateTourForm from "./create-tour-form"
 import PackDetailHeader from "./pack-detail-header"
@@ -13,11 +14,11 @@ import PackDetailHeader from "./pack-detail-header"
 export default function PackDetail() {
     const { openModal } = useModal(TOUR_DATA)
     const { store, remove } = useStore(TOUR_DATA)
-    const { data } = useGet<PlanItem[]>("tours/plans", {
-        params: { tour_id: 1 },
-    })
+    const { pack: tour_id } = useParams({ from: "/_main/packs/$pack/" })
 
-    console.log(data)
+    const { data } = useGet<PlanItem[] | undefined>("tours/plans", {
+        params: { tour_id },
+    })
 
     function handleAdd() {
         remove()

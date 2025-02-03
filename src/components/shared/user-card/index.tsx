@@ -18,17 +18,19 @@ interface UserCardProps {
 }
 
 function UserCard({ phone, image, passpord_serial, full_name }: UserCardProps) {
-    const { setStore } = useStore<TourItem>(USER_DATA)
+    const { setStore } = useStore<PlanItem>(USER_DATA)
 
     const { openModal: openDeleteModal } = useModal("delete")
     const { openModal } = useModal(USER_DATA)
 
     function handleEdit() {
         setStore({
-            hotel_type: 1,
             id: 1,
-            leaders: 1,
-            users: 1,
+            leaders_count: 1,
+            tourists_count: 1,
+            hotel_stars: 1,
+            accepted: false,
+            tour: 1,
         })
         openModal()
     }

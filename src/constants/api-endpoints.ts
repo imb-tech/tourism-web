@@ -1,5 +1,6 @@
 // categories
 const USER = "users/"
+const COMMON = "common/"
 
 export const REFRESH_TOKEN = "refresh_token"
 
@@ -12,3 +13,7 @@ export const GET_ME = USER + "getme"
 
 //
 export const TOUR = "tours"
+export const COUNTRIES = COMMON + "countries"
+export const LIGHT = USER + "light"
+export const PLANS = TOUR + "/plans"
+export const HOTEL_TYPES = COMMON + "hotel_types"

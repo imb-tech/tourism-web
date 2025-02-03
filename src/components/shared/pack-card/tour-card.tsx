@@ -17,14 +17,9 @@ import {
 import { memo } from "react"
 import Progress from "./progress"
 
-function TourCard({
-    id,
-    leaders_count,
-    tourists_count,
-    hotel_stars,
-    accepted,
-}: PlanItem) {
-    const { setStore } = useStore<TourItem>(TOUR_DATA)
+function TourCard(props: PlanItem) {
+    const { id, leaders_count, tourists_count, hotel_stars, accepted } = props
+    const { setStore } = useStore<PlanItem>(TOUR_DATA)
 
     const { pack } = useParams({ from: "/_main/packs/$pack/" })
 
@@ -34,12 +29,7 @@ function TourCard({
     const navigate = useNavigate()
 
     function handleEdit() {
-        setStore({
-            hotel_type: 1,
-            id: 1,
-            leaders: 1,
-            users: 1,
-        })
+        setStore(props)
         openModal()
     }
 
@@ -48,7 +38,7 @@ function TourCard({
     }
 
     function handleUsers() {
-        navigate({ to: `/packs/${id}/${id}` })
+        navigate({ to: `/packs/${pack}/${id}` })
     }
 
     function handleDetails() {
