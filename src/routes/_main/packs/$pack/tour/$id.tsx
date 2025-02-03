@@ -4,6 +4,7 @@ import { createFileRoute, useParams } from "@tanstack/react-router"
 
 export const Route = createFileRoute("/_main/packs/$pack/tour/$id")({
     component: RouteComponent,
+    validateSearch: (params: { type?: packTab }) => params,
 })
 
 function RouteComponent() {

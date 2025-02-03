@@ -1,31 +1,31 @@
 import { TableColumns } from "@/types/table"
 import TourTableHeader from "../tour-table-header"
-import TourGidCard from "./tour-gid-card"
+import TourGidCard from "./tour-col"
 
 export default function TourGidRow() {
     const columns: TableColumns<TourGidItem>[] = [
         {
-            flex: 0.2,
-            header: "Day",
+            flex: 0.1,
+            header: "Kun",
         },
         {
-            flex: 0.2,
+            flex: 0.18,
             header: "Ismi",
         },
         {
-            flex: 0.2,
+            flex: 0.18,
             header: "Telefon",
         },
         {
-            flex: 0.2,
+            flex: 0.18,
             header: "Kunlik narxi",
         },
         {
-            flex: 0.2,
+            flex: 0.18,
             header: "Tili",
         },
         {
-            flex: 0.2,
+            flex: 0.18,
             header: "Qo’shimcha ma’lumot",
         },
     ]
@@ -37,6 +37,14 @@ export default function TourGidRow() {
                 {
                     id: 1,
                     name: "Jesica",
+                    phone: "+998 99 999 99 99",
+                    price: 500000,
+                    langs: ["O'z", "Rus"],
+                    description: "Description",
+                },
+                {
+                    id: 2,
+                    name: "Abdullo",
                     phone: "+998 99 999 99 99",
                     price: 500000,
                     langs: ["O'z", "Rus"],
