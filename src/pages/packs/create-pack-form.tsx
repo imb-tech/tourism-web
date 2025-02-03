@@ -4,11 +4,13 @@ import FormInput from "@/components/form/input"
 import FormNumberInput from "@/components/form/number-input"
 import SelectField from "@/components/form/select-field"
 import { TOUR } from "@/constants/api-endpoints"
-import { usePost } from "@/services/default-requests"
+import { useGet, usePost } from "@/services/default-requests"
 import { useForm } from "react-hook-form"
 
 export default function CreatePackForm() {
     const form = useForm<CreatePack>()
+    const { data: countries } = useGet<Country[]>("common/countries")
+    const { data: managers } = useGet<Manager[]>("users/light")
 
     const { mutate, isPending } = usePost({})
 
@@ -27,32 +29,19 @@ export default function CreatePackForm() {
                 name="manager"
                 label="Manager"
                 methods={form}
-                options={[
-                    {
-                        name: "Jesica",
-                        id: 1,
-                    },
-                    {
-                        name: "Xudoyor",
-                        id: 2,
-                    },
-                ]}
+                options={
+                    managers?.map((m) => ({
+                        name: `${m.first_name} ${m.last_name}`,
+                        id: m.id,
+                    })) || []
+                }
             />
 
             <SelectField
                 name="country"
                 label="Davlat"
                 methods={form}
-                options={[
-                    {
-                        name: "O'zbekiston",
-                        id: 1,
-                    },
-                    {
-                        name: "Xitoy",
-                        id: 2,
-                    },
-                ]}
+                options={countries || []}
             />
 
             <div className="flex gap-3 w-full">

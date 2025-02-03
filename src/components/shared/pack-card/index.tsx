@@ -17,6 +17,7 @@ function PackCard({
     manager,
     country,
     days,
+    nights,
     end,
     start,
 }: PackCardProps) {
@@ -39,7 +40,9 @@ function PackCard({
                         <span className="text-muted-foreground">
                             Davomiyligi:
                         </span>
-                        <span>{days}</span>
+                        <span>
+                            {days} / {nights}
+                        </span>
                     </div>
                     <div className="flex justify-between">
                         <span className="text-muted-foreground">Mijoz:</span>
