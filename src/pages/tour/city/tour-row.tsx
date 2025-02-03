@@ -1,6 +1,6 @@
 import { TableColumns } from "@/types/table"
 import TourTableHeader from "../tour-table-header"
-import TourCityCard from "./tour-city-card"
+import TourCityCard from "./tour-col"
 
 export default function TourCityRow() {
     const columns: TableColumns<TourCityItem>[] = [
