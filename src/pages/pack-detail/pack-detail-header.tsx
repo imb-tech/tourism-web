@@ -9,7 +9,7 @@ type Props = {
 
 const PackDetailHeader = ({ title = "Pack Detail", backUrl }: Props) => {
     return (
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 py-1">
             <Link to={backUrl || "/"}>
                 <Button size={"icon"} variant={"outline"}>
                     <ChevronLeft />

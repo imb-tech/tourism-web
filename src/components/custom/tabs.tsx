@@ -65,7 +65,7 @@ export default function AnimatedTabs({
                             key={i}
                             data-index={t?.[returnValue]}
                             value={t.id.toString()}
-                            className="delay-100 data-[state=active]:delay-100 data-[state=active]:bg-transparent data-[state=active]:text-background duration-300 z-10 ease-out"
+                            className="delay-100 data-[state=active]:delay-100 data-[state=active]:bg-transparent data-[state=active]:text-background duration-300 z-10 ease-out w-full"
                         >
                             {t.icon ? t.icon : ""}
                             {t.name}
