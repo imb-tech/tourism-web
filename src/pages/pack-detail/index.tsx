@@ -5,6 +5,7 @@ import TourCard from "@/components/shared/pack-card/tour-card"
 import { TOUR_DATA } from "@/constants/localstorage-keys"
 import { useModal } from "@/hooks/use-modal"
 import { useStore } from "@/hooks/use-store"
+import { useGet } from "@/services/default-requests"
 import { Grid2x2PlusIcon } from "lucide-react"
 import CreateTourForm from "./create-tour-form"
 import PackDetailHeader from "./pack-detail-header"
@@ -12,6 +13,11 @@ import PackDetailHeader from "./pack-detail-header"
 export default function PackDetail() {
     const { openModal } = useModal(TOUR_DATA)
     const { store, remove } = useStore(TOUR_DATA)
+    const { data } = useGet<PlanItem[]>("tours/plans", {
+        params: { tour_id: 1 },
+    })
+
+    console.log(data)
 
     function handleAdd() {
         remove()
@@ -28,10 +34,7 @@ export default function PackDetail() {
                     label="Tarif qo'shish"
                     icon={Grid2x2PlusIcon}
                 />
-                <TourCard id="1234" city="Xitoy" users="12" hotel_stars={4} />
-                <TourCard id="1234" city="Xitoy" users="12" hotel_stars={4} />
-                <TourCard id="1234" city="Xitoy" users="12" hotel_stars={4} />
-                <TourCard id="1234" city="Xitoy" users="12" hotel_stars={4} />
+                {data?.map((pack) => <TourCard key={pack.id} {...pack} />)}
             </div>
 
             <Modal

@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { TOUR_DATA } from "@/constants/localstorage-keys"
 import { useModal } from "@/hooks/use-modal"
 import { useStore } from "@/hooks/use-store"
+import { cn } from "@/lib/utils"
 import { useNavigate, useParams } from "@tanstack/react-router"
 import {
     ArrowRight,
@@ -16,14 +17,13 @@ import {
 import { memo } from "react"
 import Progress from "./progress"
 
-interface TourCardProps {
-    id: string
-    users: string
-    city: string
-    hotel_stars: number
-}
-
-function TourCard({ id, hotel_stars, users, city }: TourCardProps) {
+function TourCard({
+    id,
+    leaders_count,
+    tourists_count,
+    hotel_stars,
+    accepted,
+}: PlanItem) {
     const { setStore } = useStore<TourItem>(TOUR_DATA)
 
     const { pack } = useParams({ from: "/_main/packs/$pack/" })
@@ -56,10 +56,15 @@ function TourCard({ id, hotel_stars, users, city }: TourCardProps) {
     }
 
     return (
-        <Card className="w-full max-w-sm p-4 shadow-none">
+        <Card
+            className={cn(
+                "w-full max-w-sm p-4 shadow-none",
+                accepted && "border border-success",
+            )}
+        >
             <CardHeader className="flex flex-row items-center justify-between">
                 <div className="text-sm text-muted-foreground">#{id}</div>
-                <div className="font-medium">{city}</div>
+                <div className="font-medium">{"Xitoy"}</div>
             </CardHeader>
             <CardContent className="space-y-4 p-0">
                 <Progress size={4} finished={1} />
@@ -68,7 +73,9 @@ function TourCard({ id, hotel_stars, users, city }: TourCardProps) {
                         <span className="text-muted-foreground">
                             Turistlar:
                         </span>
-                        <span>{users}</span>
+                        <span>
+                            {tourists_count} + {leaders_count}
+                        </span>
                     </div>
                     <div className="flex justify-between">
                         <span className="text-muted-foreground">

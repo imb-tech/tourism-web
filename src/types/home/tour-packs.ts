@@ -1,3 +1,9 @@
+type Manager = {
+    id: number
+    first_name: string
+    last_name: string
+}
+
 type TourItem = {
     id: number
     users: number
@@ -8,11 +14,7 @@ type TourItem = {
 type PackItem = {
     id: number
     client: string
-    manager: {
-        id: number
-        first_name: string
-        last_name: string
-    }
+    manager: Manager
     start: string
     end: string
     days: number
@@ -23,4 +25,12 @@ type PackItem = {
 
 type CreatePack = PackItem & {
     manager: number
+}
+
+type PlanItem = {
+    id: number
+    leaders_count: number
+    tourists_count: number
+    hotel_stars: number
+    accepted: boolean
 }
