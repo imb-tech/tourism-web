@@ -13,7 +13,7 @@ export default function Users() {
     const { openModal } = useModal()
 
     return (
-        <section className="p-2">
+        <section className="p-3">
             <PackDetailHeader title="Turistlar" backUrl={`/packs/${pack}`} />
             <div className="mt-2 grid grid-cols-2 md:grid-cols-4 gap-4">
                 <AddButton

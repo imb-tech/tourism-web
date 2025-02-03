@@ -19,7 +19,7 @@ export default function PackDetail() {
     }
 
     return (
-        <div className="p-2">
+        <div className="p-3">
             <PackDetailHeader title="Tariflar" backUrl="/packs" />
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-3">

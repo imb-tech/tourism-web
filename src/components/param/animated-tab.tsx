@@ -15,6 +15,7 @@ interface ParamTabsProps {
     cleanOthers?: boolean
     returnValue?: "name" | "id"
     onValueChange?: (val: string | number) => void
+    className?: string
 }
 
 const ParamAnimatedTabs: React.FC<ParamTabsProps> = ({
@@ -25,6 +26,7 @@ const ParamAnimatedTabs: React.FC<ParamTabsProps> = ({
     cleanOthers = false,
     returnValue = "id",
     onValueChange,
+    className,
 }) => {
     const navigate = useNavigate()
     const search: any = useSearch({ from: "__root__" }) as Record<
@@ -51,6 +53,7 @@ const ParamAnimatedTabs: React.FC<ParamTabsProps> = ({
             value={currentTab}
             setValue={handleTabChange}
             returnValue={returnValue}
+            listClassName={className}
         />
     )
 }

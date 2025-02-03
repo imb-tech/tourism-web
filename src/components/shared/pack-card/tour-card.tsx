@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { TOUR_DATA } from "@/constants/localstorage-keys"
 import { useModal } from "@/hooks/use-modal"
 import { useStore } from "@/hooks/use-store"
-import { useNavigate } from "@tanstack/react-router"
+import { useNavigate, useParams } from "@tanstack/react-router"
 import {
     ArrowRight,
     Copy,
@@ -26,6 +26,8 @@ interface TourCardProps {
 function TourCard({ id, hotel_stars, users, city }: TourCardProps) {
     const { setStore } = useStore<TourItem>(TOUR_DATA)
 
+    const { pack } = useParams({ from: "/_main/packs/$pack/" })
+
     const { openModal: openDeleteModal } = useModal("delete")
     const { openModal } = useModal(TOUR_DATA)
 
@@ -47,6 +49,10 @@ function TourCard({ id, hotel_stars, users, city }: TourCardProps) {
 
     function handleUsers() {
         navigate({ to: `/packs/${id}/${id}` })
+    }
+
+    function handleDetails() {
+        navigate({ to: `/packs/${pack}/tour/${id}` })
     }
 
     return (
@@ -135,6 +141,7 @@ function TourCard({ id, hotel_stars, users, city }: TourCardProps) {
                         size="icon"
                         variant={"default"}
                         className="h-10 w-10 rounded-lg"
+                        onClick={handleDetails}
                     >
                         <ArrowRight size={18} className="font-light" />
                     </Button>

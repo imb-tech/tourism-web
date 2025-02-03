@@ -3,13 +3,17 @@ import FormDatePicker from "@/components/form/date-picker"
 import FormInput from "@/components/form/input"
 import FormNumberInput from "@/components/form/number-input"
 import SelectField from "@/components/form/select-field"
+import { TOUR } from "@/constants/api-endpoints"
+import { usePost } from "@/services/default-requests"
 import { useForm } from "react-hook-form"
 
 export default function CreatePackForm() {
     const form = useForm<CreatePack>()
 
+    const { mutate, isPending } = usePost({})
+
     function handleSubmit(vals: CreatePack) {
-        console.log(vals)
+        mutate(TOUR, vals)
     }
 
     return (
@@ -17,7 +21,7 @@ export default function CreatePackForm() {
             onSubmit={form.handleSubmit(handleSubmit)}
             className="flex flex-col gap-4"
         >
-            <FormInput methods={form} name="name" label="Nomi" />
+            <FormInput methods={form} name="client" label="Mijoz" />
 
             <SelectField
                 name="manager"
@@ -53,16 +57,18 @@ export default function CreatePackForm() {
 
             <div className="flex gap-3 w-full">
                 <FormDatePicker
+                    format="yyyy-MM-dd"
                     methods={form}
-                    name="start_date"
+                    name="start"
                     label="Kelish sanasi"
                     wrapperClassName={"w-full"}
                 />
 
                 <FormDatePicker
+                    format="yyyy-MM-dd"
                     required
                     methods={form}
-                    name="end_date"
+                    name="end"
                     label="Ketish sanasi"
                     wrapperClassName={"w-full"}
                 />
@@ -86,7 +92,7 @@ export default function CreatePackForm() {
                 />
             </div>
 
-            <FormAction />
+            <FormAction loading={isPending} />
         </form>
     )
 }
