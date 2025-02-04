@@ -1,6 +1,7 @@
 import ParamAnimatedTabs from "@/components/param/animated-tab"
 import CityAndCountries from "./city-and-countries"
 import Enterances from "./enterances"
+import Foods from "./foods"
 import Hotels from "./hotels"
 import Transports from "./transports"
 
@@ -28,6 +29,11 @@ export default function Settings() {
                         id: "transports",
                         name: "Transportlar",
                         content: <Transports />,
+                    },
+                    {
+                        id: "foods",
+                        name: "Taomlar",
+                        content: <Foods />,
                     },
                 ]}
             />
