@@ -38,7 +38,7 @@ export default function CityCreateEdit() {
 
     return (
         <form onSubmit={form.handleSubmit(handleSubmit)}>
-            <FormInput methods={form} name="name" />
+            <FormInput methods={form} name="name" required label="Sahar nomi" />
             <FormAction loading={isPending || isUpdating} />
         </form>
     )

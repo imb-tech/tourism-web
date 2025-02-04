@@ -51,13 +51,14 @@ export default function EnteranceCreateEditForm() {
             onSubmit={form.handleSubmit(handleSubmit)}
             className="flex flex-col gap-5"
         >
-            <FormInput methods={form} name="name" label="Joy nomi" />
+            <FormInput methods={form} name="name" label="Joy nomi" required />
 
             <FormNumberInput
                 thousandSeparator=" "
                 label="Kirish narxi"
                 methods={form}
                 name="price"
+                required
             />
 
             <SelectField
@@ -65,6 +66,7 @@ export default function EnteranceCreateEditForm() {
                 options={cities || []}
                 methods={form}
                 name="city"
+                required
             />
 
             <FormAction loading={isPending || isUpdating} />

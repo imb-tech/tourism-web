@@ -1,6 +1,6 @@
 type TransportImage = {
-    id: number
-    image: string
+    id: number | null | undefined
+    image: Blob | string | undefined
 }
 
 type Transport = {

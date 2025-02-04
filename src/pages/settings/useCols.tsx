@@ -1,3 +1,4 @@
+import Star from "@/assets/images/star.png"
 import { ColumnDef } from "@tanstack/react-table"
 import { useMemo } from "react"
 
@@ -64,6 +65,22 @@ export const useHotelColumns = () =>
             {
                 accessorKey: "name",
                 header: "Nomi",
+            },
+            {
+                accessorKey: "city.name",
+                header: "Shahar",
+            },
+            {
+                accessorKey: "star",
+                header: "Darajasi",
+                cell: ({ row }) => {
+                    return (
+                        <div className="flex items-center gap-1">
+                            <span>{row.original.star}</span>
+                            <img width={14} src={Star} alt="" />
+                        </div>
+                    )
+                },
             },
         ],
         [],

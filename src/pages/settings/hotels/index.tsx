@@ -1,32 +1,46 @@
 import DeleteModal from "@/components/custom/delete-modal"
 import Modal from "@/components/custom/modal"
+import InitialDataBox from "@/components/elements/initial-data-box"
 import { Button } from "@/components/ui/button"
 import { DataTable } from "@/components/ui/datatable"
-import { COUNTRIES } from "@/constants/api-endpoints"
-import { COUNTRY_DATA } from "@/constants/localstorage-keys"
+import { HOTELS } from "@/constants/api-endpoints"
+import { HOTEL_DATA } from "@/constants/localstorage-keys"
 import { useModal } from "@/hooks/use-modal"
 import { useStore } from "@/hooks/use-store"
+import axiosInstance from "@/services/axios-instance"
 import { useGet } from "@/services/default-requests"
 import { useState } from "react"
 import { useHotelColumns } from "../useCols"
+import HotelCreateForm from "./hotel-create-form"
 
 export default function Hotels() {
-    const { data: countries, isLoading } = useGet<Country[]>(COUNTRIES)
+    const { data, isLoading } = useGet<ListResponse<Hotel>>(HOTELS)
 
-    const { openModal } = useModal("country")
-    const { openModal: openDeleteModal } = useModal("country-delete")
+    const { openModal } = useModal()
+    const { openModal: openDeleteModal } = useModal("delete")
 
-    const [deleteItem, setDeleteItem] = useState<Country["id"] | null>(null)
-    const { setStore, store, remove } = useStore(COUNTRY_DATA)
+    const [deleteItem, setDeleteItem] = useState<Hotel["id"] | null>(null)
+    const { setStore, store, remove } = useStore<Hotel | undefined>(HOTEL_DATA)
+    const [loading, setLoading] = useState(false)
 
-    function handleCountryDelete({ original }: { original: Country }) {
+    async function getHotelById(id: number | null) {
+        setLoading(true)
+        openModal()
+        const resp = await axiosInstance.get(HOTELS + `/${id}/`)
+        setStore(resp.data)
+        setLoading(false)
+    }
+
+    function handleHotelDelete({ original }: { original: Hotel }) {
         openDeleteModal()
         setDeleteItem(original.id)
     }
 
-    function handleCountryEdit({ original }: { original: Country }) {
-        openModal()
-        setStore(original)
+    const handleHotelEdit = ({ original }: { original: Hotel }) => {
+        getHotelById(original.id)
+        if (store?.id !== original.id) {
+            setStore(original)
+        }
     }
 
     return (
@@ -44,26 +58,25 @@ export default function Hotels() {
             </div>
             <DataTable
                 columns={useHotelColumns()}
-                data={countries ?? []}
+                data={data?.results ?? []}
                 loading={isLoading}
                 viewAll
                 withActions
-                onDelete={handleCountryDelete}
-                onEdit={handleCountryEdit}
+                onDelete={handleHotelDelete}
+                onEdit={handleHotelEdit}
             />
 
-            <DeleteModal
-                path={COUNTRIES}
-                id={deleteItem || ""}
-                modalKey="country-delete"
-            />
+            <DeleteModal path={HOTELS} id={deleteItem || ""} />
 
             <Modal
-                title={store ? "Davlat tahrirlash" : "Davlat qo'shish"}
+                title={
+                    store ? "Mehmonxonani tahrirlash" : "Mehmonxonani qo'shish"
+                }
                 className="max-w-xl"
-                modalKey="country"
             >
-                {/* <CountryCreateEditForm /> */}
+                {!loading ?
+                    <HotelCreateForm />
+                :   <InitialDataBox isLoading />}
             </Modal>
         </>
     )

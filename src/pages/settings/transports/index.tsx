@@ -15,7 +15,7 @@ export default function Transports() {
     const { data, isLoading } = useGet<ListResponse<Transport>>(TRANSPORTS)
 
     const { openModal } = useModal()
-    const { openModal: openDeleteModal } = useModal()
+    const { openModal: openDeleteModal } = useModal("delete")
 
     const [deleteItem, setDeleteItem] = useState<Transport["id"] | null>(null)
     const { setStore, store, remove } = useStore(TRANSPORT_DATA)

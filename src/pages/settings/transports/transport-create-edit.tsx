@@ -8,7 +8,9 @@ import { useModal } from "@/hooks/use-modal"
 import { useStore } from "@/hooks/use-store"
 import { usePatch, usePost } from "@/services/default-requests"
 import { useQueryClient } from "@tanstack/react-query"
-import { useForm } from "react-hook-form"
+import { Trash2 } from "lucide-react"
+import { useState } from "react"
+import { useFieldArray, useForm } from "react-hook-form"
 
 export default function TransportCreateEdit() {
     const queryClient = useQueryClient()
@@ -17,8 +19,44 @@ export default function TransportCreateEdit() {
     const { store, remove } = useStore<Transport>(TRANSPORT_DATA)
 
     const form = useForm<Transport>({
-        defaultValues: store || {},
+        values:
+            store ?
+                {
+                    ...store,
+                    images: [
+                        ...(store?.images || []),
+                        {
+                            id: null,
+                            image: "none",
+                        },
+                    ],
+                }
+            :   {
+                    id: -1,
+                    name: "",
+                    size: 0,
+                    price: 0,
+                    images: [
+                        {
+                            id: null,
+                            image: "none",
+                        },
+                    ],
+                },
     })
+
+    const {
+        fields,
+        append,
+        remove: removeImage,
+        update,
+    } = useFieldArray({
+        control: form.control,
+        name: "images",
+        keyName: "key",
+    })
+
+    const [deleted_images, setDeletedImages] = useState<number[]>([])
 
     function onSuccess() {
         closeModal()
@@ -28,29 +66,61 @@ export default function TransportCreateEdit() {
         })
     }
 
-    const { mutate: post, isPending } = usePost({ onSuccess })
-    const { mutate: patch, isPending: isUpdating } = usePatch({ onSuccess })
+    const { mutate: post, isPending } = usePost(
+        { onSuccess },
+        {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        },
+    )
+
+    const { mutate: patch, isPending: isUpdating } = usePatch(
+        { onSuccess },
+        {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        },
+    )
 
     function handleSubmit(vals: Transport) {
+        const formData = new FormData()
+
+        vals.images.forEach((image) => {
+            if (image.image && !image.id && image.image !== "none") {
+                formData.append("new_images", image.image)
+            }
+        })
+
+        formData.append("name", vals.name)
+        formData.append("size", String(vals.size))
+        formData.append("price", String(vals.price))
+        for (const image of deleted_images) {
+            formData.append("deleted_images", image.toString())
+        }
+
         if (store?.id) {
-            patch(TRANSPORTS + `/${store.id}`, vals)
+            patch(TRANSPORTS + `/${store.id}`, formData)
         } else {
-            post(TRANSPORTS, vals)
+            post(TRANSPORTS, formData)
         }
     }
+    console.log(fields, deleted_images)
 
     return (
         <form
             onSubmit={form.handleSubmit(handleSubmit)}
             className="flex flex-col gap-5"
         >
-            <FormInput methods={form} name="name" label="Joy nomi" />
+            <FormInput methods={form} name="name" label="Nomi" required />
 
             <FormNumberInput
                 thousandSeparator=" "
                 label="Sig'imi"
                 methods={form}
                 name="size"
+                required
             />
 
             <FormNumberInput
@@ -58,9 +128,50 @@ export default function TransportCreateEdit() {
                 label="Narxi"
                 methods={form}
                 name="price"
+                required
             />
 
-            <FormImageInput methods={form} name="images" />
+            <div className="flex gap-2 flex-wrap">
+                {fields?.map((field, i) => (
+                    <div
+                        key={field.key}
+                        className="relative border p-1 rounded-xl flex flex-col gap-1"
+                    >
+                        <FormImageInput
+                            methods={form}
+                            name={`images.${i}.image`}
+                            handleChange={() => {
+                                append({
+                                    id: null,
+                                    image: "none",
+                                })
+                            }}
+                            disabled={!!field.image && field.image !== "none"}
+                        />
+                        <span
+                            className=" cursor-pointer flex items-center justify-center rounded-md"
+                            onClick={() => {
+                                if (fields.length > 1) {
+                                    removeImage(i)
+                                } else {
+                                    update(i, {
+                                        id: null,
+                                        image: "none",
+                                    })
+                                }
+                                if (field.id) {
+                                    setDeletedImages((prev) => [
+                                        ...prev,
+                                        Number(field.id),
+                                    ])
+                                }
+                            }}
+                        >
+                            <Trash2 size={20} className="text-destructive" />
+                        </span>
+                    </div>
+                ))}
+            </div>
 
             <FormAction loading={isPending || isUpdating} />
         </form>
