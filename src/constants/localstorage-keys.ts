@@ -5,3 +5,4 @@ export const USER_REFRESH_KEY = "user_refresh"
 
 export const TOUR_DATA = "tour-data"
 export const USER_DATA = "user-data"
+export const COUNTRY_DATA = "country-data"
