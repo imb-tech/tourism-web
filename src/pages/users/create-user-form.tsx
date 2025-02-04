@@ -2,21 +2,43 @@ import FormAction from "@/components/custom/form-action"
 import FormCheckbox from "@/components/form/checkbox"
 import FormImagePicker from "@/components/form/image-picker"
 import FormInput from "@/components/form/input"
-import FormNumberInput from "@/components/form/number-input"
 import PhoneField from "@/components/form/phone-field"
+import { TOURISTS } from "@/constants/api-endpoints"
 import { USER_DATA } from "@/constants/localstorage-keys"
 import { useStore } from "@/hooks/use-store"
+import { usePost } from "@/services/default-requests"
+import { useParams } from "@tanstack/react-router"
 import { useForm } from "react-hook-form"
 
 export default function CreateUserForm() {
     const { store } = useStore<UserItem>(USER_DATA)
+    const { id } = useParams({ from: "/_main/packs/$pack/$id" })
+
+    const { mutate, isPending } = usePost(
+        {},
+        {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        },
+    )
 
     const form = useForm<UserItem>({
         defaultValues: store || {},
     })
 
     function handleSubmit(vals: UserItem) {
-        console.log(vals)
+        const formData = new FormData()
+
+        formData.append("full_name", vals.full_name)
+        formData.append("passcode", vals.passcode)
+        formData.append("phone", vals.phone.replace("+", ""))
+        formData.append("plan", id)
+        formData.append("is_leader", String(vals.is_leader))
+        formData.append("photo", vals.photo)
+        console.log(formData)
+
+        mutate(TOURISTS, formData)
     }
 
     return (
@@ -32,9 +54,9 @@ export default function CreateUserForm() {
                     wrapperClassName={"w-full"}
                 />
 
-                <FormNumberInput
+                <FormInput
                     methods={form}
-                    name="passpord_serial"
+                    name="passcode"
                     label="Passport"
                     wrapperClassName={"w-full"}
                 />
@@ -52,12 +74,12 @@ export default function CreateUserForm() {
             <FormImagePicker
                 className={"w-full rounded-md"}
                 methods={form}
-                name="image"
+                name="photo"
                 label="Rasmni bu yerga tashlang yoki kompyuterdan yuklang"
                 labelClassName="border rounded-md w-full py-12 flex flex-col items-center justify-center gap-3"
             />
 
-            <FormAction />
+            <FormAction loading={isPending} />
         </form>
     )
 }

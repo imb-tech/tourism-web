@@ -1,9 +1,12 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { PLANS } from "@/constants/api-endpoints"
 import { TOUR_DATA } from "@/constants/localstorage-keys"
 import { useModal } from "@/hooks/use-modal"
 import { useStore } from "@/hooks/use-store"
 import { cn } from "@/lib/utils"
+import { usePost } from "@/services/default-requests"
+import { useQueryClient } from "@tanstack/react-query"
 import { useNavigate, useParams } from "@tanstack/react-router"
 import {
     ArrowRight,
@@ -20,8 +23,17 @@ import Progress from "./progress"
 function TourCard(props: PlanItem) {
     const { id, leaders_count, tourists_count, hotel_stars, accepted } = props
     const { setStore } = useStore<PlanItem>(TOUR_DATA)
+    const queryClient = useQueryClient()
 
     const { pack } = useParams({ from: "/_main/packs/$pack/" })
+
+    const { mutate, isPending } = usePost({
+        onSuccess() {
+            queryClient.refetchQueries({
+                queryKey: [PLANS],
+            })
+        },
+    })
 
     const { openModal: openDeleteModal } = useModal("delete")
     const { openModal } = useModal(TOUR_DATA)
@@ -34,6 +46,7 @@ function TourCard(props: PlanItem) {
     }
 
     function handleDelete() {
+        setStore(props)
         openDeleteModal()
     }
 
@@ -43,6 +56,10 @@ function TourCard(props: PlanItem) {
 
     function handleDetails() {
         navigate({ to: `/packs/${pack}/tour/${id}` })
+    }
+
+    function handleDublicate() {
+        mutate(PLANS, props)
     }
 
     return (
@@ -115,6 +132,8 @@ function TourCard(props: PlanItem) {
                         size="icon"
                         variant={"primary-muted"}
                         className="h-10 w-10 rounded-lg"
+                        onClick={handleDublicate}
+                        loading={isPending}
                     >
                         <Copy size={18} className="font-light" />
                     </Button>

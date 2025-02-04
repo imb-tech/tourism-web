@@ -2,6 +2,7 @@ import DeleteModal from "@/components/custom/delete-modal"
 import Modal from "@/components/custom/modal"
 import AddButton from "@/components/shared/add-button"
 import TourCard from "@/components/shared/pack-card/tour-card"
+import { PLANS } from "@/constants/api-endpoints"
 import { TOUR_DATA } from "@/constants/localstorage-keys"
 import { useModal } from "@/hooks/use-modal"
 import { useStore } from "@/hooks/use-store"
@@ -13,10 +14,10 @@ import PackDetailHeader from "./pack-detail-header"
 
 export default function PackDetail() {
     const { openModal } = useModal(TOUR_DATA)
-    const { store, remove } = useStore(TOUR_DATA)
+    const { store, remove } = useStore<PlanItem>(TOUR_DATA)
     const { pack: tour_id } = useParams({ from: "/_main/packs/$pack/" })
 
-    const { data } = useGet<PlanItem[] | undefined>("tours/plans", {
+    const { data } = useGet<PlanItem[] | undefined>(PLANS, {
         params: { tour_id },
     })
 
@@ -46,7 +47,7 @@ export default function PackDetail() {
                 <CreateTourForm />
             </Modal>
 
-            <DeleteModal id={1} path="" />
+            <DeleteModal id={store?.id || 0} path={PLANS} />
         </div>
     )
 }

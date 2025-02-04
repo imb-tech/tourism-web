@@ -14,10 +14,18 @@ export default function AddButton({
     onClick,
     className,
 }: Props) {
+    function handleAdd() {
+        const forms = document.querySelectorAll("form")
+        forms.forEach((form) => {
+            form.reset()
+        })
+        onClick?.()
+    }
+
     return (
         <div className={cn("h-full", className)}>
             <button
-                onClick={onClick}
+                onClick={handleAdd}
                 className="w-full h-full flex flex-col items-center justify-center p-8 border-[1px] border-dashed border-primary rounded-lg hover:bg-gray-50 transition-colors bg-background"
             >
                 <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mb-4">

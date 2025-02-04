@@ -1,61 +1,53 @@
 import DeleteModal from "@/components/custom/delete-modal"
 import Modal from "@/components/custom/modal"
+import InitialDataBox from "@/components/elements/initial-data-box"
 import AddButton from "@/components/shared/add-button"
 import UserCard from "@/components/shared/user-card"
+import { TOURISTS } from "@/constants/api-endpoints"
+import { USER_DATA } from "@/constants/localstorage-keys"
 import { useModal } from "@/hooks/use-modal"
+import { useStore } from "@/hooks/use-store"
+import { useGet } from "@/services/default-requests"
 import { useParams } from "@tanstack/react-router"
 import { UserRoundPlus } from "lucide-react"
 import PackDetailHeader from "../pack-detail/pack-detail-header"
 import CreateUserForm from "./create-user-form"
 
+type UsersResponse = {
+    total_pages: number
+    results: UserItem[]
+}
+
 export default function Users() {
     const { pack } = useParams({ from: "/_main/packs/$pack/$id" })
     const { openModal } = useModal()
+    const { store } = useStore<UserItem>(USER_DATA)
 
-    return (
-        <section className="p-3">
-            <PackDetailHeader title="Turistlar" backUrl={`/packs/${pack}`} />
-            <div className="mt-2 grid grid-cols-2 md:grid-cols-4 gap-4">
-                <AddButton
-                    label="Turist qo'shish"
-                    icon={UserRoundPlus}
-                    onClick={openModal}
-                />
-                <UserCard
-                    id="1234"
-                    full_name="Alisher Xaydarov"
-                    phone="998931231177"
-                    image="https://s3-alpha-sig.figma.com/img/b36b/91e5/765577b2a6865e02c589fe3c9b620772?Expires=1739145600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=nfBgksw7rb-2ly64anXB0vEB9XiP55di5vI~sd8SytvGIEIeJAOuVLxK-GAfmjcSYH2ios6~FqoAnhMYZxZWrAT1CYgbu3nO2LbEFyz7RjxCwoQs2XogppJuqoG2S95MW0qb3qhc08-gN4xFO7YvEazsv2Ky8iG-IVKsAtUBYtdxNACX41BpjeZeqoTET7Kb31EhGbWlT4UxMMutTfqhqqECXWhUpNG6iOSfARjBDuT2mh6UqWulB5WHbb2qFgtSGbNZxqVEbVGTpRg38nMEUEjqpsZ1O43BdV2Vf6ElNtThC07urKNe7ruxczj3QxBPZ2fPhoukr-FD32zFYvvoig__"
-                    passpord_serial="AD0180697"
-                />
-                <UserCard
-                    id="1234"
-                    full_name="Alisher Xaydarov"
-                    phone="998931231177"
-                    image="https://s3-alpha-sig.figma.com/img/b36b/91e5/765577b2a6865e02c589fe3c9b620772?Expires=1739145600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=nfBgksw7rb-2ly64anXB0vEB9XiP55di5vI~sd8SytvGIEIeJAOuVLxK-GAfmjcSYH2ios6~FqoAnhMYZxZWrAT1CYgbu3nO2LbEFyz7RjxCwoQs2XogppJuqoG2S95MW0qb3qhc08-gN4xFO7YvEazsv2Ky8iG-IVKsAtUBYtdxNACX41BpjeZeqoTET7Kb31EhGbWlT4UxMMutTfqhqqECXWhUpNG6iOSfARjBDuT2mh6UqWulB5WHbb2qFgtSGbNZxqVEbVGTpRg38nMEUEjqpsZ1O43BdV2Vf6ElNtThC07urKNe7ruxczj3QxBPZ2fPhoukr-FD32zFYvvoig__"
-                    passpord_serial="AD0180697"
-                />
-                <UserCard
-                    id="1234"
-                    full_name="Alisher Xaydarov"
-                    phone="998931231177"
-                    image="https://s3-alpha-sig.figma.com/img/b36b/91e5/765577b2a6865e02c589fe3c9b620772?Expires=1739145600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=nfBgksw7rb-2ly64anXB0vEB9XiP55di5vI~sd8SytvGIEIeJAOuVLxK-GAfmjcSYH2ios6~FqoAnhMYZxZWrAT1CYgbu3nO2LbEFyz7RjxCwoQs2XogppJuqoG2S95MW0qb3qhc08-gN4xFO7YvEazsv2Ky8iG-IVKsAtUBYtdxNACX41BpjeZeqoTET7Kb31EhGbWlT4UxMMutTfqhqqECXWhUpNG6iOSfARjBDuT2mh6UqWulB5WHbb2qFgtSGbNZxqVEbVGTpRg38nMEUEjqpsZ1O43BdV2Vf6ElNtThC07urKNe7ruxczj3QxBPZ2fPhoukr-FD32zFYvvoig__"
-                    passpord_serial="AD0180697"
-                />
-                <UserCard
-                    id="1234"
-                    full_name="Alisher Xaydarov"
-                    phone="998931231177"
-                    image="https://s3-alpha-sig.figma.com/img/b36b/91e5/765577b2a6865e02c589fe3c9b620772?Expires=1739145600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=nfBgksw7rb-2ly64anXB0vEB9XiP55di5vI~sd8SytvGIEIeJAOuVLxK-GAfmjcSYH2ios6~FqoAnhMYZxZWrAT1CYgbu3nO2LbEFyz7RjxCwoQs2XogppJuqoG2S95MW0qb3qhc08-gN4xFO7YvEazsv2Ky8iG-IVKsAtUBYtdxNACX41BpjeZeqoTET7Kb31EhGbWlT4UxMMutTfqhqqECXWhUpNG6iOSfARjBDuT2mh6UqWulB5WHbb2qFgtSGbNZxqVEbVGTpRg38nMEUEjqpsZ1O43BdV2Vf6ElNtThC07urKNe7ruxczj3QxBPZ2fPhoukr-FD32zFYvvoig__"
-                    passpord_serial="AD0180697"
-                />
-            </div>
+    const { data, isSuccess, isLoading, isError } =
+        useGet<UsersResponse>(TOURISTS)
 
-            <DeleteModal path="" id={1} />
+    return isSuccess ?
+            <section className="p-3">
+                <PackDetailHeader
+                    title="Turistlar"
+                    backUrl={`/packs/${pack}`}
+                />
+                <div className="mt-2 grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <AddButton
+                        label="Turist qo'shish"
+                        icon={UserRoundPlus}
+                        onClick={openModal}
+                    />
+                    {data?.results?.map((user) => (
+                        <UserCard key={user.id} {...user} />
+                    ))}
+                </div>
 
-            <Modal title="Turist qo'shish" className="max-w-xl">
-                <CreateUserForm />
-            </Modal>
-        </section>
-    )
+                <DeleteModal path={TOURISTS} id={store?.id || ""} />
+
+                <Modal title="Turist qo'shish" className="max-w-xl">
+                    <CreateUserForm />
+                </Modal>
+            </section>
+        :   <InitialDataBox isLoading={isLoading} isError={isError} />
 }

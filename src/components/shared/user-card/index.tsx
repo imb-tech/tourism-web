@@ -9,40 +9,29 @@ import { formatPhone } from "@/lib/format-phone"
 import { Copy, Pencil, PhoneCall, Trash2 } from "lucide-react"
 import { memo } from "react"
 
-interface UserCardProps {
-    id: string
-    full_name: string
-    phone: string
-    image: string
-    passpord_serial: string
-}
-
-function UserCard({ phone, image, passpord_serial, full_name }: UserCardProps) {
-    const { setStore } = useStore<PlanItem>(USER_DATA)
+function UserCard(props: UserItem) {
+    const { phone, photo, passcode, full_name } = props
+    const { setStore } = useStore<UserItem>(USER_DATA)
 
     const { openModal: openDeleteModal } = useModal("delete")
     const { openModal } = useModal(USER_DATA)
 
     function handleEdit() {
-        setStore({
-            id: 1,
-            leaders_count: 1,
-            tourists_count: 1,
-            hotel_stars: 1,
-            accepted: false,
-            tour: 1,
-        })
         openModal()
     }
 
     function handleDelete() {
+        setStore(props)
         openDeleteModal()
     }
 
     return (
         <Card className="w-full max-w-sm p-4 shadow-none">
             <CardHeader className="flex flex-row items-start justify-between">
-                <Image className="w-24 h-24 rounded-sm" src={image} />
+                <Image
+                    className="w-24 h-24 rounded-sm"
+                    src={photo as unknown as string}
+                />
                 <div className="flex gap-2">
                     <Button
                         size="icon"
@@ -67,7 +56,7 @@ function UserCard({ phone, image, passpord_serial, full_name }: UserCardProps) {
                 <div className="flex items-center gap-1">
                     <Copy size={18} className="font-light text-primary" />
                     <span className="text-muted-foreground">
-                        {formatPassportSerial(passpord_serial)}
+                        {formatPassportSerial(passcode)}
                     </span>
                 </div>
                 <div className="flex items-center gap-1">
