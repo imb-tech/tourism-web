@@ -2,6 +2,7 @@
 const USER = "users/"
 const COMMON = "common/"
 const TOURS = "tours/"
+const SERVICES = "services/"
 
 export const REFRESH_TOKEN = "refresh_token"
 
@@ -21,3 +22,5 @@ export const PLANS = TOUR + "/plans"
 export const HOTEL_TYPES = COMMON + "hotel_types"
 
 export const TOURISTS = TOURS + "tourists"
+export const ENTERANCES = SERVICES + "entrances"
+export const TRANSPORTS = SERVICES + "transports"

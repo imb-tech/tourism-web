@@ -2,23 +2,28 @@ import DeleteModal from "@/components/custom/delete-modal"
 import Modal from "@/components/custom/modal"
 import { Button } from "@/components/ui/button"
 import { DataTable } from "@/components/ui/datatable"
-import { COUNTRIES } from "@/constants/api-endpoints"
-import { COUNTRY_DATA } from "@/constants/localstorage-keys"
+import { ENTERANCES } from "@/constants/api-endpoints"
+import { ENTERANCE_DATA } from "@/constants/localstorage-keys"
 import { useModal } from "@/hooks/use-modal"
 import { useStore } from "@/hooks/use-store"
 import { useGet } from "@/services/default-requests"
 import { useState } from "react"
-import { useCountryColumns } from "../useCols"
-import CountryCreateEditForm from "./country-create-edit-form"
+import { useEnteranceColumns } from "../useCols"
+import EnteranceCreateEditForm from "./enterance-create-edit-form"
 
-export default function Countries() {
-    const { data: countries, isLoading } = useGet<Country[]>(COUNTRIES)
+type EnteranceResponse = {
+    total_pages: number
+    results: Enterance[]
+}
 
-    const { openModal } = useModal("country")
-    const { openModal: openDeleteModal } = useModal("country-delete")
+export default function Enterances() {
+    const { data: enteance, isLoading } = useGet<EnteranceResponse>(ENTERANCES)
 
-    const [deleteItem, setDeleteItem] = useState<Country["id"] | null>(null)
-    const { setStore, store, remove } = useStore(COUNTRY_DATA)
+    const { openModal } = useModal(ENTERANCE_DATA)
+    const { openModal: openDeleteModal } = useModal("enterance-delete")
+
+    const [deleteItem, setDeleteItem] = useState<Enterance["id"] | null>(null)
+    const { setStore, store, remove } = useStore(ENTERANCE_DATA)
 
     function handleCountryDelete({ original }: { original: Country }) {
         openDeleteModal()
@@ -33,7 +38,7 @@ export default function Countries() {
     return (
         <>
             <div className="flex justify-between items-center mb-2">
-                <h2 className="text-xl">Davlatlar</h2>
+                <h2 className="text-xl">Joylar</h2>
                 <Button
                     onClick={() => {
                         remove()
@@ -45,8 +50,8 @@ export default function Countries() {
                 </Button>
             </div>
             <DataTable
-                columns={useCountryColumns()}
-                data={countries ?? []}
+                columns={useEnteranceColumns()}
+                data={enteance?.results ?? []}
                 loading={isLoading}
                 viewAll
                 withActions
@@ -55,17 +60,17 @@ export default function Countries() {
             />
 
             <DeleteModal
-                path={COUNTRIES}
+                path={ENTERANCES}
                 id={deleteItem || ""}
                 modalKey="country-delete"
             />
 
             <Modal
-                title={store ? "Davlat tahrirlash" : "Davlat qo'shish"}
+                title={store ? "Joy tahrirlash" : "Joy qo'shish"}
                 className="max-w-xl"
-                modalKey="country"
+                modalKey={ENTERANCE_DATA}
             >
-                <CountryCreateEditForm />
+                <EnteranceCreateEditForm />
             </Modal>
         </>
     )

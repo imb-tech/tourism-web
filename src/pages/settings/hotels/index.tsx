@@ -8,10 +8,9 @@ import { useModal } from "@/hooks/use-modal"
 import { useStore } from "@/hooks/use-store"
 import { useGet } from "@/services/default-requests"
 import { useState } from "react"
-import { useCountryColumns } from "../useCols"
-import CountryCreateEditForm from "./country-create-edit-form"
+import { useHotelColumns } from "../useCols"
 
-export default function Countries() {
+export default function Hotels() {
     const { data: countries, isLoading } = useGet<Country[]>(COUNTRIES)
 
     const { openModal } = useModal("country")
@@ -33,19 +32,18 @@ export default function Countries() {
     return (
         <>
             <div className="flex justify-between items-center mb-2">
-                <h2 className="text-xl">Davlatlar</h2>
+                <h2 className="text-xl">Mehmonxonalar</h2>
                 <Button
                     onClick={() => {
                         remove()
                         openModal()
                     }}
                 >
-                    {" "}
-                    Qo'shish{" "}
+                    Qo'shish
                 </Button>
             </div>
             <DataTable
-                columns={useCountryColumns()}
+                columns={useHotelColumns()}
                 data={countries ?? []}
                 loading={isLoading}
                 viewAll
@@ -65,7 +63,7 @@ export default function Countries() {
                 className="max-w-xl"
                 modalKey="country"
             >
-                <CountryCreateEditForm />
+                {/* <CountryCreateEditForm /> */}
             </Modal>
         </>
     )

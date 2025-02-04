@@ -7,20 +7,9 @@ import { CITY_DATA } from "@/constants/localstorage-keys"
 import { useModal } from "@/hooks/use-modal"
 import { useStore } from "@/hooks/use-store"
 import { useGet } from "@/services/default-requests"
-import { ColumnDef } from "@tanstack/react-table"
 import { useState } from "react"
+import { useCityColumns } from "../useCols"
 import CityCreateEditForm from "./city-create-edit"
-
-const cityColumns: ColumnDef<City>[] = [
-    {
-        accessorKey: "id",
-        header: "ID",
-    },
-    {
-        accessorKey: "name",
-        header: "City Name",
-    },
-]
 
 export default function Cities() {
     const { data: cities, isLoading: isCitiesLoading } = useGet<City[]>(CITIES)
@@ -30,7 +19,7 @@ export default function Cities() {
 
     const [deleteItem, setDeleteItem] = useState<City["id"] | null>(null)
 
-    const { setStore: setCityStore, store: cityStore } = useStore(CITY_DATA)
+    const { setStore, store, remove } = useStore<City>(CITY_DATA)
 
     function handleCityDelete({ original }: { original: City }) {
         openDeleteModal()
@@ -39,17 +28,25 @@ export default function Cities() {
 
     function handleCityEdit({ original }: { original: City }) {
         openCityModal()
-        setCityStore(original)
+        setStore(original)
     }
 
     return (
         <>
             <div className="flex justify-between items-center mb-2">
                 <h2 className="text-xl">Shaharlar</h2>
-                <Button onClick={openCityModal}> Qo'shish </Button>
+                <Button
+                    onClick={() => {
+                        remove()
+                        openCityModal()
+                    }}
+                >
+                    {" "}
+                    Qo'shish{" "}
+                </Button>
             </div>
             <DataTable
-                columns={cityColumns}
+                columns={useCityColumns()}
                 data={cities ?? []}
                 loading={isCitiesLoading}
                 viewAll
@@ -65,7 +62,7 @@ export default function Cities() {
             />
 
             <Modal
-                title={cityStore ? "Shahar tahrirlash" : "Shahar qo'shish"}
+                title={store?.id ? "Shahar tahrirlash" : "Shahar qo'shish"}
                 className="max-w-xl"
                 modalKey="city"
             >

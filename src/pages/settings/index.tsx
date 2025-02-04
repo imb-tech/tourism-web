@@ -1,15 +1,36 @@
-import Cities from "./cities/index"
-import Countries from "./countries/index"
+import ParamAnimatedTabs from "@/components/param/animated-tab"
+import CityAndCountries from "./city-and-countries"
+import Enterances from "./enterances"
+import Hotels from "./hotels"
+import Transports from "./transports"
 
 export default function Settings() {
     return (
-        <section className="p-3 flex gap-6 items-start">
-            <div className="w-1/2 p-3 bg-background rounded-sm">
-                <Countries />
-            </div>
-            <div className="w-1/2  p-3 bg-background rounded-sm">
-                <Cities />
-            </div>
-        </section>
+        <main className="bg-background p-3 rounded-sm">
+            <ParamAnimatedTabs
+                options={[
+                    {
+                        id: "settings",
+                        name: "Davlat va shaharlar",
+                        content: <CityAndCountries />,
+                    },
+                    {
+                        id: "hotels",
+                        name: "Mehmonxonalar",
+                        content: <Hotels />,
+                    },
+                    {
+                        id: "enterances",
+                        name: "Joylar",
+                        content: <Enterances />,
+                    },
+                    {
+                        id: "transports",
+                        name: "Transportlar",
+                        content: <Transports />,
+                    },
+                ]}
+            />
+        </main>
     )
 }

@@ -4,3 +4,8 @@ type GetMe = {
     last_name: string
     permissions: Partial<TPermissions>
 }
+
+type ListResponse<T> = {
+    total_page: number
+    results: T[]
+}

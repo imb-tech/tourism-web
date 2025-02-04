@@ -1,0 +1,73 @@
+import FormAction from "@/components/custom/form-action"
+import FormInput from "@/components/form/input"
+import FormNumberInput from "@/components/form/number-input"
+import SelectField from "@/components/form/select-field"
+import { CITIES, ENTERANCES } from "@/constants/api-endpoints"
+import { ENTERANCE_DATA } from "@/constants/localstorage-keys"
+import { useModal } from "@/hooks/use-modal"
+import { useStore } from "@/hooks/use-store"
+import { useGet, usePatch, usePost } from "@/services/default-requests"
+import { useQueryClient } from "@tanstack/react-query"
+import { useForm } from "react-hook-form"
+
+export default function EnteranceCreateEditForm() {
+    const queryClient = useQueryClient()
+    const { closeModal } = useModal(ENTERANCE_DATA)
+    const { store, remove } = useStore<Enterance>(ENTERANCE_DATA)
+
+    const { data: cities } = useGet<City[]>(CITIES)
+
+    const form = useForm<CreaateEnterance>({
+        defaultValues:
+            store ?
+                {
+                    ...store,
+                    city: store.city.id,
+                }
+            :   {},
+    })
+
+    function onSuccess() {
+        closeModal()
+        remove()
+        queryClient.removeQueries({
+            queryKey: [ENTERANCES],
+        })
+    }
+
+    const { mutate: post, isPending } = usePost({ onSuccess })
+    const { mutate: patch, isPending: isUpdating } = usePatch({ onSuccess })
+
+    function handleSubmit(vals: Enterance) {
+        if (store?.id) {
+            patch(ENTERANCES + `/${store.id}`, vals)
+        } else {
+            post(ENTERANCES, vals)
+        }
+    }
+
+    return (
+        <form
+            onSubmit={form.handleSubmit(handleSubmit)}
+            className="flex flex-col gap-5"
+        >
+            <FormInput methods={form} name="name" label="Joy nomi" />
+
+            <FormNumberInput
+                thousandSeparator=" "
+                label="Kirish narxi"
+                methods={form}
+                name="price"
+            />
+
+            <SelectField
+                label="Joylashgan shahri"
+                options={cities || []}
+                methods={form}
+                name="city"
+            />
+
+            <FormAction loading={isPending || isUpdating} />
+        </form>
+    )
+}
