@@ -15,8 +15,8 @@ export default function Categories() {
     const { data: categories, isLoading: isCategoriesLoading } =
         useGet<Category[]>(CATEGORIES)
 
-    const { openModal: openCategoryModal } = useModal("category")
-    const { openModal: openCategoryDeleteModal } = useModal("category-delete")
+    const { openModal: openCategoryModal } = useModal(CATEGORIES)
+    const { openModal: openCategoryDeleteModal } = useModal()
 
     const [deleteItem, setDeleteItem] = useState<Category["id"] | null>(null)
 
@@ -35,7 +35,7 @@ export default function Categories() {
     return (
         <>
             <div className="flex justify-between items-center mb-2">
-                <h2 className="text-xl">Shaharlar</h2>
+                <h2 className="text-xl">Kategoriyalar</h2>
                 <Button
                     onClick={() => {
                         remove()
@@ -55,16 +55,16 @@ export default function Categories() {
                 onEdit={handleCategoryEdit}
             />
 
-            <DeleteModal
-                path={CATEGORIES}
-                id={deleteItem || ""}
-                modalKey="category-delete"
-            />
+            <DeleteModal path={CATEGORIES} id={deleteItem || ""} />
 
             <Modal
-                title={store?.id ? "Category tahrirlash" : "Category qo'shish"}
+                title={
+                    store?.id ?
+                        "Kategoryni o'zgartirish"
+                    :   "Kategoriya qo'shish"
+                }
                 className="max-w-xl"
-                modalKey="category"
+                modalKey={CATEGORIES}
             >
                 <CategoryCreateEdit />
             </Modal>

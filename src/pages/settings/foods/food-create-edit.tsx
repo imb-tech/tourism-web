@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form"
 
 export default function FoodCreateEdit() {
     const queryClient = useQueryClient()
-    const { closeModal } = useModal("food")
+    const { closeModal } = useModal(FOODS)
     const { store, remove } = useStore<Food>(FOOD_DATA)
 
     const headers = {

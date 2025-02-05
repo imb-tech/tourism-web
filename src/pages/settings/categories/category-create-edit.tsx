@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form"
 
 export default function CategoryCreateEdit() {
     const queryClient = useQueryClient()
-    const { closeModal } = useModal("category")
+    const { closeModal } = useModal(CATEGORIES)
     const { store, remove } = useStore<Category>(CATEGORY_DATA)
 
     const form = useForm<Category>({
@@ -25,7 +25,7 @@ export default function CategoryCreateEdit() {
         })
     }
 
-    const { mutate: post, isPending } = usePost({ onSuccess })
+    const { mutate: post, isPending: isCreating } = usePost({ onSuccess })
     const { mutate: patch, isPending: isUpdating } = usePatch({ onSuccess })
 
     function handleSubmit(vals: Category) {
@@ -42,9 +42,9 @@ export default function CategoryCreateEdit() {
                 methods={form}
                 name="name"
                 required
-                label="Categoriya nomi"
+                label="Kategoriya nomi"
             />
-            <FormAction loading={isPending || isUpdating} />
+            <FormAction loading={isCreating || isUpdating} />
         </form>
     )
 }

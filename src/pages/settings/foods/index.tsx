@@ -13,9 +13,9 @@ import FoodCreateEdit from "./food-create-edit"
 
 export default function Foods() {
     const { data: foods, isLoading } = useGet<Food[]>(FOODS)
-    const { openModal } = useModal("food")
-    const { openModal: openDeleteModal } = useModal("food-delete")
-    const { remove, setStore } = useStore<Food>(FOOD_DATA)
+    const { openModal } = useModal(FOODS)
+    const { openModal: openDeleteModal } = useModal()
+    const { remove, setStore, store } = useStore<Food>(FOOD_DATA)
     const [deleteItem, setDeleteItem] = useState<Food["id"] | null>(null)
 
     function handleFoodEdit({ original }: { original: Food }) {
@@ -50,15 +50,15 @@ export default function Foods() {
                 onDelete={handleFoodDelete}
             />
 
-            <Modal title="Taom qo'shish" className="max-w-xl" modalKey="food">
+            <Modal
+                title={store?.id ? "Taomni o'zgartirish" : "Taom qo'shish"}
+                className="max-w-xl"
+                modalKey={FOODS}
+            >
                 <FoodCreateEdit />
             </Modal>
 
-            <DeleteModal
-                path={FOODS}
-                id={deleteItem || ""}
-                modalKey="food-delete"
-            />
+            <DeleteModal path={FOODS} id={deleteItem || ""} />
         </div>
     )
 }
