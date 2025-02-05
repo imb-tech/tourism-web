@@ -172,15 +172,15 @@ export default function HotelCreateForm() {
                     <FormInput
                         methods={form}
                         name={`rooms.${i}.name`}
-                        label={i === 0 ? "Nomi" : ""}
-                        placeholder="Nomi"
+                        label={i === 0 ? "Xona nomi" : ""}
+                        placeholder="Xona nomi"
                         required
                     />
                     <FormNumberInput
                         methods={form}
                         name={`rooms.${i}.price`}
-                        label={i === 0 ? "Narxi" : ""}
-                        placeholder="Narxi"
+                        label={i === 0 ? "Xona narxi" : ""}
+                        placeholder="Xona narxi"
                         required
                     />
                     <Button
