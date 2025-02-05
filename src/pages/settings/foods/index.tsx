@@ -1,0 +1,64 @@
+import DeleteModal from "@/components/custom/delete-modal"
+import Modal from "@/components/custom/modal"
+import { Button } from "@/components/ui/button"
+import { DataTable } from "@/components/ui/datatable"
+import { FOODS } from "@/constants/api-endpoints"
+import { FOOD_DATA } from "@/constants/localstorage-keys"
+import { useModal } from "@/hooks/use-modal"
+import { useStore } from "@/hooks/use-store"
+import { useGet } from "@/services/default-requests"
+import { useState } from "react"
+import { useFoodColumns } from "../useCols"
+import FoodCreateEdit from "./food-create-edit"
+
+export default function Foods() {
+    const { data: foods, isLoading } = useGet<Food[]>(FOODS)
+    const { openModal } = useModal("food")
+    const { openModal: openDeleteModal } = useModal("food-delete")
+    const { remove, setStore } = useStore<Food>(FOOD_DATA)
+    const [deleteItem, setDeleteItem] = useState<Food["id"] | null>(null)
+
+    function handleFoodEdit({ original }: { original: Food }) {
+        openModal()
+        setStore(original)
+    }
+    function handleFoodDelete({ original }: { original: Food }) {
+        openDeleteModal()
+        setDeleteItem(original.id)
+    }
+
+    return (
+        <div>
+            <div className="flex justify-between items-center mb-2">
+                <h2 className="text-xl">Taomlar</h2>
+                <Button
+                    onClick={() => {
+                        remove()
+                        openModal()
+                    }}
+                >
+                    Qo'shish
+                </Button>
+            </div>
+            <DataTable
+                columns={useFoodColumns()}
+                data={foods ?? []}
+                loading={isLoading}
+                viewAll
+                withActions
+                onEdit={handleFoodEdit}
+                onDelete={handleFoodDelete}
+            />
+
+            <Modal title="Taom qo'shish" className="max-w-xl" modalKey="food">
+                <FoodCreateEdit />
+            </Modal>
+
+            <DeleteModal
+                path={FOODS}
+                id={deleteItem || ""}
+                modalKey="food-delete"
+            />
+        </div>
+    )
+}

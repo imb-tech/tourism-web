@@ -1,4 +1,6 @@
 import Star from "@/assets/images/star.png"
+import Img from "@/components/custom/img"
+import SeeInView from "@/components/ui/see-in-view"
 import { ColumnDef } from "@tanstack/react-table"
 import { useMemo } from "react"
 
@@ -104,6 +106,50 @@ export const useTransportColumns = () =>
             {
                 accessorKey: "price",
                 header: "Narxi",
+            },
+        ],
+        [],
+    )
+
+export const useFoodColumns = () =>
+    useMemo<ColumnDef<Food>[]>(
+        () => [
+            {
+                accessorKey: "id",
+                header: "ID",
+            },
+            {
+                accessorKey: "name",
+                header: "Nomi",
+            },
+            {
+                accessorKey: "image",
+                header: "Rasmi",
+                cell: ({ row }) => (
+                    <SeeInView url={row.original.image}>
+                        <Img
+                            width={50}
+                            height={50}
+                            src={row.original.image}
+                            alt=""
+                        />
+                    </SeeInView>
+                ),
+            },
+        ],
+        [],
+    )
+
+export const useCategoryColumns = () =>
+    useMemo<ColumnDef<Category>[]>(
+        () => [
+            {
+                accessorKey: "id",
+                header: "ID",
+            },
+            {
+                accessorKey: "name",
+                header: "Nomi",
             },
         ],
         [],
