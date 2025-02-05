@@ -1,4 +1,5 @@
 import ParamAnimatedTabs from "@/components/param/animated-tab"
+import Categories from "./categories"
 import CityAndCountries from "./city-and-countries"
 import Enterances from "./enterances"
 import Foods from "./foods"
@@ -34,6 +35,11 @@ export default function Settings() {
                         id: "foods",
                         name: "Taomlar",
                         content: <Foods />,
+                    },
+                    {
+                        id: "categories",
+                        name: "Kategoriyalar",
+                        content: <Categories />,
                     },
                 ]}
             />
