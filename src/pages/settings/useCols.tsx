@@ -154,3 +154,18 @@ export const useCategoryColumns = () =>
         ],
         [],
     )
+
+export const useRestaurantColumns = () =>
+    useMemo<ColumnDef<Restaurant>[]>(
+        () => [
+            {
+                accessorKey: "id",
+                header: "ID",
+            },
+            {
+                accessorKey: "name",
+                header: "Nomi",
+            },
+        ],
+        [],
+    )

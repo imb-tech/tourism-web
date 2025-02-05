@@ -4,6 +4,7 @@ import CityAndCountries from "./city-and-countries"
 import Enterances from "./enterances"
 import Foods from "./foods"
 import Hotels from "./hotels"
+import Restaurans from "./restaurans"
 import Transports from "./transports"
 
 export default function Settings() {
@@ -40,6 +41,11 @@ export default function Settings() {
                         id: "categories",
                         name: "Kategoriyalar",
                         content: <Categories />,
+                    },
+                    {
+                        id: "restaurans",
+                        name: "Restoranlar",
+                        content: <Restaurans />,
                     },
                 ]}
             />
