@@ -25,12 +25,12 @@ export default function Enterances() {
     const [deleteItem, setDeleteItem] = useState<Enterance["id"] | null>(null)
     const { setStore, store, remove } = useStore(ENTERANCE_DATA)
 
-    function handleCountryDelete({ original }: { original: Country }) {
+    function handleEnteranceDelete({ original }: { original: Enterance }) {
         openDeleteModal()
         setDeleteItem(original.id)
     }
 
-    function handleCountryEdit({ original }: { original: Country }) {
+    function handleEnteranceEdit({ original }: { original: Enterance }) {
         openModal()
         setStore(original)
     }
@@ -55,14 +55,14 @@ export default function Enterances() {
                 loading={isLoading}
                 viewAll
                 withActions
-                onDelete={handleCountryDelete}
-                onEdit={handleCountryEdit}
+                onDelete={handleEnteranceDelete}
+                onEdit={handleEnteranceEdit}
             />
 
             <DeleteModal
                 path={ENTERANCES}
                 id={deleteItem || ""}
-                modalKey="country-delete"
+                modalKey="enterance-delete"
             />
 
             <Modal

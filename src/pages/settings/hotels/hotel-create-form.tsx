@@ -86,6 +86,7 @@ export default function HotelCreateForm() {
 
         formData.append("name", data.name)
         formData.append("city", String(data.city))
+        formData.append("star", data.star.toString())
         formData.append("rooms", JSON.stringify(data.rooms))
 
         for (const image of data.images) {
@@ -114,6 +115,20 @@ export default function HotelCreateForm() {
                 required
                 label="Shahar"
                 options={cities || []}
+            />
+
+            <SelectField
+                name="star"
+                methods={form}
+                required
+                label="Star"
+                options={[
+                    { id: 1, name: "1 yulduz" },
+                    { id: 2, name: "2 yulduz" },
+                    { id: 3, name: "3 yulduz" },
+                    { id: 4, name: "4 yulduz" },
+                    { id: 5, name: "5 yulduz" },
+                ]}
             />
 
             <div className="flex gap-2 flex-wrap my-1">
