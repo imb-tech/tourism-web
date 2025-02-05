@@ -1,5 +1,5 @@
 import SelectField from "@/components/form/select-field"
-import FormTextarea from "@/components/form/textarea"
+import { useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 
 export default function TourCityCard({
@@ -15,15 +15,24 @@ export default function TourCityCard({
             desciption,
         },
     })
+    const [isEditing, setIsEditing] = useState(false)
     // const { mutate } = usePatch()
 
+    const isDirty = useMemo(
+        () => form.formState.isDirty,
+        [form.formState.isDirty],
+    )
+
     function save() {
-        document.body.style.cursor = "wait"
-        // mutate(CITIES + `/${id}`, form.getValues())
-        setTimeout(() => {
-            console.log(form.getValues())
-            document.body.style.cursor = "default"
-        }, 1000)
+        setIsEditing(false)
+        if (isDirty) {
+            document.body.style.cursor = "wait"
+            // mutate(CITIES + `/${id}`, form.getValues())
+            setTimeout(() => {
+                console.log(form.getValues())
+                document.body.style.cursor = "default"
+            }, 1000)
+        }
     }
 
     return (
@@ -53,13 +62,21 @@ export default function TourCityCard({
                     ]}
                 />
             </div>
-            <div className="flex-[0.4] text-sm">
-                <FormTextarea
+            <div
+                className="flex-[0.4] text-sm outline-none focus:outline-none"
+                contentEditable={isEditing}
+                suppressContentEditableWarning
+                suppressHydrationWarning
+                onBlur={save}
+                onDoubleClick={() => setIsEditing(true)}
+            >
+                {/* <FormTextarea
                     onBlur={save}
                     methods={form}
                     name="desciption"
                     className="border-none focus:border-none !ring-transparent min-h-12 max-w-full break-words "
-                />
+                /> */}
+                {desciption}
             </div>
         </div>
     )

@@ -5,17 +5,29 @@ import FormInput from "@/components/form/input"
 import PhoneField from "@/components/form/phone-field"
 import { TOURISTS } from "@/constants/api-endpoints"
 import { USER_DATA } from "@/constants/localstorage-keys"
+import { useModal } from "@/hooks/use-modal"
 import { useStore } from "@/hooks/use-store"
 import { usePost } from "@/services/default-requests"
+import { useQueryClient } from "@tanstack/react-query"
 import { useParams } from "@tanstack/react-router"
 import { useForm } from "react-hook-form"
 
 export default function CreateUserForm() {
-    const { store } = useStore<UserItem>(USER_DATA)
+    const queryClient = useQueryClient()
+    const { store, remove } = useStore<UserItem>(USER_DATA)
     const { id } = useParams({ from: "/_main/packs/$pack/$id" })
+    const { closeModal } = useModal()
+
+    function onSuccess() {
+        queryClient.removeQueries({
+            queryKey: [TOURISTS],
+        })
+        closeModal()
+        remove()
+    }
 
     const { mutate, isPending } = usePost(
-        {},
+        { onSuccess },
         {
             headers: {
                 "Content-Type": "multipart/form-data",

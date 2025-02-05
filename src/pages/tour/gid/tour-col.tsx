@@ -1,3 +1,4 @@
+import formatMoney from "@/lib/format-money"
 import { cn } from "@/lib/utils"
 
 export default function TourGidCard({ day, data }: TourGidItem) {
@@ -13,19 +14,19 @@ export default function TourGidCard({ day, data }: TourGidItem) {
                         )}
                         key={el.id}
                     >
-                        <p className="flex-[0.25] font-light text-sm">
+                        <p className="flex-[0.11] font-light text-sm">
                             {el?.name}
                         </p>
-                        <p className="flex-[0.25] font-light text-sm">
+                        <p className="flex-[0.165] font-light text-sm">
                             {el?.phone}
                         </p>
-                        <p className="flex-[0.25] font-light text-sm">
-                            {el?.price}
+                        <p className="flex-[0.115] font-light text-sm">
+                            {formatMoney(el?.price)}
                         </p>
-                        <p className="flex-[0.25] font-light text-sm">
+                        <p className="flex-[0.11] font-light text-sm">
                             {el?.langs.join(", ")}
                         </p>
-                        <p className="flex-[0.25] font-light text-sm">
+                        <p className="flex-[0.4] font-light text-sm">
                             {el?.description}
                         </p>
                     </div>

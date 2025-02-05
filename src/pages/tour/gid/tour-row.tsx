@@ -9,23 +9,23 @@ export default function TourGidRow() {
             header: "Kun",
         },
         {
-            flex: 0.18,
+            flex: 0.1,
             header: "Ismi",
         },
         {
-            flex: 0.18,
+            flex: 0.15,
             header: "Telefon",
         },
         {
-            flex: 0.18,
+            flex: 0.1,
             header: "Kunlik narxi",
         },
         {
-            flex: 0.18,
+            flex: 0.1,
             header: "Tili",
         },
         {
-            flex: 0.18,
+            flex: 0.2,
             header: "Qo’shimcha ma’lumot",
         },
     ]

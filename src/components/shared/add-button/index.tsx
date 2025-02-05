@@ -15,10 +15,6 @@ export default function AddButton({
     className,
 }: Props) {
     function handleAdd() {
-        const forms = document.querySelectorAll("form")
-        forms.forEach((form) => {
-            form.reset()
-        })
         onClick?.()
     }
 

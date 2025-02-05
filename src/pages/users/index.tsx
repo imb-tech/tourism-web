@@ -21,10 +21,15 @@ type UsersResponse = {
 export default function Users() {
     const { pack } = useParams({ from: "/_main/packs/$pack/$id" })
     const { openModal } = useModal()
-    const { store } = useStore<UserItem>(USER_DATA)
+    const { store, remove } = useStore<UserItem>(USER_DATA)
 
     const { data, isSuccess, isLoading, isError } =
         useGet<UsersResponse>(TOURISTS)
+
+    function handleAdd() {
+        remove()
+        openModal()
+    }
 
     return isSuccess ?
             <section className="p-3">
@@ -36,7 +41,7 @@ export default function Users() {
                     <AddButton
                         label="Turist qo'shish"
                         icon={UserRoundPlus}
-                        onClick={openModal}
+                        onClick={handleAdd}
                     />
                     {data?.results?.map((user) => (
                         <UserCard key={user.id} {...user} />

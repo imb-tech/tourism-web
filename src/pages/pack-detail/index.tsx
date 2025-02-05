@@ -1,5 +1,6 @@
 import DeleteModal from "@/components/custom/delete-modal"
 import Modal from "@/components/custom/modal"
+import InitialDataBox from "@/components/elements/initial-data-box"
 import AddButton from "@/components/shared/add-button"
 import TourCard from "@/components/shared/pack-card/tour-card"
 import { PLANS } from "@/constants/api-endpoints"
@@ -17,7 +18,7 @@ export default function PackDetail() {
     const { store, remove } = useStore<PlanItem>(TOUR_DATA)
     const { pack: tour_id } = useParams({ from: "/_main/packs/$pack/" })
 
-    const { data } = useGet<PlanItem[] | undefined>(PLANS, {
+    const { data, isLoading } = useGet<PlanItem[] | undefined>(PLANS, {
         params: { tour_id },
     })
 
@@ -30,14 +31,17 @@ export default function PackDetail() {
         <div className="p-3">
             <PackDetailHeader title="Tariflar" backUrl="/packs" />
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-3">
-                <AddButton
-                    onClick={handleAdd}
-                    label="Tarif qo'shish"
-                    icon={Grid2x2PlusIcon}
-                />
-                {data?.map((pack) => <TourCard key={pack.id} {...pack} />)}
-            </div>
+            {isLoading ?
+                <InitialDataBox isLoading />
+            :   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-3">
+                    <AddButton
+                        onClick={handleAdd}
+                        label="Tarif qo'shish"
+                        icon={Grid2x2PlusIcon}
+                    />
+                    {data?.map((pack) => <TourCard key={pack.id} {...pack} />)}
+                </div>
+            }
 
             <Modal
                 className="max-w-xl"
