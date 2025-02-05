@@ -1,6 +1,5 @@
 import SelectField from "@/components/form/select-field"
 import FormTextarea from "@/components/form/textarea"
-import { usePatch } from "@/services/default-requests"
 import { useForm } from "react-hook-form"
 
 export default function TourCityCard({
@@ -16,7 +15,7 @@ export default function TourCityCard({
             desciption,
         },
     })
-    const { mutate } = usePatch()
+    // const { mutate } = usePatch()
 
     function save() {
         document.body.style.cursor = "wait"
