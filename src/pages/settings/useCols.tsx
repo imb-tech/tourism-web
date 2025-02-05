@@ -132,6 +132,7 @@ export const useFoodColumns = () =>
                             height={50}
                             src={row.original.image}
                             alt=""
+                            className="w-16 min-h-16 max-h-16 object-cover"
                         />
                     </SeeInView>
                 ),
