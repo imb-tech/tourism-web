@@ -226,9 +226,11 @@ const ValueContainer = ({
     // eslint-disable-next-line prefer-const
     let [values, input] = children as any
 
-    if (Array.isArray(values)) {
-        values = `${values.length} ta tanlandi`
-    }
+    // if (Array.isArray(values)) {
+    //     console.log(values);
+
+    //     values = values?.map((el) => el.key).join(", ")
+    // }
 
     return (
         <components.ValueContainer {...props}>

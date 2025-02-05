@@ -6,8 +6,9 @@ type RestaurantSet = {
 }
 
 type Restaurant = {
+    id: number
     name: string
-    city: number
+    city: City
     sets: RestaurantSet[]
     deleted_sets: number[]
 }

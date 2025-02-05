@@ -5,25 +5,61 @@ import FormNumberInput from "@/components/form/number-input"
 import SelectField from "@/components/form/select-field"
 import { Button } from "@/components/ui/button"
 import { CITIES, FOODS, RESTAURANTS } from "@/constants/api-endpoints"
-import { useGet, usePost } from "@/services/default-requests"
+import { useModal } from "@/hooks/use-modal"
+import { useStore } from "@/hooks/use-store"
+import { useGet, usePatch, usePost } from "@/services/default-requests"
+import { useQueryClient } from "@tanstack/react-query"
 import { Trash2 } from "lucide-react"
+import { useState } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 
 export default function RestaurantCreateForm() {
     const { data: cities, isLoading } = useGet<City[]>(CITIES)
     const { data: foods } = useGet<Food[]>(FOODS)
 
-    const form = useForm<Restaurant>()
+    const queryClient = useQueryClient()
+    const { store } = useStore<Restaurant>(RESTAURANTS)
+    const { closeModal } = useModal()
+    const [deleted_sets, setDeletedSets] = useState<number[]>([])
+
+    const form = useForm<Restaurant & { city: number }>({
+        defaultValues:
+            store ?
+                {
+                    ...store,
+                    city: store.city.id,
+                }
+            :   {},
+    })
 
     const { fields, append, remove } = useFieldArray({
         control: form.control,
         name: "sets",
+        keyName: "key",
     })
 
-    const { mutate: createRestaurant, isPending } = usePost()
+    function onSuccess() {
+        closeModal()
+        remove()
+        queryClient.removeQueries({
+            queryKey: [RESTAURANTS],
+        })
+    }
+
+    const { mutate: createRestaurant, isPending } = usePost({ onSuccess })
+    const { mutate: updateRestaurant, isPending: isUpdating } = usePatch({
+        onSuccess,
+    })
 
     function onSubmit(vals: Restaurant) {
-        createRestaurant(RESTAURANTS, vals)
+        if (store?.id) {
+            updateRestaurant(RESTAURANTS + `/${store.id}`, {
+                ...vals,
+                deleted_sets,
+            })
+        } else {
+            createRestaurant(RESTAURANTS, vals)
+        }
     }
 
     return (
@@ -77,7 +113,12 @@ export default function RestaurantCreateForm() {
                         type="button"
                         className={"min-w-9"}
                         variant={"destructive-muted"}
-                        onClick={() => remove(index)}
+                        onClick={() => {
+                            if (field.id) {
+                                setDeletedSets([...deleted_sets, field.id])
+                            }
+                            remove(index)
+                        }}
                     >
                         <Trash2 size={16} />
                     </Button>
@@ -99,7 +140,7 @@ export default function RestaurantCreateForm() {
                 Set qo'shish
             </Button>
 
-            <FormAction loading={isPending} />
+            <FormAction loading={isPending || isUpdating} />
         </form>
     )
 }

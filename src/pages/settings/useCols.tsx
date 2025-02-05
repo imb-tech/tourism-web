@@ -166,6 +166,10 @@ export const useRestaurantColumns = () =>
                 accessorKey: "name",
                 header: "Nomi",
             },
+            {
+                accessorKey: "city.name",
+                header: "Shahar",
+            },
         ],
         [],
     )
