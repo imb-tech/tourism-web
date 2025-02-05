@@ -13,8 +13,10 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
-import { CheckIcon, ChevronsUpDown, X } from "lucide-react"
+import { CheckIcon, ChevronsUpDown, Soup, X } from "lucide-react"
 import { ReactNode, useState } from "react"
+import { ClassNameValue } from "tailwind-merge"
+import Image from "../custom/image"
 
 export function MultiCombobox({
     options,
@@ -24,14 +26,20 @@ export function MultiCombobox({
     disabled,
     isError,
     returnValue = "id",
+    isWithImages = false,
+    buttonClassName,
 }: {
-    options: { name: string | number; id: string | number }[] | undefined
+    options:
+        | { name: string | number; id: string | number; image?: string }[]
+        | undefined
     values?: (string | number)[]
     setValues: (val: (string | number)[]) => void
     label: string | ReactNode
     disabled?: boolean
     isError?: boolean
     returnValue?: "id" | "name"
+    isWithImages?: boolean
+    buttonClassName?: ClassNameValue
 }) {
     const [open, setOpen] = useState(false)
 
@@ -61,27 +69,44 @@ export function MultiCombobox({
     return (
         <Popover modal open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
-                <Button
-                    variant="outline"
-                    role="combobox"
-                    aria-expanded={open}
-                    className={cn(
-                        "w-full justify-between font-normal text-muted-foreground",
-                        isError && "!text-destructive",
-                        values && values?.length > 0 && "text-foreground",
-                    )}
-                    disabled={disabled}
-                >
-                    {values?.length && values?.length < 3 ?
-                        options
-                            ?.filter((d) => values.includes(d[returnValue]))
-                            .map((d) => d.name)
-                            .join(", ")
-                    : values?.length ?
-                        values.length + " ta tanlandi"
-                    :   label}
-                    <ChevronsUpDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
-                </Button>
+                {isWithImages ?
+                    <Button
+                        variant="outline"
+                        role="combobox"
+                        aria-expanded={open}
+                        className={cn(
+                            "w-full flex-col text-orange-600 border-orange-600 p-1 gap-0 items-center justify-center hover:text-orange-600 border-dashed",
+                            isError && "!text-destructive",
+                            values && values?.length > 0 && "text-foreground",
+                            buttonClassName,
+                        )}
+                        disabled={disabled}
+                    >
+                        <Soup size={18} className="text-orange-600" />
+                        <span className="text-xs">Taom qo'shish</span>
+                    </Button>
+                :   <Button
+                        variant="outline"
+                        role="combobox"
+                        aria-expanded={open}
+                        className={cn(
+                            "w-full justify-between font-normal text-muted-foreground",
+                            isError && "!text-destructive",
+                            values && values?.length > 0 && "text-foreground",
+                        )}
+                        disabled={disabled}
+                    >
+                        {values?.length && values?.length < 3 ?
+                            options
+                                ?.filter((d) => values.includes(d[returnValue]))
+                                .map((d) => d.name)
+                                .join(", ")
+                        : values?.length ?
+                            values.length + " ta tanlandi"
+                        :   label}
+                        <ChevronsUpDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                }
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0">
                 <Command>
@@ -105,22 +130,54 @@ export function MultiCombobox({
                     <CommandList>
                         <CommandEmpty>Mavjud emas</CommandEmpty>
                         <CommandGroup className="!overflow-y-scroll">
-                            {sortedData?.map((d, i) => (
-                                <CommandItem
-                                    key={i}
-                                    onSelect={() => handleSelect(d)}
-                                >
-                                    {d.name}
-                                    <CheckIcon
-                                        className={cn(
-                                            "ml-auto h-4 w-4",
-                                            values?.includes(d[returnValue]) ?
-                                                "opacity-100"
-                                            :   "opacity-0",
-                                        )}
-                                    />
-                                </CommandItem>
-                            ))}
+                            {isWithImages ?
+                                sortedData?.map((d, i) => (
+                                    <CommandItem
+                                        key={i}
+                                        onSelect={() => handleSelect(d)}
+                                        className="p-1"
+                                    >
+                                        <Image
+                                            src={d.image}
+                                            alt={d.name.toString()}
+                                            className="w-14 h-14 object-cover rounded-sm"
+                                        />
+                                        {d.name}
+                                        <CheckIcon
+                                            className={cn(
+                                                "ml-auto h-4 w-4",
+                                                (
+                                                    values?.includes(
+                                                        d[returnValue],
+                                                    )
+                                                ) ?
+                                                    "opacity-100"
+                                                :   "opacity-0",
+                                            )}
+                                        />
+                                    </CommandItem>
+                                ))
+                            :   sortedData?.map((d, i) => (
+                                    <CommandItem
+                                        key={i}
+                                        onSelect={() => handleSelect(d)}
+                                    >
+                                        {d.name}
+                                        <CheckIcon
+                                            className={cn(
+                                                "ml-auto h-4 w-4",
+                                                (
+                                                    values?.includes(
+                                                        d[returnValue],
+                                                    )
+                                                ) ?
+                                                    "opacity-100"
+                                                :   "opacity-0",
+                                            )}
+                                        />
+                                    </CommandItem>
+                                ))
+                            }
                         </CommandGroup>
                     </CommandList>
                 </Command>

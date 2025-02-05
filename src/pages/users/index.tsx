@@ -19,12 +19,16 @@ type UsersResponse = {
 }
 
 export default function Users() {
-    const { pack } = useParams({ from: "/_main/packs/$pack/$id" })
+    const { pack, id } = useParams({ from: "/_main/packs/$pack/$id" })
     const { openModal } = useModal()
     const { store, remove } = useStore<UserItem>(USER_DATA)
 
-    const { data, isSuccess, isLoading, isError } =
-        useGet<UsersResponse>(TOURISTS)
+    const { data, isSuccess, isLoading, isError } = useGet<UsersResponse>(
+        TOURISTS,
+        {
+            params: { plan_id: id },
+        },
+    )
 
     function handleAdd() {
         remove()

@@ -1,38 +1,34 @@
 import SelectField from "@/components/form/select-field"
-import { useMemo, useState } from "react"
+import { DETAIL } from "@/constants/api-endpoints"
+import { cn } from "@/lib/utils"
+import { usePost } from "@/services/default-requests"
+import { useParams } from "@tanstack/react-router"
+import { memo, useState } from "react"
 import { useForm } from "react-hook-form"
 
-export default function TourCityCard({
-    id,
-    day,
-    city,
-    desciption,
-}: TourCityItem) {
+function TourCityCard(props: TourCityItem & { citiesList: City[] }) {
+    const { day, desc, citiesList, cities } = props
+    const { id: planId } = useParams({ from: "/_main/packs/$pack/tour/$id" })
     const form = useForm<TourCityItem>({
         defaultValues: {
-            id,
-            city: city,
-            desciption,
+            ...props,
+            cities: cities || [],
         },
     })
     const [isEditing, setIsEditing] = useState(false)
-    // const { mutate } = usePatch()
-
-    const isDirty = useMemo(
-        () => form.formState.isDirty,
-        [form.formState.isDirty],
-    )
+    const { mutate } = usePost({
+        onSuccess: () => {
+            document.body.style.cursor = "default"
+        },
+    })
 
     function save() {
         setIsEditing(false)
-        if (isDirty) {
-            document.body.style.cursor = "wait"
-            // mutate(CITIES + `/${id}`, form.getValues())
-            setTimeout(() => {
-                console.log(form.getValues())
-                document.body.style.cursor = "default"
-            }, 1000)
-        }
+        document.body.style.cursor = "wait"
+        mutate(DETAIL + "/city", {
+            ...form.getValues(),
+            plan_id: Number(planId),
+        })
     }
 
     return (
@@ -41,7 +37,7 @@ export default function TourCityCard({
             <div className="flex-[0.3] text-sm">
                 <SelectField
                     isMulti
-                    name="city"
+                    name="cities"
                     methods={form}
                     className="!border-none"
                     wrapperClassName="!border-none w-auto"
@@ -50,34 +46,29 @@ export default function TourCityCard({
                         control: () => "!border-none w-auto",
                         indicatorsContainer: () => "!hidden",
                     }}
-                    options={[
-                        {
-                            id: 1,
-                            name: city,
-                        },
-                        {
-                            id: 2,
-                            name: "Samarkand",
-                        },
-                    ]}
+                    options={citiesList}
                 />
             </div>
             <div
-                className="flex-[0.4] text-sm outline-none focus:outline-none"
+                className={cn(
+                    "flex-[0.4] text-sm outline-none focus:outline-none",
+                )}
                 contentEditable={isEditing}
                 suppressContentEditableWarning
                 suppressHydrationWarning
                 onBlur={save}
                 onDoubleClick={() => setIsEditing(true)}
+                onInput={async (v) => {
+                    await form.setValue(
+                        "desc",
+                        v.currentTarget.textContent?.toString() || "",
+                    )
+                }}
             >
-                {/* <FormTextarea
-                    onBlur={save}
-                    methods={form}
-                    name="desciption"
-                    className="border-none focus:border-none !ring-transparent min-h-12 max-w-full break-words "
-                /> */}
-                {desciption}
+                {desc || "-"}
             </div>
         </div>
     )
 }
+
+export default memo(TourCityCard)

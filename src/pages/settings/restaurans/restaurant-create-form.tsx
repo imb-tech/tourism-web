@@ -1,9 +1,10 @@
 import FormAction from "@/components/custom/form-action"
+import Image from "@/components/custom/image"
 import FormInput from "@/components/form/input"
-import FormMultiCombobox from "@/components/form/multi-combobox"
 import FormNumberInput from "@/components/form/number-input"
 import SelectField from "@/components/form/select-field"
 import { Button } from "@/components/ui/button"
+import SeeInView from "@/components/ui/see-in-view"
 import { CITIES, FOODS, RESTAURANTS } from "@/constants/api-endpoints"
 import { useModal } from "@/hooks/use-modal"
 import { useStore } from "@/hooks/use-store"
@@ -12,6 +13,7 @@ import { useQueryClient } from "@tanstack/react-query"
 import { Trash2 } from "lucide-react"
 import { useState } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
+import FormMultiCombobox from "./select-food"
 
 export default function RestaurantCreateForm() {
     const { data: cities, isLoading } = useGet<City[]>(CITIES)
@@ -84,44 +86,71 @@ export default function RestaurantCreateForm() {
             />
 
             {fields.map((field, index) => (
-                <div key={field.id} className="flex gap-2 items-end">
-                    <FormInput
-                        methods={form}
-                        name={`sets.${index}.name`}
-                        required
-                        label={index === 0 ? "Set nomi" : ""}
-                        placeholder="Set nomi"
-                    />
+                <div key={field.id}>
+                    <div className="flex gap-2 items-end">
+                        <FormInput
+                            methods={form}
+                            name={`sets.${index}.name`}
+                            required
+                            label={index === 0 ? "Set nomi" : ""}
+                            placeholder="Set nomi"
+                        />
 
-                    <FormNumberInput
-                        thousandSeparator=" "
-                        methods={form}
-                        name={`sets.${index}.price`}
-                        required
-                        label={index === 0 ? "Set narxi" : ""}
-                        placeholder="Set narxi"
-                    />
+                        <FormNumberInput
+                            thousandSeparator=" "
+                            methods={form}
+                            name={`sets.${index}.price`}
+                            required
+                            label={index === 0 ? "Set narxi" : ""}
+                            placeholder="Set narxi"
+                        />
 
-                    <FormMultiCombobox
-                        options={foods || []}
-                        methods={form}
-                        name={`sets.${index}.foods`}
-                    />
+                        <Button
+                            size={"icon"}
+                            type="button"
+                            className={"min-w-9"}
+                            variant={"destructive-muted"}
+                            onClick={() => {
+                                if (field.id) {
+                                    setDeletedSets([...deleted_sets, field.id])
+                                }
+                                remove(index)
+                            }}
+                        >
+                            <Trash2 size={16} />
+                        </Button>
+                    </div>
 
-                    <Button
-                        size={"icon"}
-                        type="button"
-                        className={"min-w-9"}
-                        variant={"destructive-muted"}
-                        onClick={() => {
-                            if (field.id) {
-                                setDeletedSets([...deleted_sets, field.id])
-                            }
-                            remove(index)
-                        }}
-                    >
-                        <Trash2 size={16} />
-                    </Button>
+                    <div className="flex gap-1 mt-2 flex-wrap">
+                        {form
+                            .watch(`sets.${index}.foods`)
+                            ?.map((food, index) => (
+                                <div key={index}>
+                                    <SeeInView
+                                        url={
+                                            foods?.find((el) => el.id === food)
+                                                ?.image || ""
+                                        }
+                                    >
+                                        <Image
+                                            src={
+                                                foods?.find(
+                                                    (el) => el.id === food,
+                                                )?.image
+                                            }
+                                            alt=""
+                                            className="w-16 h-16 object-cover rounded-md"
+                                        />
+                                    </SeeInView>
+                                </div>
+                            ))}
+                        <FormMultiCombobox
+                            wrapperClassName={"w-auto"}
+                            options={foods || []}
+                            methods={form}
+                            name={`sets.${index}.foods`}
+                        />
+                    </div>
                 </div>
             ))}
 

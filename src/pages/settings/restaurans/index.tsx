@@ -38,7 +38,7 @@ export default function Restaurans() {
                 withActions
                 onEdit={({ original }) => handleEdit(original)}
             />
-            <Modal className="max-w-3xl">
+            <Modal className="max-w-5xl">
                 <RestaurantCreateForm />
             </Modal>
         </section>

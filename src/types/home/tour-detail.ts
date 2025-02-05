@@ -1,8 +1,8 @@
 type TourCityItem = {
     id: number
     day: number
-    city: string
-    desciption: string
+    desc: string
+    cities: number[]
 }
 
 type TourGidData = {
