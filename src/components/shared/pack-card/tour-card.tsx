@@ -105,7 +105,7 @@ function TourCard(props: PlanItem) {
                         </div>
                     </div>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between gap-1">
                     <Button
                         size="icon"
                         variant={"destructive-muted"}

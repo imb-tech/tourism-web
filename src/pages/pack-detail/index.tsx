@@ -33,8 +33,9 @@ export default function PackDetail() {
 
             {isLoading ?
                 <InitialDataBox isLoading />
-            :   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-3">
+            :   <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-3">
                     <AddButton
+                        className="w-full max-w-sm"
                         onClick={handleAdd}
                         label="Tarif qo'shish"
                         icon={Grid2x2PlusIcon}
