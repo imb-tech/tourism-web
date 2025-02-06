@@ -7,16 +7,20 @@ import { TOURISTS } from "@/constants/api-endpoints"
 import { USER_DATA } from "@/constants/localstorage-keys"
 import { useModal } from "@/hooks/use-modal"
 import { useStore } from "@/hooks/use-store"
-import { usePost } from "@/services/default-requests"
+import { usePatch, usePost } from "@/services/default-requests"
 import { useQueryClient } from "@tanstack/react-query"
 import { useParams } from "@tanstack/react-router"
 import { useForm } from "react-hook-form"
 
-export default function CreateUserForm() {
+export default function CreateEditUserForm() {
     const queryClient = useQueryClient()
     const { store, remove } = useStore<UserItem>(USER_DATA)
     const { id } = useParams({ from: "/_main/packs/$pack/$id" })
     const { closeModal } = useModal()
+
+    const headrs = {
+        "Content-Type": "multipart/form-data",
+    }
 
     function onSuccess() {
         queryClient.removeQueries({
@@ -29,9 +33,14 @@ export default function CreateUserForm() {
     const { mutate, isPending } = usePost(
         { onSuccess },
         {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
+            headers: headrs,
+        },
+    )
+
+    const { mutate: patch, isPending: isUpdating } = usePatch(
+        { onSuccess },
+        {
+            headers: headrs,
         },
     )
 
@@ -47,9 +56,15 @@ export default function CreateUserForm() {
         formData.append("phone", vals.phone.replace("+", ""))
         formData.append("plan", id)
         formData.append("is_leader", String(vals.is_leader))
-        formData.append("photo", vals.photo)
+        if (vals.photo instanceof File || vals.photo instanceof Blob) {
+            formData.append("photo", vals.photo)
+        }
 
-        mutate(TOURISTS, formData)
+        if (store?.id) {
+            patch(TOURISTS + `/${store.id}`, formData)
+        } else {
+            mutate(TOURISTS, formData)
+        }
     }
 
     return (
@@ -90,7 +105,7 @@ export default function CreateUserForm() {
                 labelClassName="border rounded-md w-full py-12 flex flex-col items-center justify-center gap-3"
             />
 
-            <FormAction loading={isPending} />
+            <FormAction loading={isPending || isUpdating} />
         </form>
     )
 }

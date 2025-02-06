@@ -11,7 +11,7 @@ import { useGet } from "@/services/default-requests"
 import { useParams } from "@tanstack/react-router"
 import { UserRoundPlus } from "lucide-react"
 import PackDetailHeader from "../pack-detail/pack-detail-header"
-import CreateUserForm from "./create-user-form"
+import CreateEditUserForm from "./user-create-edit-form"
 
 type UsersResponse = {
     total_pages: number
@@ -55,8 +55,13 @@ export default function Users() {
 
                 <DeleteModal path={TOURISTS} id={store?.id || ""} />
 
-                <Modal title="Turist qo'shish" className="max-w-xl">
-                    <CreateUserForm />
+                <Modal
+                    title={
+                        store?.id ? "Turistni tahrirlash" : "Turist qo'shish"
+                    }
+                    className="max-w-xl"
+                >
+                    <CreateEditUserForm />
                 </Modal>
             </section>
         :   <InitialDataBox isLoading={isLoading} isError={isError} />

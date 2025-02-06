@@ -15,9 +15,10 @@ function UserCard(props: UserItemProps) {
     const { setStore } = useStore<UserItemProps>(USER_DATA)
 
     const { openModal: openDeleteModal } = useModal("delete")
-    const { openModal } = useModal(USER_DATA)
+    const { openModal } = useModal()
 
     function handleEdit() {
+        setStore(props)
         openModal()
     }
 
