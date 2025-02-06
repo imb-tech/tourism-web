@@ -1,6 +1,7 @@
 import Image from "@/components/custom/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import SeeInView from "@/components/ui/see-in-view"
 import { USER_DATA } from "@/constants/localstorage-keys"
 import { useModal } from "@/hooks/use-modal"
 import { useStore } from "@/hooks/use-store"
@@ -9,9 +10,9 @@ import { formatPhone } from "@/lib/format-phone"
 import { Copy, Pencil, PhoneCall, Trash2 } from "lucide-react"
 import { memo } from "react"
 
-function UserCard(props: UserItem) {
+function UserCard(props: UserItemProps) {
     const { phone, photo, passcode, full_name } = props
-    const { setStore } = useStore<UserItem>(USER_DATA)
+    const { setStore } = useStore<UserItemProps>(USER_DATA)
 
     const { openModal: openDeleteModal } = useModal("delete")
     const { openModal } = useModal(USER_DATA)
@@ -27,11 +28,12 @@ function UserCard(props: UserItem) {
 
     return (
         <Card className="w-full max-w-sm p-4 shadow-none">
-            <CardHeader className="flex flex-row items-start justify-between">
-                <Image
-                    className="w-24 h-24 rounded-sm"
-                    src={photo as unknown as string}
-                />
+            <CardHeader className="flex items-start justify-between">
+                <div className="w-auto max-w-24">
+                    <SeeInView url={photo}>
+                        <Image className="w-24 h-24 rounded-sm" src={photo} />
+                    </SeeInView>
+                </div>
                 <div className="flex gap-2">
                     <Button
                         size="icon"

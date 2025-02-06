@@ -15,7 +15,7 @@ import CreateUserForm from "./create-user-form"
 
 type UsersResponse = {
     total_pages: number
-    results: UserItem[]
+    results: UserItemProps[]
 }
 
 export default function Users() {
@@ -41,8 +41,9 @@ export default function Users() {
                     title="Turistlar"
                     backUrl={`/packs/${pack}`}
                 />
-                <div className="mt-2 grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-3">
                     <AddButton
+                        className="w-full max-w-sm"
                         label="Turist qo'shish"
                         icon={UserRoundPlus}
                         onClick={handleAdd}

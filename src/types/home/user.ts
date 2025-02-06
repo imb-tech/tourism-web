@@ -6,3 +6,7 @@ type UserItem = {
     phone: string
     is_leader: boolean
 }
+
+type UserItemProps = UserItem & {
+    photo: string
+}

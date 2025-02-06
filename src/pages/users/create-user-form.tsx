@@ -48,7 +48,6 @@ export default function CreateUserForm() {
         formData.append("plan", id)
         formData.append("is_leader", String(vals.is_leader))
         formData.append("photo", vals.photo)
-        console.log(formData)
 
         mutate(TOURISTS, formData)
     }
