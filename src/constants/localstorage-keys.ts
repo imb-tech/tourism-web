@@ -4,6 +4,7 @@ export const USER_ACCESS_KEY = "user_access"
 export const USER_REFRESH_KEY = "user_refresh"
 
 export const TOUR_DATA = "tour-data"
+export const PLAN_BENEFIT = "plan-benefit"
 export const USER_DATA = "user-data"
 export const COUNTRY_DATA = "country-data"
 export const CITY_DATA = "city-data"

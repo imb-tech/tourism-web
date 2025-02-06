@@ -21,6 +21,7 @@ export const LIGHT = USER + "light"
 export const PLANS = TOUR + "/plans"
 export const HOTEL_TYPES = COMMON + "hotel_types"
 export const CATEGORIES = COMMON + "categories"
+export const EXPECTED = PLANS + "/expected"
 
 export const TOURISTS = TOURS + "tourists"
 export const ENTERANCES = SERVICES + "entrances"

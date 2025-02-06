@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { PLANS } from "@/constants/api-endpoints"
-import { TOUR_DATA } from "@/constants/localstorage-keys"
+import { PLAN_BENEFIT, TOUR_DATA } from "@/constants/localstorage-keys"
 import { useModal } from "@/hooks/use-modal"
 import { useStore } from "@/hooks/use-store"
 import { cn } from "@/lib/utils"
@@ -31,6 +31,7 @@ function TourCard(props: PlanItem) {
     } = props
     const { setStore } = useStore<PlanItem>(TOUR_DATA)
     const queryClient = useQueryClient()
+    const { openModal: openBenefitModal } = useModal(PLAN_BENEFIT)
 
     const { pack } = useParams({ from: "/_main/packs/$pack/" })
 
@@ -55,6 +56,11 @@ function TourCard(props: PlanItem) {
     function handleDelete() {
         setStore(props)
         openDeleteModal()
+    }
+
+    function handleBenefit() {
+        setStore(props)
+        openBenefitModal()
     }
 
     function handleUsers() {
@@ -129,6 +135,7 @@ function TourCard(props: PlanItem) {
                         size="icon"
                         variant={"warning-muted"}
                         className="h-10 w-10 rounded-lg"
+                        onClick={handleBenefit}
                     >
                         <DollarSign size={18} className="font-light" />
                     </Button>

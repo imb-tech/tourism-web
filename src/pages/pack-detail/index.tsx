@@ -4,17 +4,19 @@ import InitialDataBox from "@/components/elements/initial-data-box"
 import AddButton from "@/components/shared/add-button"
 import TourCard from "@/components/shared/pack-card/tour-card"
 import { PLANS } from "@/constants/api-endpoints"
-import { TOUR_DATA } from "@/constants/localstorage-keys"
+import { PLAN_BENEFIT, TOUR_DATA } from "@/constants/localstorage-keys"
 import { useModal } from "@/hooks/use-modal"
 import { useStore } from "@/hooks/use-store"
 import { useGet } from "@/services/default-requests"
 import { useParams } from "@tanstack/react-router"
 import { Grid2x2PlusIcon } from "lucide-react"
 import CreateTourForm from "./create-tour-form"
+import PackBenefitForm from "./pack-benefit-form"
 import PackDetailHeader from "./pack-detail-header"
 
 export default function PackDetail() {
     const { openModal } = useModal(TOUR_DATA)
+
     const { store, remove } = useStore<PlanItem>(TOUR_DATA)
     const { pack: tour_id } = useParams({ from: "/_main/packs/$pack/" })
 
@@ -50,6 +52,14 @@ export default function PackDetail() {
                 modalKey={TOUR_DATA}
             >
                 <CreateTourForm />
+            </Modal>
+
+            <Modal
+                className="max-w-xl font-bold"
+                title="Daromad foizi"
+                modalKey={PLAN_BENEFIT}
+            >
+                <PackBenefitForm />
             </Modal>
 
             <DeleteModal id={store?.id || 0} path={PLANS} />
