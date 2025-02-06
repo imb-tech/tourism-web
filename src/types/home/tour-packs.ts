@@ -36,4 +36,5 @@ type PlanItem = {
     tourists_count: number
     hotel_stars: number
     accepted: boolean
+    benefit: number
 }

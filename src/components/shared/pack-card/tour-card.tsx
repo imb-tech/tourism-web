@@ -21,7 +21,14 @@ import { memo } from "react"
 import Progress from "./progress"
 
 function TourCard(props: PlanItem) {
-    const { id, leaders_count, tourists_count, hotel_stars, accepted } = props
+    const {
+        id,
+        leaders_count,
+        tourists_count,
+        hotel_stars,
+        accepted,
+        benefit,
+    } = props
     const { setStore } = useStore<PlanItem>(TOUR_DATA)
     const queryClient = useQueryClient()
 
@@ -103,6 +110,10 @@ function TourCard(props: PlanItem) {
                                 />
                             </svg>
                         </div>
+                    </div>
+                    <div className="flex justify-between">
+                        <span className="text-muted-foreground">Daromad:</span>
+                        <span>{benefit} %</span>
                     </div>
                 </div>
                 <div className="flex justify-between gap-1">
