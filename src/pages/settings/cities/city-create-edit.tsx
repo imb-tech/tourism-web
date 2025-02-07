@@ -1,4 +1,5 @@
 import FormAction from "@/components/custom/form-action"
+import FormImagePicker from "@/components/form/image-picker"
 import FormInput from "@/components/form/input"
 import { CITIES } from "@/constants/api-endpoints"
 import { CITY_DATA } from "@/constants/localstorage-keys"
@@ -12,6 +13,9 @@ export default function CityCreateEdit() {
     const queryClient = useQueryClient()
     const { closeModal } = useModal("city")
     const { store, remove } = useStore<City>(CITY_DATA)
+    const headers = {
+        "Content-Type": "multipart/form-data",
+    }
 
     const form = useForm<City>({
         defaultValues: store || {},
@@ -25,20 +29,53 @@ export default function CityCreateEdit() {
         })
     }
 
-    const { mutate: post, isPending } = usePost({ onSuccess })
-    const { mutate: patch, isPending: isUpdating } = usePatch({ onSuccess })
+    const { mutate: post, isPending } = usePost({ onSuccess }, { headers })
+    const { mutate: patch, isPending: isUpdating } = usePatch(
+        { onSuccess },
+        { headers },
+    )
+    const dirty = form.formState.dirtyFields
 
-    function handleSubmit(vals: City) {
+    function handleSubmit(vals: FormCity) {
+        const formData = new FormData()
+
+        for (const key in dirty) {
+            if (
+                Object.prototype.hasOwnProperty.call(dirty, key) &&
+                dirty[key as keyof typeof dirty]
+            ) {
+                const value = vals[key as keyof FormCity]
+
+                if (typeof value === "object" && value !== null) {
+                    formData.append(key, value)
+                } else if (typeof value === "string") {
+                    formData.append(key, value)
+                }
+            }
+        }
+
         if (store?.id) {
-            patch(CITIES + `/${store.id}`, vals)
+            patch(CITIES + `/${store.id}`, formData)
         } else {
-            post(CITIES, vals)
+            post(CITIES, formData)
         }
     }
 
     return (
         <form onSubmit={form.handleSubmit(handleSubmit)}>
-            <FormInput methods={form} name="name" required label="Sahar nomi" />
+            <FormInput
+                methods={form}
+                name="name"
+                required
+                label="Shahar nomi"
+            />
+            <FormImagePicker
+                methods={form}
+                name="image"
+                required
+                label="Rasm"
+            />
+
             <FormAction loading={isPending || isUpdating} />
         </form>
     )

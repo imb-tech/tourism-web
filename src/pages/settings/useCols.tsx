@@ -30,6 +30,21 @@ export const useCityColumns = () =>
                 accessorKey: "name",
                 header: "Nomi",
             },
+            {
+                accessorKey: "image",
+                header: "Rasm",
+                cell: ({ row }) => (
+                    <SeeInView url={row.original?.image ?? ""}>
+                        <Img
+                            width={50}
+                            height={50}
+                            src={row.original?.image ?? ""}
+                            alt=""
+                            className="w-10 min-h-10 max-h-10 object-cover"
+                        />
+                    </SeeInView>
+                ),
+            },
         ],
         [],
     )
@@ -52,6 +67,21 @@ export const useEnteranceColumns = () =>
             {
                 accessorKey: "price",
                 header: "Narxi",
+            },
+            {
+                accessorKey: "image",
+                header: "Rasmi",
+                cell: ({ row }) => (
+                    <SeeInView url={row.original.image ?? ""}>
+                        <Img
+                            width={50}
+                            height={50}
+                            src={row.original.image ?? ""}
+                            alt=""
+                            className="w-16 min-h-16 max-h-16 object-cover"
+                        />
+                    </SeeInView>
+                ),
             },
         ],
         [],

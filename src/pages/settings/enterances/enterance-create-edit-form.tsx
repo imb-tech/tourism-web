@@ -1,4 +1,5 @@
 import FormAction from "@/components/custom/form-action"
+import FormImagePicker from "@/components/form/image-picker"
 import FormInput from "@/components/form/input"
 import FormNumberInput from "@/components/form/number-input"
 import SelectField from "@/components/form/select-field"
@@ -14,8 +15,10 @@ export default function EnteranceCreateEditForm() {
     const queryClient = useQueryClient()
     const { closeModal } = useModal(ENTERANCE_DATA)
     const { store, remove } = useStore<Enterance>(ENTERANCE_DATA)
-
     const { data: cities } = useGet<City[]>(CITIES)
+    const headers = {
+        "Content-Type": "multipart/form-data",
+    }
 
     const form = useForm<CreaateEnterance>({
         defaultValues:
@@ -35,14 +38,37 @@ export default function EnteranceCreateEditForm() {
         })
     }
 
-    const { mutate: post, isPending } = usePost({ onSuccess })
-    const { mutate: patch, isPending: isUpdating } = usePatch({ onSuccess })
+    const { mutate: post, isPending } = usePost({ onSuccess }, { headers })
+    const { mutate: patch, isPending: isUpdating } = usePatch(
+        { onSuccess },
+        { headers },
+    )
+    const dirty = form.formState.dirtyFields
 
-    function handleSubmit(vals: Enterance) {
+    function handleSubmit(vals: CreaateEnterance) {
+        const formData = new FormData()
+        console.log(dirty)
+
+        for (const key in dirty) {
+            if (
+                Object.prototype.hasOwnProperty.call(dirty, key) &&
+                dirty[key as keyof typeof dirty]
+            ) {
+                const value = vals[key as keyof CreaateEnterance]
+
+                if (value && typeof value === "object" && value !== null) {
+                    formData.append(key, value)
+                } else if (typeof value === "string") {
+                    formData.append(key, value)
+                } else if (typeof value === "number") {
+                    formData.append(key, value.toString())
+                }
+            }
+        }
         if (store?.id) {
-            patch(ENTERANCES + `/${store.id}`, vals)
+            patch(ENTERANCES + `/${store.id}`, formData)
         } else {
-            post(ENTERANCES, vals)
+            post(ENTERANCES, formData)
         }
     }
 
@@ -67,6 +93,13 @@ export default function EnteranceCreateEditForm() {
                 methods={form}
                 name="city"
                 required
+            />
+
+            <FormImagePicker
+                methods={form}
+                name="image"
+                required
+                label="Rasm"
             />
 
             <FormAction loading={isPending || isUpdating} />

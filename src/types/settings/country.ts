@@ -3,7 +3,13 @@ type Country = {
     name: string
 }
 
+type FormCity = {
+    name: string
+    image: File | Blob | string | null
+}
+
 type City = {
     id: number
     name: string
+    image: string | null
 }
