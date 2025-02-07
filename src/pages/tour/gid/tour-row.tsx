@@ -1,6 +1,50 @@
+import { DETAIL } from "@/constants/api-endpoints"
+import { useGet } from "@/services/default-requests"
 import { TableColumns } from "@/types/table"
+import { useParams } from "@tanstack/react-router"
+import { useMemo } from "react"
 import TourTableHeader from "../tour-table-header"
 import TourGidCard from "./tour-col"
+
+// eslint-disable-next-line react-refresh/only-export-components
+export function groupByDay<
+    T,
+    D,
+    DayKey extends keyof T,
+    DetailKey extends keyof T,
+>(list: T[], key: DayKey, detailKey: DetailKey) {
+    const days: Record<
+        string,
+        {
+            day: number
+            data: D[]
+        }
+    > = {}
+    list?.forEach((item) => {
+        if (days[item[key] as string] && item[detailKey]) {
+            days[item[key] as string].data.push({
+                ...item[detailKey],
+                ...item,
+                [detailKey]: undefined,
+            } as D)
+        } else {
+            days[item[key] as string] = {
+                day: Number(item[key]),
+                data:
+                    item[detailKey] ?
+                        [
+                            {
+                                ...item[detailKey],
+                                ...item,
+                                [detailKey]: undefined,
+                            } as D,
+                        ]
+                    :   [],
+            }
+        }
+    })
+    return Object.values(days)
+}
 
 export default function TourGidRow() {
     const columns: TableColumns<TourGidItem>[] = [
@@ -29,35 +73,30 @@ export default function TourGidRow() {
             header: "Qo’shimcha ma’lumot",
         },
     ]
-    const data: TourGidItem[] = [
-        {
-            id: 1,
-            day: 1,
-            data: [
-                {
-                    id: 1,
-                    name: "Jesica",
-                    phone: "+998 99 999 99 99",
-                    price: 500000,
-                    langs: ["O'z", "Rus"],
-                    description: "Description",
-                },
-                {
-                    id: 2,
-                    name: "Abdullo",
-                    phone: "+998 99 999 99 99",
-                    price: 500000,
-                    langs: ["O'z", "Rus"],
-                    description: "Description",
-                },
-            ],
-        },
-    ]
+
+    const { id } = useParams({ from: "/_main/packs/$pack/tour/$id" })
+
+    const url = DETAIL + `/guide/${id}`
+
+    const { data: list } = useGet<TourGidResponse[] | undefined>(url)
+
+    const renderedList = useMemo(
+        () =>
+            groupByDay<
+                TourGidResponse,
+                TourGidDetailData,
+                "day",
+                "detail_data"
+            >(list || [], "day", "detail_data"),
+        [list],
+    )
 
     return (
         <div className="flex flex-col gap-3">
             <TourTableHeader columns={columns} />
-            {data?.map((item) => <TourGidCard key={item.id} {...item} />)}
+            {renderedList?.map((item) => (
+                <TourGidCard key={item.day} id={item.day} {...item} />
+            ))}
         </div>
     )
 }

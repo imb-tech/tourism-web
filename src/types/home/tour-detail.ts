@@ -14,10 +14,30 @@ type TourGidData = {
     description: string
 }
 
+type TourGidDetailData = {
+    id: number
+    full_name: string
+    phone: string
+    price: number
+    payment_type: PaymentType
+    desc: string
+    languages: string[]
+}
+
+type TourGidResponse = {
+    id: number
+    type: "guide"
+    day: number
+    real_cost: number
+    expected_cost: number
+    payment_type: PaymentType
+    detail_data: TourGidDetailData
+}
+
 type TourGidItem = {
     id: number
     day: number
-    data: TourGidData[]
+    data: TourGidDetailData[] | null
 }
 
 type TourHotelData = {

@@ -15,7 +15,7 @@ export default function PackBenefitForm() {
     const queryClient = useQueryClient()
     const { closeModal } = useModal(PLAN_BENEFIT)
 
-    const { data } = useGet<PaymentType>(EXPECTED + `/${store?.id}`)
+    const { data } = useGet<PaymentTypeItem>(EXPECTED + `/${store?.id}`)
 
     const form = useForm<PlanItem>({
         defaultValues: store || {},
