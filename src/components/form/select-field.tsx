@@ -29,6 +29,7 @@ interface IProps<IForm extends FieldValues> {
     wrapperClassName?: string
     onValueChange?: () => void
     hideError?: boolean
+    showFormatKey?: string
 }
 
 export default function SelectField<IForm extends FieldValues>({
@@ -44,6 +45,7 @@ export default function SelectField<IForm extends FieldValues>({
     options,
     onValueChange,
     hideError = false,
+    showFormatKey,
     ...props
 }: IProps<IForm> & Props) {
     const opts = options || []
@@ -231,6 +233,16 @@ const ValueContainer = ({
 
     //     values = values?.map((el) => el.key).join(", ")
     // }
+
+    if (Array.isArray(values) && props.isMulti) {
+        values = values?.map((el: any) => ({
+            ...el,
+            props: {
+                ...el.props,
+                children: el.props.data?.code ?? el.props.children,
+            },
+        }))
+    }
 
     return (
         <components.ValueContainer {...props}>

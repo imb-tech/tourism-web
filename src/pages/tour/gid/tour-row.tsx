@@ -53,7 +53,7 @@ export default function TourGidRow() {
             header: "Kun",
         },
         {
-            flex: 0.1,
+            flex: 0.15,
             header: "Ismi",
         },
         {
@@ -61,15 +61,19 @@ export default function TourGidRow() {
             header: "Telefon",
         },
         {
-            flex: 0.1,
+            flex: 0.15,
             header: "Kunlik narxi",
         },
         {
-            flex: 0.1,
+            flex: 0.15,
+            header: "To'lov turi",
+        },
+        {
+            flex: 0.15,
             header: "Tili",
         },
         {
-            flex: 0.2,
+            flex: 0.15,
             header: "Qo’shimcha ma’lumot",
         },
     ]
@@ -87,7 +91,13 @@ export default function TourGidRow() {
                 TourGidDetailData,
                 "day",
                 "detail_data"
-            >(list || [], "day", "detail_data"),
+            >(
+                list?.map((el, i) => {
+                    return { ...el, field_id: i + 1 }
+                }) || [],
+                "day",
+                "detail_data",
+            ),
         [list],
     )
 

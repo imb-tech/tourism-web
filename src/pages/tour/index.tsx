@@ -1,3 +1,4 @@
+import InitialDataBox from "@/components/elements/initial-data-box"
 import { useParams, useSearch } from "@tanstack/react-router"
 import React, { Suspense } from "react"
 import PackDetailHeader from "../pack-detail/pack-detail-header"
@@ -33,7 +34,7 @@ export default function Tour() {
             />
             <div className="mt-3 bg-background p-3 rounded-md">
                 <TourTab />
-                <Suspense fallback={<div></div>}>
+                <Suspense fallback={<InitialDataBox isLoading />}>
                     <div className="p-3 bg-secondary rounded-sm">
                         <ComponentMain />
                     </div>

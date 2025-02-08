@@ -6,6 +6,9 @@ export default function useEditableRequest<T>() {
         onSuccess: () => {
             document.body.style.cursor = "default"
         },
+        onError: () => {
+            document.body.style.cursor = "default"
+        },
     })
 
     function save(values: T, type: string, planId: string | number) {
@@ -13,6 +16,7 @@ export default function useEditableRequest<T>() {
         mutate(CHANGE + type, {
             ...values,
             plan: Number(planId),
+            type,
         })
     }
 

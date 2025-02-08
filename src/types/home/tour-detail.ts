@@ -17,6 +17,7 @@ type TourGidData = {
 type TourGidDetailData = {
     id: number
     full_name: string
+    field_id: number
     phone: string
     price: number
     payment_type: PaymentType
@@ -28,6 +29,7 @@ type TourGidResponse = {
     id: number
     type: "guide"
     day: number
+    field_id: number
     real_cost: number
     expected_cost: number
     payment_type: PaymentType

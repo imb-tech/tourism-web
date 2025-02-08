@@ -1,6 +1,7 @@
 import EditableBox from "@/components/form/editaable-box"
-import FormInput from "@/components/form/input"
-import formatMoney from "@/lib/format-money"
+import SelectField from "@/components/form/select-field"
+import { languages } from "@/lib/langs"
+import { paymentTypes } from "@/lib/payment-types"
 import { cn } from "@/lib/utils"
 import useEditableRequest from "@/pages/tour/editable-request"
 import { useParams } from "@tanstack/react-router"
@@ -26,13 +27,22 @@ export default function TourGidCard({ day, data }: TourGidItem) {
     const fieldsValue = form.watch("data")
 
     const handleSave = useCallback(
-        (event: React.FocusEvent<HTMLDivElement>) => {
+        (event: React.FocusEvent<HTMLElement>) => {
             const item = fieldsValue?.find(
-                (field) => field.id === Number(event.currentTarget.textContent),
+                (field) =>
+                    field.field_id === Number(event.currentTarget.textContent),
             )
 
             if (item) {
-                save(item, "guide", planId)
+                save(
+                    {
+                        ...item,
+                        payment_type: item.payment_type ?? 0,
+                        languages: item.languages ?? [],
+                    },
+                    "guide",
+                    planId,
+                )
             }
         },
         [fieldsValue, save, planId],
@@ -50,44 +60,101 @@ export default function TourGidCard({ day, data }: TourGidItem) {
                         )}
                         key={field.key}
                     >
-                        {/* <div className="flex-[0.11] font-light text-sm">
-                            <FormInput
-                                methods={form}
-                                name={`data.${i}.full_name`}
-                                className="border-none ring-0 outline-none focus:ring-0 focus:border-none active:ring-0 active:border-none"
-                            />
-                        </div> */}
                         <EditableBox
                             methods={form}
                             name={`data.${i}.full_name`}
                             className="flex-[0.11] font-light text-sm"
                             onBlur={handleSave}
-                            dayId={field.id}
+                            dayId={field.field_id}
                         >
                             {field?.full_name}
                         </EditableBox>
-                        {/* <p className="flex-[0.11] font-light text-sm">
-                            {field?.full_name}
-                        </p> */}
-                        <div className="flex-[0.165] font-light text-sm">
-                            <FormInput
+
+                        <EditableBox
+                            methods={form}
+                            name={`data.${i}.phone`}
+                            className="flex-[0.165] font-light text-sm"
+                            onBlur={handleSave}
+                            dayId={field.field_id}
+                        >
+                            {field?.phone}
+                        </EditableBox>
+
+                        <EditableBox
+                            methods={form}
+                            name={`data.${i}.price`}
+                            className="flex-[0.115] font-light text-sm"
+                            onBlur={handleSave}
+                            dayId={field.field_id}
+                            isNumber
+                        >
+                            {field?.price}
+                        </EditableBox>
+
+                        <div className="flex-[0.165] font-light text-xs">
+                            <SelectField
+                                name={`data.${i}.payment_type`}
                                 methods={form}
-                                name={`data.${i}.phone`}
-                                className="border-none ring-0 outline-none focus:ring-0 focus:border-none"
+                                className="!border-none"
+                                wrapperClassName="!border-none w-auto"
+                                onBlur={(event) =>
+                                    handleSave({
+                                        ...event,
+                                        currentTarget: {
+                                            ...event.currentTarget,
+                                            textContent:
+                                                field?.field_id.toString(),
+                                        },
+                                    })
+                                }
+                                optionLabelKey="name"
+                                optionValueKey="value"
+                                placeholder="Tanlang"
+                                classNames={{
+                                    control: () => "!border-none w-auto",
+                                    indicatorsContainer: () => "!hidden",
+                                }}
+                                options={paymentTypes}
                             />
                         </div>
-                        <p className="flex-[0.115] font-light text-sm">
-                            {formatMoney(field?.price)}
-                        </p>
-                        <p className="flex-[0.115] font-light text-sm">
-                            {field?.payment_type}
-                        </p>
-                        <p className="flex-[0.11] font-light text-sm">
-                            {field?.languages?.join(", ")}
-                        </p>
-                        <p className="flex-[0.4] font-light text-sm">
+
+                        <div className="flex-[0.165] font-light text-xs">
+                            <SelectField
+                                isMulti
+                                name={`data.${i}.languages`}
+                                methods={form}
+                                className="!border-none"
+                                wrapperClassName="!border-none w-auto"
+                                onBlur={(event) =>
+                                    handleSave({
+                                        ...event,
+                                        currentTarget: {
+                                            ...event.currentTarget,
+                                            textContent:
+                                                field?.field_id.toString(),
+                                        },
+                                    })
+                                }
+                                optionLabelKey="name"
+                                optionValueKey="code"
+                                placeholder="Tanlang"
+                                classNames={{
+                                    control: () => "!border-none w-auto",
+                                    indicatorsContainer: () => "!hidden",
+                                }}
+                                options={languages}
+                            />
+                        </div>
+
+                        <EditableBox
+                            methods={form}
+                            name={`data.${i}.desc`}
+                            className="flex-[0.115] font-light text-sm"
+                            onBlur={handleSave}
+                            dayId={field.id}
+                        >
                             {field?.desc}
-                        </p>
+                        </EditableBox>
                     </div>
                 ))}
             </div>

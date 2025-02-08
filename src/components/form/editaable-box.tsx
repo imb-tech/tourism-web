@@ -1,3 +1,4 @@
+import formatMoney from "@/lib/format-money"
 import { cn } from "@/lib/utils"
 import { HTMLAttributes, useRef, useState } from "react"
 import {
@@ -11,6 +12,7 @@ type IProps<IForm extends FieldValues> = {
     methods: UseFormReturn<IForm>
     name: Path<IForm>
     dayId: number
+    isNumber?: boolean
 }
 
 export default function EditableBox<IForm extends FieldValues>({
@@ -19,6 +21,7 @@ export default function EditableBox<IForm extends FieldValues>({
     onBlur,
     children,
     dayId,
+    isNumber,
 }: IProps<IForm> & HTMLAttributes<HTMLDivElement>) {
     const [isEditing, setIsEditing] = useState(false)
     const ref = useRef<HTMLDivElement>(null)
@@ -38,7 +41,7 @@ export default function EditableBox<IForm extends FieldValues>({
             ...event,
             currentTarget: {
                 ...event.currentTarget,
-                textContent: dayId.toString(),
+                textContent: (dayId || "").toString(),
             },
         })
     }
@@ -54,7 +57,7 @@ export default function EditableBox<IForm extends FieldValues>({
             onBlur={handleBlur}
             onDoubleClick={() => setIsEditing(true)}
         >
-            {children || "-"}
+            {isNumber ? formatMoney(children as number) : children || "—"}
         </div>
     )
 }

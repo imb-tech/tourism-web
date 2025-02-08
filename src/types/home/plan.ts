@@ -10,7 +10,7 @@ type PlanBenifit = {
 }
 
 type CashType = 0
-type BankType = 1
+type BankType = 10
 
 type PaymentType = CashType | BankType
 
