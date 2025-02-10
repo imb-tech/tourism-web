@@ -28,6 +28,9 @@ export default function TourRow() {
         {
             header: "Jami",
         },
+        {
+            header: "To'lov turi",
+        },
     ]
 
     const { id } = useParams({ from: "/_main/packs/$pack/tour/$id" })
@@ -61,7 +64,7 @@ export default function TourRow() {
 
     return (
         <TourTableContainer loading={isLoading}>
-            <TourTableHeader columns={columns} grid={"grid-cols-6"} />
+            <TourTableHeader columns={columns} grid={"grid-cols-7"} />
             {renderedList?.map((item) => (
                 <TourCol
                     key={item.day}
