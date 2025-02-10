@@ -5,23 +5,18 @@ import TourCol from "./tour-col"
 export default function TourRow() {
     const columns: TableColumns<EnterenceItem>[] = [
         {
-            flex: 0.2,
             header: "Kun",
         },
         {
-            flex: 0.2,
             header: "Nomi",
         },
         {
-            flex: 0.2,
             header: "Turistlar",
         },
         {
-            flex: 0.2,
             header: "Individual narxi",
         },
         {
-            flex: 0.2,
             header: "Jami",
         },
     ]

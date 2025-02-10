@@ -1,6 +1,6 @@
 import { ColumnDef, Row } from "@tanstack/react-table"
 
-export type TableColumns<TData> = ColumnDef<TData> & { flex: number }
+export type TableColumns<TData> = ColumnDef<TData> & { flex?: number }
 
 export type TableProps<TData> = {
     data: TData[]

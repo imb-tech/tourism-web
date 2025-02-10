@@ -1,12 +1,14 @@
+import CustomTable from "@/components/custom/table"
 import EditableBox from "@/components/form/editaable-box"
 import SelectField from "@/components/form/select-field"
 import { languages } from "@/lib/langs"
 import { paymentTypes } from "@/lib/payment-types"
-import { cn } from "@/lib/utils"
 import useEditableRequest from "@/pages/tour/editable-request"
 import { useParams } from "@tanstack/react-router"
 import { useCallback } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
+import CustomTableCol from "../custome-table-col"
+import CustomTableRow from "../custome-table-row"
 
 export default function TourGidCard({ day, data }: TourGidItem) {
     const { id: planId } = useParams({ from: "/_main/packs/$pack/tour/$id" })
@@ -39,6 +41,7 @@ export default function TourGidCard({ day, data }: TourGidItem) {
                         ...item,
                         payment_type: item.payment_type ?? 0,
                         languages: item.languages ?? [],
+                        price: item.price || 0,
                     },
                     "guide",
                     planId,
@@ -48,64 +51,66 @@ export default function TourGidCard({ day, data }: TourGidItem) {
         [fieldsValue, save, planId],
     )
 
+    function onBlur(event: React.FocusEvent<HTMLElement>, field_id: number) {
+        handleSave({
+            ...event,
+            currentTarget: {
+                ...event.currentTarget,
+                textContent: field_id.toString(),
+            },
+        })
+    }
+
     return (
-        <div className="w-full flex items-center bg-background rounded-sm px-3 py-1">
-            <p className="flex-[0.1] text-primary">Day {day}</p>
-            <div className="flex-[0.9] flex flex-col">
+        <CustomTable cols={7}>
+            <div className="flex flex-col justify-center">
+                <p className="text-primary">Day {day}</p>
+            </div>
+            <div className="flex flex-col col-span-6">
                 {fields?.map((field, i) => (
-                    <div
-                        className={cn(
-                            "flex items-center min-w-full flex-1 py-2 px-1",
-                            i > 0 && "border-t border-secondary",
-                        )}
-                        key={field.key}
-                    >
-                        <EditableBox
-                            methods={form}
-                            name={`data.${i}.full_name`}
-                            className="flex-[0.11] font-light text-sm"
-                            onBlur={handleSave}
-                            dayId={field.field_id}
-                        >
-                            {field?.full_name}
-                        </EditableBox>
+                    <CustomTableRow in={i} cols={6} key={field.key}>
+                        <CustomTableCol>
+                            <EditableBox
+                                methods={form}
+                                name={`data.${i}.full_name`}
+                                onBlur={handleSave}
+                                dayId={field.field_id}
+                            >
+                                {field?.full_name}
+                            </EditableBox>
+                        </CustomTableCol>
 
-                        <EditableBox
-                            methods={form}
-                            name={`data.${i}.phone`}
-                            className="flex-[0.165] font-light text-sm"
-                            onBlur={handleSave}
-                            dayId={field.field_id}
-                        >
-                            {field?.phone}
-                        </EditableBox>
+                        <CustomTableCol>
+                            <EditableBox
+                                methods={form}
+                                name={`data.${i}.phone`}
+                                onBlur={handleSave}
+                                dayId={field.field_id}
+                            >
+                                {field?.phone}
+                            </EditableBox>
+                        </CustomTableCol>
 
-                        <EditableBox
-                            methods={form}
-                            name={`data.${i}.price`}
-                            className="flex-[0.115] font-light text-sm"
-                            onBlur={handleSave}
-                            dayId={field.field_id}
-                            isNumber
-                        >
-                            {field?.price}
-                        </EditableBox>
+                        <CustomTableCol>
+                            <EditableBox
+                                methods={form}
+                                name={`data.${i}.price`}
+                                onBlur={handleSave}
+                                dayId={field.field_id}
+                                isNumber
+                            >
+                                {field?.price}
+                            </EditableBox>
+                        </CustomTableCol>
 
-                        <div className="flex-[0.165] font-light text-xs">
+                        <CustomTableCol>
                             <SelectField
                                 name={`data.${i}.payment_type`}
                                 methods={form}
                                 className="!border-none"
                                 wrapperClassName="!border-none w-auto"
                                 onBlur={(event) =>
-                                    handleSave({
-                                        ...event,
-                                        currentTarget: {
-                                            ...event.currentTarget,
-                                            textContent:
-                                                field?.field_id.toString(),
-                                        },
-                                    })
+                                    onBlur(event, field?.field_id)
                                 }
                                 optionLabelKey="name"
                                 optionValueKey="value"
@@ -116,9 +121,9 @@ export default function TourGidCard({ day, data }: TourGidItem) {
                                 }}
                                 options={paymentTypes}
                             />
-                        </div>
+                        </CustomTableCol>
 
-                        <div className="flex-[0.165] font-light text-xs">
+                        <CustomTableCol>
                             <SelectField
                                 isMulti
                                 name={`data.${i}.languages`}
@@ -126,14 +131,7 @@ export default function TourGidCard({ day, data }: TourGidItem) {
                                 className="!border-none"
                                 wrapperClassName="!border-none w-auto"
                                 onBlur={(event) =>
-                                    handleSave({
-                                        ...event,
-                                        currentTarget: {
-                                            ...event.currentTarget,
-                                            textContent:
-                                                field?.field_id.toString(),
-                                        },
-                                    })
+                                    onBlur(event, field?.field_id)
                                 }
                                 optionLabelKey="name"
                                 optionValueKey="code"
@@ -144,20 +142,21 @@ export default function TourGidCard({ day, data }: TourGidItem) {
                                 }}
                                 options={languages}
                             />
-                        </div>
+                        </CustomTableCol>
 
-                        <EditableBox
-                            methods={form}
-                            name={`data.${i}.desc`}
-                            className="flex-[0.115] font-light text-sm"
-                            onBlur={handleSave}
-                            dayId={field.id}
-                        >
-                            {field?.desc}
-                        </EditableBox>
-                    </div>
+                        <CustomTableCol>
+                            <EditableBox
+                                methods={form}
+                                name={`data.${i}.desc`}
+                                onBlur={handleSave}
+                                dayId={field.id}
+                            >
+                                {field?.desc}
+                            </EditableBox>
+                        </CustomTableCol>
+                    </CustomTableRow>
                 ))}
             </div>
-        </div>
+        </CustomTable>
     )
 }

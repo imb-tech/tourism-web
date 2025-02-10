@@ -3,6 +3,7 @@ import { useGet } from "@/services/default-requests"
 import { TableColumns } from "@/types/table"
 import { useParams } from "@tanstack/react-router"
 import { useMemo } from "react"
+import TourTableContainer from "../tour-table-container"
 import TourTableHeader from "../tour-table-header"
 import TourGidCard from "./tour-col"
 
@@ -12,6 +13,7 @@ export function groupByDay<
     D,
     DayKey extends keyof T,
     DetailKey extends keyof T,
+    Item,
 >(list: T[], key: DayKey, detailKey: DetailKey) {
     const days: Record<
         string,
@@ -43,37 +45,30 @@ export function groupByDay<
             }
         }
     })
-    return Object.values(days)
+    return Object.values(days) as Item[]
 }
 
 export default function TourGidRow() {
     const columns: TableColumns<TourGidItem>[] = [
         {
-            flex: 0.1,
             header: "Kun",
         },
         {
-            flex: 0.15,
             header: "Ismi",
         },
         {
-            flex: 0.15,
             header: "Telefon",
         },
         {
-            flex: 0.15,
             header: "Kunlik narxi",
         },
         {
-            flex: 0.15,
             header: "To'lov turi",
         },
         {
-            flex: 0.15,
             header: "Tili",
         },
         {
-            flex: 0.15,
             header: "Qo’shimcha ma’lumot",
         },
     ]
@@ -82,7 +77,7 @@ export default function TourGidRow() {
 
     const url = DETAIL + `/guide/${id}`
 
-    const { data: list } = useGet<TourGidResponse[] | undefined>(url)
+    const { data: list, isLoading } = useGet<TourGidResponse[] | undefined>(url)
 
     const renderedList = useMemo(
         () =>
@@ -90,7 +85,8 @@ export default function TourGidRow() {
                 TourGidResponse,
                 TourGidDetailData,
                 "day",
-                "detail_data"
+                "detail_data",
+                TourGidItem
             >(
                 list?.map((el, i) => {
                     return { ...el, field_id: i + 1 }
@@ -102,11 +98,11 @@ export default function TourGidRow() {
     )
 
     return (
-        <div className="flex flex-col gap-3">
+        <TourTableContainer loading={isLoading}>
             <TourTableHeader columns={columns} />
             {renderedList?.map((item) => (
-                <TourGidCard key={item.day} id={item.day} {...item} />
+                <TourGidCard key={item.day} {...item} id={item.id} />
             ))}
-        </div>
+        </TourTableContainer>
     )
 }

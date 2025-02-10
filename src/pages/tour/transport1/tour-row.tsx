@@ -1,35 +1,29 @@
 import { TableColumns } from "@/types/table"
+import TourTableContainer from "../tour-table-container"
 import TourTableHeader from "../tour-table-header"
 import TourCol from "./tour-col"
 
 export default function TourRow() {
     const columns: TableColumns<TourTransport1Item>[] = [
         {
-            flex: 0.1,
             header: "Kun",
         },
         {
-            flex: 0.15,
             header: "Transport turi",
         },
         {
-            flex: 0.15,
             header: "Sig’imi",
         },
         {
-            flex: 0.15,
             header: "Narxi",
         },
         {
-            flex: 0.15,
             header: "Haydovchi",
         },
         {
-            flex: 0.15,
             header: "Haydovchi raqami",
         },
         {
-            flex: 0.15,
             header: "Kompaniya raqami",
         },
     ]
@@ -62,9 +56,9 @@ export default function TourRow() {
     ]
 
     return (
-        <div className="flex flex-col gap-3">
+        <TourTableContainer loading={false}>
             <TourTableHeader columns={columns} />
             {data?.map((item) => <TourCol key={item.id} {...item} />)}
-        </div>
+        </TourTableContainer>
     )
 }

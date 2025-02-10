@@ -1,3 +1,4 @@
+import CustomTable from "@/components/custom/table"
 import SelectField from "@/components/form/select-field"
 import { DETAIL } from "@/constants/api-endpoints"
 import { cn } from "@/lib/utils"
@@ -32,9 +33,9 @@ function TourCityCard(props: TourCityItem & { citiesList: City[] }) {
     }
 
     return (
-        <div className="w-full flex items-center bg-background rounded-sm px-3 py-1">
-            <p className="flex-[0.3] text-primary">Day {day}</p>
-            <div className="flex-[0.3] text-sm">
+        <CustomTable cols={3}>
+            <p className="text-primary">Day {day}</p>
+            <div className="text-sm">
                 <SelectField
                     isMulti
                     name="cities"
@@ -50,9 +51,7 @@ function TourCityCard(props: TourCityItem & { citiesList: City[] }) {
                 />
             </div>
             <div
-                className={cn(
-                    "flex-[0.4] text-sm outline-none focus:outline-none",
-                )}
+                className={cn("text-sm outline-none focus:outline-none")}
                 contentEditable={isEditing}
                 suppressContentEditableWarning
                 suppressHydrationWarning
@@ -67,7 +66,7 @@ function TourCityCard(props: TourCityItem & { citiesList: City[] }) {
             >
                 {desc || "-"}
             </div>
-        </div>
+        </CustomTable>
     )
 }
 

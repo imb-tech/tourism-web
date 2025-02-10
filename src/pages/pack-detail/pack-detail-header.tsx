@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Link } from "@tanstack/react-router"
-import { ChevronLeft } from "lucide-react"
+import { ChevronLeft, Loader2 } from "lucide-react"
+import useTourLoading from "../tour/loading"
 
 type Props = {
     title?: string
@@ -8,6 +9,8 @@ type Props = {
 }
 
 const PackDetailHeader = ({ title = "Pack Detail", backUrl }: Props) => {
+    const { loading } = useTourLoading()
+
     return (
         <div className="flex items-center gap-3 py-1">
             <Link to={backUrl || "/"}>
@@ -16,6 +19,7 @@ const PackDetailHeader = ({ title = "Pack Detail", backUrl }: Props) => {
                 </Button>
             </Link>
             <p className="text-3xl">{title}</p>
+            {loading && <Loader2 className="h-4 w-4 animate-spin" />}
         </div>
     )
 }

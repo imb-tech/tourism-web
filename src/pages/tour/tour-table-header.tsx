@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils"
 import { TableColumns } from "@/types/table"
 
 export default function TourTableHeader<TData>({
@@ -6,9 +7,9 @@ export default function TourTableHeader<TData>({
     columns: TableColumns<TData>[]
 }) {
     return (
-        <div className="w-full flex items-center rounded-sm px-3">
+        <div className={cn("px-3 grid", "grid-cols-" + columns.length)}>
             {columns?.map((column, index) => (
-                <p key={index} className={`flex-[${column.flex}] font-medium`}>
+                <p key={index} className={`font-medium`}>
                     {column.header?.toString()}
                 </p>
             ))}

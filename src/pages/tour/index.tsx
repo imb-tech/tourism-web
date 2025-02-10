@@ -35,7 +35,7 @@ export default function Tour() {
             <div className="mt-3 bg-background p-3 rounded-md">
                 <TourTab />
                 <Suspense fallback={<InitialDataBox isLoading />}>
-                    <div className="p-3 bg-secondary rounded-sm">
+                    <div>
                         <ComponentMain />
                     </div>
                 </Suspense>

@@ -60,6 +60,8 @@ export const deleteRequest = (url: string, config?: AxiosRequestConfig) =>
 
 // --------------------------------------------------------------------------------
 
+const DEFAULT_STALE_TIME = 1000 * 60
+
 export type UseGetArgs<TData = any, TQueryFnData = unknown, TError = any> = {
     deps?: QueryKey
     options?: ICustomUseQueryOptions<TQueryFnData, TError, TData>
@@ -86,7 +88,7 @@ export const useGet = <TData = any, TQueryFnData = unknown, TError = any>(
             return hasParams ? [url, ...paramValues] : [url]
         })(),
         queryFn: () => getRequest(url, { ...config, params }),
-        ...(options || {}),
+        ...(options || { staleTime: DEFAULT_STALE_TIME }),
     })
 }
 

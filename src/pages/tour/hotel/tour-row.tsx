@@ -1,64 +1,79 @@
+import { DETAIL, SELECTION } from "@/constants/api-endpoints"
+import { useGet } from "@/services/default-requests"
 import { TableColumns } from "@/types/table"
+import { useParams } from "@tanstack/react-router"
+import { useMemo } from "react"
+import { groupByDay } from "../gid/tour-row"
+import TourTableContainer from "../tour-table-container"
 import TourTableHeader from "../tour-table-header"
 import TourCol from "./tour-col"
 
 export default function TourRow() {
-    const columns: TableColumns<TourHotelItem>[] = [
+    const columns: TableColumns<HotelItem>[] = [
         {
-            flex: 0.1,
             header: "Kun",
         },
         {
-            flex: 0.18,
             header: "Nomi",
         },
         {
-            flex: 0.18,
             header: "Xona turi",
         },
         {
-            flex: 0.18,
             header: "Soni",
         },
         {
-            flex: 0.18,
             header: "Individual narxi",
         },
         {
-            flex: 0.18,
             header: "Jami",
         },
     ]
 
-    const data: TourHotelItem[] = [
-        {
-            id: 1,
-            day: 1,
-            data: [
-                {
-                    id: 1,
-                    name: "Anor Plaza",
-                    type: "Standart",
-                    rooms: 4,
-                    per_price: 500000,
-                    total_price: 2000000,
-                },
-                {
-                    id: 2,
-                    name: "Anor Plaza",
-                    type: "Biznes",
-                    rooms: 2,
-                    per_price: 1000000,
-                    total_price: 2000000,
-                },
-            ],
-        },
-    ]
+    const { id } = useParams({ from: "/_main/packs/$pack/tour/$id" })
+
+    const url = DETAIL + `/hotel/${id}`
+
+    const { data: list, isLoading } = useGet<HotelItemResponse[] | undefined>(
+        url,
+    )
+    const { data: hotels } = useGet<HotelByCityResponse | undefined>(
+        SELECTION + `hotel/${id}`,
+    )
+
+    const renderedList = useMemo<HotelItem[]>(
+        () =>
+            groupByDay<
+                HotelItemResponse,
+                HotelDetailData,
+                "day",
+                "detail_data",
+                HotelItem
+            >(
+                list?.map((el, i) => {
+                    return { ...el, field_id: i + 1 }
+                }) || [],
+                "day",
+                "detail_data",
+            ),
+        [list],
+    )
 
     return (
-        <div className="flex flex-col gap-3">
+        <TourTableContainer loading={isLoading}>
             <TourTableHeader columns={columns} />
-            {data?.map((item) => <TourCol key={item.id} {...item} />)}
-        </div>
+            {renderedList?.map((item) => (
+                <TourCol
+                    key={item.day}
+                    day={item.day}
+                    data={item.data?.map((el) => ({
+                        ...el,
+                        field_id: el.field_id,
+                    }))}
+                    id={item.id}
+                    hotels={hotels?.[item.day] || []}
+                />
+            ))}
+        </TourTableContainer>
     )
 }
