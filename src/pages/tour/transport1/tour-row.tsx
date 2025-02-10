@@ -76,7 +76,7 @@ export default function TourRow() {
 
     return (
         <TourTableContainer loading={isLoading}>
-            <TourTableHeader columns={columns} />
+            <TourTableHeader columns={columns} grid={"grid-cols-8"} />
             {renderedList?.map((item) => (
                 <TourCol
                     key={item.day}

@@ -99,7 +99,7 @@ export default function TourGidRow() {
 
     return (
         <TourTableContainer loading={isLoading}>
-            <TourTableHeader columns={columns} />
+            <TourTableHeader columns={columns} grid="grid-cols-7" />
             {renderedList?.map((item) => (
                 <TourGidCard key={item.day} {...item} id={item.id} />
             ))}

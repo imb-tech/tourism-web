@@ -30,7 +30,7 @@ export default function TourCityRow() {
 
     return (
         <TourTableContainer loading={isLoading}>
-            <TourTableHeader columns={columns} />
+            <TourTableHeader columns={columns} grid={"grid-cols-3"} />
             {list?.map((item, ind) => (
                 <TourCityCard key={ind} {...item} citiesList={cities || []} />
             ))}
