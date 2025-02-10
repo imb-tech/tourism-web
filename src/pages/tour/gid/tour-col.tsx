@@ -62,13 +62,13 @@ export default function TourGidCard({ day, data }: TourGidItem) {
     }
 
     return (
-        <CustomTable cols={7}>
+        <CustomTable grid="grid-cols-7">
             <div className="flex flex-col justify-center">
                 <p className="text-primary">Day {day}</p>
             </div>
             <div className="flex flex-col col-span-6">
                 {fields?.map((field, i) => (
-                    <CustomTableRow in={i} cols={6} key={field.key}>
+                    <CustomTableRow grid="grid-cols-6" in={i} key={field.key}>
                         <CustomTableCol>
                             <EditableBox
                                 methods={form}

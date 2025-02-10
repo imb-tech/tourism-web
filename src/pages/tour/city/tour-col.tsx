@@ -33,7 +33,7 @@ function TourCityCard(props: TourCityItem & { citiesList: City[] }) {
     }
 
     return (
-        <CustomTable cols={3}>
+        <CustomTable grid={"grid-cols-3"}>
             <p className="text-primary">Day {day}</p>
             <div className="text-sm">
                 <SelectField
