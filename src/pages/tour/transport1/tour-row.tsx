@@ -23,6 +23,9 @@ export default function TourRow() {
             header: "Narxi",
         },
         {
+            header: "To'lov turi",
+        },
+        {
             header: "Haydovchi",
         },
         {
@@ -58,13 +61,18 @@ export default function TourRow() {
                 TransportTableItem
             >(
                 list?.map((el, i) => {
-                    return { ...el, field_id: i + 1 }
+                    return {
+                        ...el,
+                        field_id: i + 1,
+                        payment_type: el.payment_type ?? 0,
+                    }
                 }) || [],
                 "day",
                 "detail_data",
             ),
         [list],
     )
+    console.log(renderedList)
 
     return (
         <TourTableContainer loading={isLoading}>

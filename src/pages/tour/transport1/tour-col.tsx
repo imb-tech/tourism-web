@@ -1,6 +1,7 @@
 import CustomTable from "@/components/custom/table"
 import EditableBox from "@/components/form/editaable-box"
 import SelectField from "@/components/form/select-field"
+import { paymentTypes } from "@/lib/payment-types"
 import { useParams } from "@tanstack/react-router"
 import { useCallback } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
@@ -68,13 +69,13 @@ function TourCol({
     }
 
     return (
-        <CustomTable cols={7}>
+        <CustomTable cols={8}>
             <div className="flex flex-col justify-center">
                 <p className="text-primary">Day {day}</p>
             </div>
-            <div className="flex flex-col col-span-6">
+            <div className="flex flex-col col-span-7">
                 {controlledFields?.map((el, i) => (
-                    <CustomTableRow cols={6} in={i} key={el.id}>
+                    <CustomTableRow cols={7} in={i} key={el.id}>
                         <CustomTableCol>
                             <SelectField
                                 name={`data.${i}.transport_id`}
@@ -127,6 +128,24 @@ function TourCol({
                             >
                                 {el.price}
                             </EditableBox>
+                        </CustomTableCol>
+
+                        <CustomTableCol>
+                            <SelectField
+                                name={`data.${i}.payment_type`}
+                                methods={form}
+                                className="!border-none"
+                                wrapperClassName="!border-none w-auto"
+                                onBlur={(event) => onBlur(event, el?.field_id)}
+                                optionLabelKey="name"
+                                optionValueKey="value"
+                                placeholder="Tanlang"
+                                classNames={{
+                                    control: () => "!border-none w-auto",
+                                    indicatorsContainer: () => "!hidden",
+                                }}
+                                options={paymentTypes}
+                            />
                         </CustomTableCol>
 
                         <CustomTableCol>
