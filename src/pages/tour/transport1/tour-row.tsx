@@ -1,4 +1,9 @@
+import { DETAIL, TRANSPORTS } from "@/constants/api-endpoints"
+import { useGet } from "@/services/default-requests"
 import { TableColumns } from "@/types/table"
+import { useParams } from "@tanstack/react-router"
+import { useMemo } from "react"
+import { groupByDay } from "../gid/tour-row"
 import TourTableContainer from "../tour-table-container"
 import TourTableHeader from "../tour-table-header"
 import TourCol from "./tour-col"
@@ -28,37 +33,49 @@ export default function TourRow() {
         },
     ]
 
-    const data: TourTransport1Item[] = [
+    const { id } = useParams({ from: "/_main/packs/$pack/tour/$id" })
+    const url = DETAIL + `/trans_in/${id}`
+
+    const { data: list, isLoading } = useGet<TransportListItem[] | undefined>(
+        url,
+    )
+    const { data: transportsData } = useGet<ListResponse<Transport>>(
+        TRANSPORTS,
         {
-            id: 1,
-            day: 1,
-            data: [
-                {
-                    id: 1,
-                    name: "Yutong",
-                    size: 32,
-                    price: 420000,
-                    driver: "Doniyor",
-                    driver_phone: "+998931231177",
-                    company: "+998998427979",
-                },
-                {
-                    id: 2,
-                    name: "Yutong",
-                    size: 44,
-                    price: 500000,
-                    driver: "Ahmadjohn",
-                    driver_phone: "+998931231177",
-                    company: "+998998427979",
-                },
-            ],
+            params: {
+                page_size: 100,
+            },
         },
-    ]
+    )
+
+    const renderedList = useMemo(
+        () =>
+            groupByDay<
+                TransportListItem,
+                TransportListItem["detail_data"],
+                "day",
+                "detail_data",
+                TransportTableItem
+            >(
+                list?.map((el, i) => {
+                    return { ...el, field_id: i + 1 }
+                }) || [],
+                "day",
+                "detail_data",
+            ),
+        [list],
+    )
 
     return (
-        <TourTableContainer loading={false}>
+        <TourTableContainer loading={isLoading}>
             <TourTableHeader columns={columns} />
-            {data?.map((item) => <TourCol key={item.id} {...item} />)}
+            {renderedList?.map((item) => (
+                <TourCol
+                    key={item.day}
+                    {...item}
+                    transports={transportsData?.results || []}
+                />
+            ))}
         </TourTableContainer>
     )
 }
