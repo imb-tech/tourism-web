@@ -8,6 +8,12 @@ type TransportListItemdetail = {
     driver: number
     driver_phone: string
     company_phone: string
+    to_city: number
+    from_city: number
+    to_city_id: number
+    from_city_id: number
+    from_time: string
+    to_time: string
     transport: number
     transport_id: number
     field_id: number

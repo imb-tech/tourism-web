@@ -112,3 +112,7 @@
         @apply !min-w-[unset];
     }
 }
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+    background: none;
+}

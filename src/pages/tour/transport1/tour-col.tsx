@@ -31,16 +31,12 @@ function TourCol({
     })
 
     const fieldsValue = form.watch("data")
-    const controlledFields = fields.map((field, i) => ({
-        ...field,
-        ...fieldsValue[i],
-    }))
 
     const handleSave = useCallback(
         (event: React.FocusEvent<HTMLElement>) => {
             const item = fieldsValue?.find(
                 (field) =>
-                    field.day === Number(event.currentTarget.textContent),
+                    field.field_id === Number(event.currentTarget.textContent),
             )
 
             if (item) {
@@ -74,7 +70,7 @@ function TourCol({
                 <p className="text-primary">Day {day}</p>
             </div>
             <div className="flex flex-col col-span-7">
-                {controlledFields?.map((el, i) => (
+                {fields?.map((el, i) => (
                     <CustomTableRow grid="grid-cols-7" in={i} key={el.id}>
                         <CustomTableCol>
                             <SelectField
@@ -114,7 +110,7 @@ function TourCol({
                                 onBlur={handleSave}
                                 dayId={el.field_id}
                             >
-                                {el.size}
+                                {fieldsValue[i].size}
                             </EditableBox>
                         </CustomTableCol>
 
@@ -126,7 +122,7 @@ function TourCol({
                                 dayId={el.field_id}
                                 isNumber
                             >
-                                {el.price}
+                                {fieldsValue[i].price}
                             </EditableBox>
                         </CustomTableCol>
 

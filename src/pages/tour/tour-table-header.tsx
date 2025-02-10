@@ -11,7 +11,13 @@ export default function TourTableHeader<TData>({
     return (
         <div className={cn("px-3 grid", grid)}>
             {columns?.map((column, index) => (
-                <p key={index} className={`font-medium`}>
+                <p
+                    key={index}
+                    className={cn(
+                        `font-medium`,
+                        column?.colSpan ? `col-span-${column.colSpan}` : "",
+                    )}
+                >
                     {column.header?.toString()}
                 </p>
             ))}
