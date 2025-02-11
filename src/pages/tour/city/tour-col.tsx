@@ -25,7 +25,6 @@ function TourCityCard(props: TourCityItem & { citiesList: City[] }) {
 
     function save() {
         setIsEditing(false)
-        document.body.style.cursor = "wait"
         mutate(DETAIL + "/city", {
             ...form.getValues(),
             plan_id: Number(planId),

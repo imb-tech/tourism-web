@@ -59,29 +59,16 @@ type TrainItem = {
     data: TrainData[]
 }
 
-type EnterenceData = {
-    id: number
-    name: string
-    users: number
-    per_price: number
-    total_price: number
-}
+// type EnterenceData = {
+//     id: number
+//     name: string
+//     users: number
+//     per_price: number
+//     total_price: number
+// }
 
-type EnterenceItem = {
-    id: number
-    day: number
-    data: EnterenceData[]
-}
-
-type OtherData = {
-    id: number
-    category: string
-    description: string
-    price: number
-}
-
-type OtherItem = {
-    id: number
-    day: number
-    data: OtherData[]
-}
+// type EnterenceItem = {
+//     id: number
+//     day: number
+//     data: EnterenceData[]
+// }

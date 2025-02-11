@@ -4,7 +4,7 @@ import useTourLoading from "./loading"
 
 export default function useEditableRequest<T>() {
     const { setLoading } = useTourLoading()
-    const { mutate } = usePost({
+    const { mutateAsync } = usePost({
         onSuccess: () => {
             setLoading(false)
         },
@@ -13,13 +13,19 @@ export default function useEditableRequest<T>() {
         },
     })
 
-    function save(values: T, type: string, planId: string | number) {
+    async function save(values: T, type: string, planId: string | number) {
         setLoading(true)
-        mutate(CHANGE + type, {
-            ...values,
-            plan: Number(planId),
-            type,
-        })
+        try {
+            const resp = await mutateAsync(CHANGE + type, {
+                ...values,
+                plan: Number(planId),
+                type,
+            })
+            setLoading(false)
+            return resp
+        } catch (error) {
+            setLoading(false)
+        }
     }
 
     return {

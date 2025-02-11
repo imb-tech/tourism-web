@@ -39,14 +39,14 @@ function TourCol({
     const fieldsValue = form.watch("data")
 
     const handleSave = useCallback(
-        (event: React.FocusEvent<HTMLElement>) => {
+        async (event: React.FocusEvent<HTMLElement>) => {
+            const fieldId = Number(event.currentTarget.textContent)
             const item = fieldsValue?.find(
-                (field) =>
-                    field.field_id === Number(event.currentTarget.textContent),
+                (field) => field.field_id === fieldId,
             )
 
             if (item) {
-                save(
+                const resp = (await save(
                     {
                         ...item,
                         payment_type: item.payment_type ?? 0,
@@ -58,10 +58,15 @@ function TourCol({
                     },
                     "trans_out",
                     planId,
-                )
+                )) as { id: number }
+                fieldsValue?.forEach((f, i) => {
+                    if (f.field_id === fieldId) {
+                        form.setValue(`data.${i}.id`, resp.id)
+                    }
+                })
             }
         },
-        [fieldsValue, save, planId],
+        [fieldsValue, save, planId, form],
     )
 
     function onBlur(event: React.FocusEvent<HTMLElement>, field_id: number) {
@@ -97,6 +102,7 @@ function TourCol({
                                     setFieldValue(
                                         `data.${i}.price`,
                                         Number(tr.price),
+                                        el.key,
                                     )
                                     form.setValue(
                                         `data.${i}.size`,
@@ -105,6 +111,7 @@ function TourCol({
                                     setFieldValue(
                                         `data.${i}.size`,
                                         Number(tr.size),
+                                        el.key,
                                     )
                                     form.setValue(
                                         `data.${i}.transport_id`,
@@ -127,6 +134,7 @@ function TourCol({
                                 name={`data.${i}.size`}
                                 onBlur={handleSave}
                                 dayId={el.field_id}
+                                fieldKey={el.key}
                             >
                                 {el.size}
                             </EditableBox>
@@ -138,6 +146,7 @@ function TourCol({
                                 name={`data.${i}.price`}
                                 onBlur={handleSave}
                                 dayId={el.field_id}
+                                fieldKey={el.key}
                                 isNumber
                             >
                                 {el.price}

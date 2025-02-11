@@ -1,6 +1,6 @@
 import InitialDataBox from "@/components/elements/initial-data-box"
 import { useParams, useSearch } from "@tanstack/react-router"
-import React, { Suspense } from "react"
+import React, { Suspense, useMemo } from "react"
 import PackDetailHeader from "../pack-detail/pack-detail-header"
 import TourTab from "./tour-tab"
 
@@ -24,7 +24,12 @@ export default function Tour() {
         enterence: () => import("@/pages/tour/enterence/tour-row"),
         other: () => import("@/pages/tour/other/tour-row"),
     }
-    const ComponentMain = React.lazy(allowedTabs[type || "city"])
+
+    const ComponentMain = useMemo(
+        () => React.lazy(allowedTabs[type || "city"]),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [type],
+    )
 
     return (
         <section className="p-3">

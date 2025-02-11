@@ -14,6 +14,7 @@ type IProps<IForm extends FieldValues> = {
     dayId: number
     isNumber?: boolean
     editable?: boolean
+    fieldKey?: string
 }
 
 export default function EditableBox<IForm extends FieldValues>({
@@ -25,6 +26,7 @@ export default function EditableBox<IForm extends FieldValues>({
     isNumber,
     className,
     editable = true,
+    fieldKey,
 }: IProps<IForm> & HTMLAttributes<HTMLDivElement>) {
     const [isEditing, setIsEditing] = useState(false)
     const ref = useRef<HTMLDivElement>(null)
@@ -62,7 +64,7 @@ export default function EditableBox<IForm extends FieldValues>({
             onInput={handleInput}
             onBlur={handleBlur}
             onDoubleClick={() => (editable ? setIsEditing(true) : null)}
-            id={name}
+            id={name + fieldKey}
         >
             {isNumber && children ?
                 formatMoney((children as number) || 0)

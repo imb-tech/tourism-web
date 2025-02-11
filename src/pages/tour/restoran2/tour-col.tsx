@@ -10,8 +10,8 @@ import CustomTableRow from "../custome-table-row"
 import useEditableRequest from "../editable-request"
 
 // eslint-disable-next-line react-refresh/only-export-components
-export function setFieldValue(id: string, value: string | number) {
-    const field = document.getElementById(id)
+export function setFieldValue(id: string, value: string | number, key: string) {
+    const field = document.getElementById(id + key)
     if (field) {
         field.textContent = value.toString()
     }
@@ -45,14 +45,14 @@ export default function TourCol({
     const fieldsValue = form.watch("data")
 
     const handleSave = useCallback(
-        (event: React.FocusEvent<HTMLElement>) => {
+        async (event: React.FocusEvent<HTMLElement>) => {
+            const fieldId = Number(event.currentTarget.textContent)
             const item = fieldsValue?.find(
-                (field) =>
-                    field.field_id === Number(event.currentTarget.textContent),
+                (field) => field.field_id === fieldId,
             )
 
             if (item) {
-                save(
+                const resp = (await save(
                     {
                         ...item,
                         payment_type: item.payment_type ?? 0,
@@ -65,10 +65,15 @@ export default function TourCol({
                     },
                     "lunch",
                     planId,
-                )
+                )) as { id: number }
+                fieldsValue?.forEach((f, i) => {
+                    if (f.field_id === fieldId) {
+                        form.setValue(`data.${i}.id`, resp.id)
+                    }
+                })
             }
         },
-        [fieldsValue, save, planId],
+        [fieldsValue, save, planId, form],
     )
 
     function onBlur(event: React.FocusEvent<HTMLElement>, field_id: number) {
@@ -131,6 +136,7 @@ export default function TourCol({
                                         setFieldValue(
                                             `data.${i}.price`,
                                             set.price,
+                                            el.key,
                                         )
                                         form.setValue(`data.${i}.set`, set.id)
                                     } else form.resetField(`data.${i}.set`)
@@ -161,6 +167,7 @@ export default function TourCol({
                                 methods={form}
                                 dayId={el.field_id}
                                 name={`data.${i}.price`}
+                                fieldKey={el.key}
                                 onBlur={handleSave}
                             >
                                 {formatMoney(el.price)}

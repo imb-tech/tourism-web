@@ -31,14 +31,14 @@ export default function TourCol({ day, data, hotels }: HotelItem) {
     const fieldsValue = form.watch("data")
 
     const handleSave = useCallback(
-        (event: React.FocusEvent<HTMLElement>) => {
+        async (event: React.FocusEvent<HTMLElement>) => {
+            const fieldId = Number(event.currentTarget.textContent)
             const item = fieldsValue?.find(
-                (field) =>
-                    field.field_id === Number(event.currentTarget.textContent),
+                (field) => field.field_id === fieldId,
             )
 
             if (item) {
-                save(
+                const resp = (await save(
                     {
                         ...item,
                         payment_type: item.payment_type ?? 0,
@@ -48,10 +48,15 @@ export default function TourCol({ day, data, hotels }: HotelItem) {
                     },
                     "hotel",
                     planId,
-                )
+                )) as { id: number }
+                fieldsValue?.forEach((f, i) => {
+                    if (f.field_id === fieldId) {
+                        form.setValue(`data.${i}.id`, resp.id)
+                    }
+                })
             }
         },
-        [fieldsValue, save, planId],
+        [fieldsValue, save, planId, form],
     )
 
     function onBlur(event: React.FocusEvent<HTMLElement>, field_id: number) {
@@ -109,7 +114,11 @@ export default function TourCol({ day, data, hotels }: HotelItem) {
                                 }}
                                 onChange={(v) => {
                                     const room = v as RoomItem
-                                    setFieldValue(`data.${i}.price`, room.price)
+                                    setFieldValue(
+                                        `data.${i}.price`,
+                                        room.price,
+                                        el.key,
+                                    )
                                     form.setValue(`data.${i}.price`, room.price)
                                     form.setValue(`data.${i}.room_id`, room.id)
                                 }}
@@ -140,6 +149,7 @@ export default function TourCol({ day, data, hotels }: HotelItem) {
                                 dayId={el.field_id}
                                 name={`data.${i}.price`}
                                 onBlur={handleSave}
+                                id={`data.${i}.room_id` + el.key}
                                 isNumber
                             >
                                 {el.price}

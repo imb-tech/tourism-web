@@ -1,54 +1,64 @@
+import { CATEGORIES, DETAIL } from "@/constants/api-endpoints"
+import { useGet } from "@/services/default-requests"
 import { TableColumns } from "@/types/table"
+import { useParams } from "@tanstack/react-router"
+import { useMemo } from "react"
+import { groupByDay } from "../gid/tour-row"
+import TourTableContainer from "../tour-table-container"
 import TourTableHeader from "../tour-table-header"
 import TourCol from "./tour-col"
 
 export default function TourRow() {
-    const columns: TableColumns<OtherItem>[] = [
+    const columns: TableColumns<EnteranceListItem>[] = [
         {
-            flex: 0.25,
             header: "Kun",
         },
         {
-            flex: 0.25,
-            header: "Nomi",
+            header: "Kategoriya",
         },
         {
-            flex: 0.25,
-            header: "Turistlar",
+            header: "Izoh",
         },
         {
-            flex: 0.25,
-            header: "Individual narxi",
+            header: "Narxi",
+        },
+        {
+            header: "To'lov turi",
         },
     ]
 
-    const data: OtherItem[] = [
-        {
-            id: 1,
-            day: 1,
-            data: [
-                {
-                    id: 1,
-                    category: "Registon maydoni",
-                    description:
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                    price: 420000,
-                },
-                {
-                    id: 2,
-                    category: "Ichan qala",
-                    description:
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                    price: 420000,
-                },
-            ],
-        },
-    ]
+    const { id } = useParams({ from: "/_main/packs/$pack/tour/$id" })
+
+    const url = DETAIL + `/other/${id}`
+
+    const { data: list, isLoading } = useGet<OtherItem[] | undefined>(url)
+    const { data: categories } = useGet<Category[] | undefined>(CATEGORIES)
+
+    const renderedList = useMemo(
+        () =>
+            groupByDay<
+                OtherItem,
+                OtherData,
+                "day",
+                "detail_data",
+                OtherTableItem
+            >(
+                list?.map((el, i) => {
+                    return { ...el, field_id: i + 1 }
+                }) || [],
+                "day",
+                "detail_data",
+            ),
+        [list],
+    )
+    console.log(renderedList)
 
     return (
-        <div className="flex flex-col gap-3">
-            <TourTableHeader columns={columns} />
-            {data?.map((item) => <TourCol key={item.id} {...item} />)}
-        </div>
+        <TourTableContainer loading={isLoading}>
+            <TourTableHeader columns={columns} grid={"grid-cols-5"} />
+            {renderedList?.map((item) => (
+                <TourCol key={item.day} {...item} places={categories || []} />
+            ))}
+        </TourTableContainer>
     )
 }
