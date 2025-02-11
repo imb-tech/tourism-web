@@ -1,58 +1,70 @@
+import { DETAIL, SELECTION } from "@/constants/api-endpoints"
+import { useGet } from "@/services/default-requests"
 import { TableColumns } from "@/types/table"
+import { useParams } from "@tanstack/react-router"
+import { useMemo } from "react"
+import { groupByDay } from "../gid/tour-row"
+import TourTableContainer from "../tour-table-container"
 import TourTableHeader from "../tour-table-header"
 import TourCol from "./tour-col"
 
 export default function TourRow() {
     const columns: TableColumns<Restaurant1Item>[] = [
         {
-            flex: 0.2,
             header: "Kun",
         },
         {
-            flex: 0.2,
             header: "Nomi",
         },
         {
-            flex: 0.2,
+            header: "Set",
+        },
+        {
             header: "Turistlar",
         },
         {
-            flex: 0.2,
             header: "Individual narxi",
         },
         {
-            flex: 0.2,
             header: "Jami",
         },
     ]
+    const { id } = useParams({ from: "/_main/packs/$pack/tour/$id" })
+    const url = DETAIL + `/dinner/${id}`
 
-    const data: Restaurant1Item[] = [
-        {
-            id: 1,
-            day: 1,
-            data: [
-                {
-                    id: 1,
-                    name: "Kamolon osh markazi",
-                    users: 4,
-                    per_price: 420000,
-                    total_price: 420000,
-                },
-                {
-                    id: 2,
-                    name: "Jizzax somsa",
-                    users: 4,
-                    per_price: 420000,
-                    total_price: 420000,
-                },
-            ],
-        },
-    ]
+    const { data: list, isLoading } = useGet<RestoranItem[] | undefined>(url)
+    const { data: restaurants } = useGet<RestaurantByCityResponse | undefined>(
+        SELECTION + `restaurant/${id}`,
+    )
+
+    const renderedList = useMemo<RestoranTableItem[]>(
+        () =>
+            groupByDay<
+                RestoranItem,
+                RestoranDetailData,
+                "day",
+                "detail_data",
+                RestoranTableItem
+            >(
+                list?.map((el, i) => {
+                    return { ...el, field_id: i + 1 }
+                }) || [],
+                "day",
+                "detail_data",
+            ),
+        [list],
+    )
 
     return (
-        <div className="flex flex-col gap-3">
-            <TourTableHeader columns={columns} />
-            {data?.map((item) => <TourCol key={item.id} {...item} />)}
-        </div>
+        <TourTableContainer loading={isLoading}>
+            <TourTableHeader columns={columns} grid={"grid-cols-6"} />
+            {renderedList?.map((item) => (
+                <TourCol
+                    key={item.day}
+                    {...item}
+                    restaurants={restaurants?.[item.day] || []}
+                />
+            ))}
+        </TourTableContainer>
     )
 }

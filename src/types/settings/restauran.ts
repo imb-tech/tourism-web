@@ -12,3 +12,5 @@ type Restaurant = {
     sets: RestaurantSet[]
     deleted_sets: number[]
 }
+
+type RestaurantByCityResponse = Record<number, Restaurant[]>

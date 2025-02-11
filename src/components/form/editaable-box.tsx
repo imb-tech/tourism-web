@@ -62,8 +62,11 @@ export default function EditableBox<IForm extends FieldValues>({
             onInput={handleInput}
             onBlur={handleBlur}
             onDoubleClick={() => (editable ? setIsEditing(true) : null)}
+            id={name}
         >
-            {isNumber ? formatMoney(children as number) : children || "—"}
+            {isNumber && children ?
+                formatMoney((children as number) || 0)
+            :   children || "—"}
         </div>
     )
 }

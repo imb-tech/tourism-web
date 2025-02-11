@@ -9,6 +9,7 @@ import { useFieldArray, useForm } from "react-hook-form"
 import CustomTableCol from "../custome-table-col"
 import CustomTableRow from "../custome-table-row"
 import useEditableRequest from "../editable-request"
+import { setFieldValue } from "../restoran2/tour-col"
 
 function TourCol({
     day,
@@ -93,7 +94,15 @@ function TourCol({
                                         `data.${i}.price`,
                                         Number(tr.price),
                                     )
+                                    setFieldValue(
+                                        `data.${i}.price`,
+                                        Number(tr.price),
+                                    )
                                     form.setValue(
+                                        `data.${i}.size`,
+                                        Number(tr.size),
+                                    )
+                                    setFieldValue(
                                         `data.${i}.size`,
                                         Number(tr.size),
                                     )
@@ -119,7 +128,7 @@ function TourCol({
                                 onBlur={handleSave}
                                 dayId={el.field_id}
                             >
-                                {fieldsValue[i].size}
+                                {el.size}
                             </EditableBox>
                         </CustomTableCol>
 
@@ -131,7 +140,7 @@ function TourCol({
                                 dayId={el.field_id}
                                 isNumber
                             >
-                                {fieldsValue[i].price}
+                                {el.price}
                             </EditableBox>
                         </CustomTableCol>
 

@@ -1,4 +1,5 @@
 import ParamAnimatedTabs from "@/components/param/animated-tab"
+import useTourLoading from "./loading"
 
 const options = [
     { id: "city", name: "Shahar" },
@@ -15,8 +16,11 @@ const options = [
 ]
 
 export default function TourTab() {
+    const { loading } = useTourLoading()
+
     return (
         <ParamAnimatedTabs
+            disabled={loading}
             options={options}
             paramName="type"
             className="max-w-full w-full grid"

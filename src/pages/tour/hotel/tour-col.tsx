@@ -9,6 +9,7 @@ import { useFieldArray, useForm } from "react-hook-form"
 import CustomTableCol from "../custome-table-col"
 import CustomTableRow from "../custome-table-row"
 import useEditableRequest from "../editable-request"
+import { setFieldValue } from "../restoran2/tour-col"
 
 export default function TourCol({ day, data, hotels }: HotelItem) {
     const { save } = useEditableRequest()
@@ -106,6 +107,12 @@ export default function TourCol({ day, data, hotels }: HotelItem) {
                                     control: () => "!border-none w-auto",
                                     indicatorsContainer: () => "!hidden",
                                 }}
+                                onChange={(v) => {
+                                    const room = v as RoomItem
+                                    setFieldValue(`data.${i}.price`, room.price)
+                                    form.setValue(`data.${i}.price`, room.price)
+                                    form.setValue(`data.${i}.room_id`, room.id)
+                                }}
                                 options={
                                     hotels?.find(
                                         (el) =>
@@ -135,7 +142,7 @@ export default function TourCol({ day, data, hotels }: HotelItem) {
                                 onBlur={handleSave}
                                 isNumber
                             >
-                                {el?.price}
+                                {el.price}
                             </EditableBox>
                         </CustomTableCol>
 
@@ -147,7 +154,10 @@ export default function TourCol({ day, data, hotels }: HotelItem) {
                                 name={`data.${i}.payment_type`}
                                 onBlur={handleSave}
                             >
-                                {formatMoney(el?.expected_cost)}
+                                {formatMoney(
+                                    Number(form.watch(`data.${i}.price`)) *
+                                        Number(form.watch(`data.${i}.count`)),
+                                )}
                             </EditableBox>
                         </CustomTableCol>
 
