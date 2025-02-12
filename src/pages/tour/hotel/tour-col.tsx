@@ -70,7 +70,13 @@ export default function TourCol({ day, data, hotels }: HotelItem) {
             </div>
             <div className="flex flex-col col-span-6">
                 {fields?.map((el, i) => (
-                    <CustomTableRow grid="grid-cols-6" in={i} key={el.id}>
+                    <CustomTableRow
+                        grid="grid-cols-6"
+                        in={i}
+                        key={el.id}
+                        rowId={el?.id}
+                        day={day}
+                    >
                         <CustomTableCol>
                             <SelectField
                                 name={`data.${i}.hotel_id`}

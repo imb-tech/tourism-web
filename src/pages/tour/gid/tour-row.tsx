@@ -1,7 +1,7 @@
 import { DETAIL } from "@/constants/api-endpoints"
 import { useGet } from "@/services/default-requests"
 import { TableColumns } from "@/types/table"
-import { useParams } from "@tanstack/react-router"
+import { useParams, useSearch } from "@tanstack/react-router"
 import { useMemo } from "react"
 import TourTableContainer from "../tour-table-container"
 import TourTableHeader from "../tour-table-header"
@@ -74,10 +74,18 @@ export default function TourGidRow() {
     ]
 
     const { id } = useParams({ from: "/_main/packs/$pack/tour/$id" })
+    const { type } = useSearch({ from: "/_main/packs/$pack/tour/$id" })
 
     const url = DETAIL + `/guide/${id}`
 
-    const { data: list, isLoading } = useGet<TourGidResponse[] | undefined>(url)
+    const { data: list, isFetching } = useGet<TourGidResponse[] | undefined>(
+        url,
+        {
+            options: {
+                queryKey: [type],
+            },
+        },
+    )
 
     const renderedList = useMemo(
         () =>
@@ -98,7 +106,7 @@ export default function TourGidRow() {
     )
 
     return (
-        <TourTableContainer loading={isLoading}>
+        <TourTableContainer loading={isFetching}>
             <TourTableHeader columns={columns} grid="grid-cols-7" />
             {renderedList?.map((item) => (
                 <TourGidCard key={item.day} {...item} id={item.id} />

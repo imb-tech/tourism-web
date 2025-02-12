@@ -1,7 +1,7 @@
 import { CITIES, DETAIL } from "@/constants/api-endpoints"
 import { useGet } from "@/services/default-requests"
 import { TableColumns } from "@/types/table"
-import { useParams } from "@tanstack/react-router"
+import { useParams, useSearch } from "@tanstack/react-router"
 import { useMemo } from "react"
 import { groupByDay } from "../gid/tour-row"
 import TourTableContainer from "../tour-table-container"
@@ -41,9 +41,14 @@ export default function TourRow() {
     ]
 
     const { id } = useParams({ from: "/_main/packs/$pack/tour/$id" })
+    const { type } = useSearch({ from: "/_main/packs/$pack/tour/$id" })
     const url = DETAIL + `/train/${id}`
 
-    const { data: list, isLoading } = useGet<TrainItem[] | undefined>(url)
+    const { data: list, isFetching } = useGet<TrainItem[] | undefined>(url, {
+        options: {
+            queryKey: [type],
+        },
+    })
 
     const { data: cities } = useGet<City[]>(CITIES, {
         params: {
@@ -75,7 +80,7 @@ export default function TourRow() {
     )
 
     return (
-        <TourTableContainer loading={isLoading}>
+        <TourTableContainer loading={isFetching}>
             <TourTableHeader columns={columns} grid={"grid-cols-10"} />
             {renderedList?.map((item) => (
                 <TourCol key={item.day} {...item} cities={cities || []} />

@@ -70,7 +70,13 @@ export default function TourGidCard({
             </div>
             <div className="flex flex-col col-span-4">
                 {fields?.map((field, i) => (
-                    <CustomTableRow grid="grid-cols-4" in={i} key={field.key}>
+                    <CustomTableRow
+                        grid="grid-cols-4"
+                        in={i}
+                        key={field.key}
+                        rowId={field?.id}
+                        day={day}
+                    >
                         <CustomTableCol>
                             <SelectField
                                 name={`data.${i}.category_id`}

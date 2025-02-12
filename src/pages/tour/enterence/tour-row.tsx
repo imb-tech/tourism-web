@@ -1,7 +1,7 @@
 import { DETAIL, ENTERANCES } from "@/constants/api-endpoints"
 import { useGet } from "@/services/default-requests"
 import { TableColumns } from "@/types/table"
-import { useParams } from "@tanstack/react-router"
+import { useParams, useSearch } from "@tanstack/react-router"
 import { useMemo } from "react"
 import { groupByDay } from "../gid/tour-row"
 import TourTableContainer from "../tour-table-container"
@@ -31,15 +31,19 @@ export default function TourRow() {
     ]
 
     const { id } = useParams({ from: "/_main/packs/$pack/tour/$id" })
+    const { type } = useSearch({ from: "/_main/packs/$pack/tour/$id" })
 
     const url = DETAIL + `/entrance/${id}`
 
-    const { data: list, isLoading } = useGet<EnteranceListItem[] | undefined>(
+    const { data: list, isFetching } = useGet<EnteranceListItem[] | undefined>(
         url,
+        {
+            options: {
+                queryKey: [type],
+            },
+        },
     )
     const { data: enterances } = useGet<ListResponse<Enterance>>(ENTERANCES)
-
-    console.log(enterances?.results)
 
     const renderedList = useMemo(
         () =>
@@ -60,7 +64,7 @@ export default function TourRow() {
     )
 
     return (
-        <TourTableContainer loading={isLoading}>
+        <TourTableContainer loading={isFetching}>
             <TourTableHeader columns={columns} grid={"grid-cols-6"} />
             {renderedList?.map((item) => (
                 <TourCol

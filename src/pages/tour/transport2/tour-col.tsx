@@ -80,7 +80,13 @@ function TourCol({
             </div>
             <div className="flex flex-col col-span-10">
                 {fields?.map((el, i) => (
-                    <CustomTableRow grid="grid-cols-10" in={i} key={el.id}>
+                    <CustomTableRow
+                        grid="grid-cols-10"
+                        in={i}
+                        key={el.id}
+                        rowId={el.id}
+                        day={day}
+                    >
                         <CustomTableCol>
                             <SelectField
                                 name={`data.${i}.transport_id`}

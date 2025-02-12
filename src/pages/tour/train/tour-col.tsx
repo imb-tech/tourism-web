@@ -143,7 +143,13 @@ function TourCol({
             </div>
             <div className="flex flex-col col-span-9">
                 {fields?.map((el, i) => (
-                    <CustomTableRow grid="grid-cols-9" in={i} key={el.id}>
+                    <CustomTableRow
+                        grid="grid-cols-9"
+                        in={i}
+                        key={el.id}
+                        rowId={el.id}
+                        day={day}
+                    >
                         <CustomTableCol className="-ml-4">
                             <DatePicker
                                 className="!border-none w-auto shadow-none"

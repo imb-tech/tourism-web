@@ -67,7 +67,13 @@ export default function TourGidCard({ day, data }: TourGidItem) {
             </div>
             <div className="flex flex-col col-span-6">
                 {fields?.map((field, i) => (
-                    <CustomTableRow grid="grid-cols-6" in={i} key={field.key}>
+                    <CustomTableRow
+                        grid="grid-cols-6"
+                        in={i}
+                        key={field.key}
+                        rowId={field?.id}
+                        day={day}
+                    >
                         <CustomTableCol>
                             <EditableBox
                                 methods={form}
