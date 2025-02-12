@@ -3,7 +3,6 @@ import EditableBox from "@/components/form/editaable-box"
 import SelectField from "@/components/form/select-field"
 import { paymentTypes } from "@/lib/payment-types"
 import useEditableRequest from "@/pages/tour/editable-request"
-import { useParams } from "@tanstack/react-router"
 import { useCallback } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 import CustomTableCol from "../custome-table-col"
@@ -14,7 +13,6 @@ export default function TourGidCard({
     data,
     places,
 }: EnteranceTableItem & { places: Enterance[] }) {
-    const { id: planId } = useParams({ from: "/_main/packs/$pack/tour/$id" })
     const { save } = useEditableRequest<EnteranceListItemdetail>()
 
     const form = useForm<EnteranceTableItem>({
@@ -39,16 +37,12 @@ export default function TourGidCard({
             )
 
             if (item) {
-                const resp = (await save(
-                    {
-                        ...item,
-                        payment_type: item.payment_type ?? 0,
-                        price: item.price || 0,
-                        entrance: item.entrance_id,
-                    },
-                    "entrance",
-                    planId,
-                )) as { id: number }
+                const resp = (await save({
+                    ...item,
+                    payment_type: item.payment_type ?? 0,
+                    price: item.price || 0,
+                    entrance: item.entrance_id,
+                })) as { id: number }
                 fieldsValue?.forEach((f, i) => {
                     if (f.field_id === fieldId) {
                         form.setValue(`data.${i}.id`, resp.id)
@@ -56,7 +50,7 @@ export default function TourGidCard({
                 })
             }
         },
-        [fieldsValue, save, planId, form],
+        [fieldsValue, save, form],
     )
 
     function onBlur(event: React.FocusEvent<HTMLElement>, field_id: number) {

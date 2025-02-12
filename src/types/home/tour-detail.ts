@@ -41,24 +41,6 @@ type Restaurant1Item = {
     data: Restaurant1Data[]
 }
 
-type TrainData = {
-    id: number
-    from_city: string
-    to_city: string
-    from_time: string
-    to_time: string
-    class: string
-    users: number
-    price: number
-    total_price: number
-}
-
-type TrainItem = {
-    id: number
-    day: number
-    data: TrainData[]
-}
-
 // type EnterenceData = {
 //     id: number
 //     name: string

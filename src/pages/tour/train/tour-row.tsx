@@ -1,74 +1,85 @@
+import { CITIES, DETAIL } from "@/constants/api-endpoints"
+import { useGet } from "@/services/default-requests"
 import { TableColumns } from "@/types/table"
+import { useParams } from "@tanstack/react-router"
+import { useMemo } from "react"
+import { groupByDay } from "../gid/tour-row"
+import TourTableContainer from "../tour-table-container"
 import TourTableHeader from "../tour-table-header"
 import TourCol from "./tour-col"
 
 export default function TourRow() {
     const columns: TableColumns<TrainItem>[] = [
         {
-            flex: 0.1,
             header: "Kun",
         },
         {
-            flex: 0.15,
-            header: "Shaxar",
+            header: "Sana",
         },
         {
-            flex: 0.15,
+            header: "Shaxar",
+            colSpan: 2,
+        },
+        {
             header: "Vaqt",
         },
         {
-            flex: 0.15,
             header: "Class",
         },
         {
-            flex: 0.15,
-            header: "Soni",
+            header: "Narxi",
         },
         {
-            flex: 0.15,
-            header: "Individual narxi",
+            header: "To'lov turi",
         },
         {
-            flex: 0.15,
+            header: "Turistlar soni",
+        },
+        {
             header: "Jami",
         },
     ]
 
-    const data: TrainItem[] = [
-        {
-            id: 1,
-            day: 1,
-            data: [
-                {
-                    id: 1,
-                    from_city: "Tashkent",
-                    to_city: "Nukus",
-                    from_time: "09:00",
-                    to_time: "17:00",
-                    class: "Ekonom",
-                    users: 2,
-                    price: 420000,
-                    total_price: 840000,
-                },
-                {
-                    id: 2,
-                    from_city: "Qarshi",
-                    to_city: "Xiva",
-                    from_time: "09:00",
-                    to_time: "17:00",
-                    class: "Ekonom",
-                    users: 2,
-                    price: 420000,
-                    total_price: 840000,
-                },
-            ],
+    const { id } = useParams({ from: "/_main/packs/$pack/tour/$id" })
+    const url = DETAIL + `/train/${id}`
+
+    const { data: list, isLoading } = useGet<TrainItem[] | undefined>(url)
+
+    const { data: cities } = useGet<City[]>(CITIES, {
+        params: {
+            page_size: 100,
+            train_code__isnull: false,
         },
-    ]
+    })
+
+    const renderedList = useMemo(
+        () =>
+            groupByDay<
+                TrainItem,
+                TrainDetailData,
+                "day",
+                "detail_data",
+                TrainTableItem
+            >(
+                list?.map((el, i) => {
+                    return {
+                        ...el,
+                        field_id: i + 1,
+                        payment_type: el.payment_type ?? 0,
+                    }
+                }) || [],
+                "day",
+                "detail_data",
+            ),
+        [list],
+    )
 
     return (
-        <div className="flex flex-col gap-3">
-            <TourTableHeader columns={columns} />
-            {data?.map((item) => <TourCol key={item.id} {...item} />)}
-        </div>
+        <TourTableContainer loading={isLoading}>
+            <TourTableHeader columns={columns} grid={"grid-cols-10"} />
+            {renderedList?.map((item) => (
+                <TourCol key={item.day} {...item} cities={cities || []} />
+            ))}
+        </TourTableContainer>
     )
 }

@@ -13,15 +13,15 @@ export default function Tour() {
         () => Promise<{ default: React.ComponentType }>
     > = {
         city: () => import("@/pages/tour/city/tour-row"),
-        gid: () => import("@/pages/tour/gid/tour-row"),
+        guide: () => import("@/pages/tour/gid/tour-row"),
         hotel: () => import("@/pages/tour/hotel/tour-row"),
-        transport1: () => import("@/pages/tour/transport1/tour-row"),
-        transport2: () => import("@/pages/tour/transport2/tour-row"),
-        restoran1: () => import("@/pages/tour/restoran1/tour-row"),
-        restoran2: () => import("@/pages/tour/restoran2/tour-row"),
+        trans_in: () => import("@/pages/tour/transport1/tour-row"),
+        trans_out: () => import("@/pages/tour/transport2/tour-row"),
+        dinner: () => import("@/pages/tour/restoran1/tour-row"),
+        lunch: () => import("@/pages/tour/restoran2/tour-row"),
         train: () => import("@/pages/tour/train/tour-row"),
         plane: () => import("@/pages/tour/plane/tour-row"),
-        enterence: () => import("@/pages/tour/enterence/tour-row"),
+        entrance: () => import("@/pages/tour/enterence/tour-row"),
         other: () => import("@/pages/tour/other/tour-row"),
     }
 

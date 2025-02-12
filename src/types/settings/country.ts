@@ -12,4 +12,5 @@ type City = {
     id: number
     name: string
     image: string | null
+    train_code: number
 }

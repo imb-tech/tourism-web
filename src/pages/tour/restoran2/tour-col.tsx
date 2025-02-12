@@ -2,7 +2,6 @@ import CustomTable from "@/components/custom/table"
 import EditableBox from "@/components/form/editaable-box"
 import SelectField from "@/components/form/select-field"
 import formatMoney from "@/lib/format-money"
-import { useParams } from "@tanstack/react-router"
 import { useCallback } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 import CustomTableCol from "../custome-table-col"
@@ -23,7 +22,6 @@ export default function TourCol({
     restaurants,
 }: RestoranTableItem & { restaurants: Restaurant[] }) {
     const { save } = useEditableRequest()
-    const { id: planId } = useParams({ from: "/_main/packs/$pack/tour/$id" })
 
     const form = useForm<RestoranTableItem>({
         defaultValues: {
@@ -52,20 +50,16 @@ export default function TourCol({
             )
 
             if (item) {
-                const resp = (await save(
-                    {
-                        ...item,
-                        payment_type: item.payment_type ?? 0,
-                        price: item.price || 0,
-                        tourists_count: item.tourists_count || 0,
-                        restaurant: item?.restaurant || null,
-                        restaurant_id: undefined,
-                        set: item?.set || null,
-                        set_id: undefined,
-                    },
-                    "lunch",
-                    planId,
-                )) as { id: number }
+                const resp = (await save({
+                    ...item,
+                    payment_type: item.payment_type ?? 0,
+                    price: item.price || 0,
+                    tourists_count: item.tourists_count || 0,
+                    restaurant: item?.restaurant || null,
+                    restaurant_id: undefined,
+                    set: item?.set || null,
+                    set_id: undefined,
+                })) as { id: number }
                 fieldsValue?.forEach((f, i) => {
                     if (f.field_id === fieldId) {
                         form.setValue(`data.${i}.id`, resp.id)
@@ -73,7 +67,7 @@ export default function TourCol({
                 })
             }
         },
-        [fieldsValue, save, planId, form],
+        [fieldsValue, save, form],
     )
 
     function onBlur(event: React.FocusEvent<HTMLElement>, field_id: number) {

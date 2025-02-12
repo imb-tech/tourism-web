@@ -1,9 +1,17 @@
-import { CHANGE } from "@/constants/api-endpoints"
+import { CHANGE, DETAIL } from "@/constants/api-endpoints"
 import { usePost } from "@/services/default-requests"
+import { useQueryClient } from "@tanstack/react-query"
+import { useParams, useSearch } from "@tanstack/react-router"
 import useTourLoading from "./loading"
 
 export default function useEditableRequest<T>() {
     const { setLoading } = useTourLoading()
+    const queryClient = useQueryClient()
+    const { id: planid } = useParams({ from: "/_main/packs/$pack/tour/$id" })
+    const { type } = useSearch({
+        from: "/_main/packs/$pack/tour/$id",
+    })
+
     const { mutateAsync } = usePost({
         onSuccess: () => {
             setLoading(false)
@@ -13,12 +21,12 @@ export default function useEditableRequest<T>() {
         },
     })
 
-    async function save(values: T, type: string, planId: string | number) {
+    async function save(values: T) {
         setLoading(true)
         try {
             const resp = await mutateAsync(CHANGE + type, {
                 ...values,
-                plan: Number(planId),
+                plan: Number(planid),
                 type,
             })
             setLoading(false)
@@ -28,7 +36,21 @@ export default function useEditableRequest<T>() {
         }
     }
 
+    function remove() {
+        queryClient.removeQueries({
+            queryKey: [DETAIL + `/guide/${planid}`],
+        })
+    }
+
+    function duplicate() {
+        queryClient.removeQueries({
+            queryKey: [DETAIL + `/guide/${planid}`],
+        })
+    }
+
     return {
         save,
+        remove,
+        duplicate,
     }
 }

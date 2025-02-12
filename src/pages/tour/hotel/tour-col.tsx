@@ -3,7 +3,6 @@ import EditableBox from "@/components/form/editaable-box"
 import SelectField from "@/components/form/select-field"
 import formatMoney from "@/lib/format-money"
 import { paymentTypes } from "@/lib/payment-types"
-import { useParams } from "@tanstack/react-router"
 import { useCallback } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 import CustomTableCol from "../custome-table-col"
@@ -13,7 +12,6 @@ import { setFieldValue } from "../restoran2/tour-col"
 
 export default function TourCol({ day, data, hotels }: HotelItem) {
     const { save } = useEditableRequest()
-    const { id: planId } = useParams({ from: "/_main/packs/$pack/tour/$id" })
     const form = useForm<HotelItem>({
         defaultValues: {
             day,
@@ -38,17 +36,13 @@ export default function TourCol({ day, data, hotels }: HotelItem) {
             )
 
             if (item) {
-                const resp = (await save(
-                    {
-                        ...item,
-                        payment_type: item.payment_type ?? 0,
-                        price: item.price || 0,
-                        hotel: item.hotel_id,
-                        room: item.room_id,
-                    },
-                    "hotel",
-                    planId,
-                )) as { id: number }
+                const resp = (await save({
+                    ...item,
+                    payment_type: item.payment_type ?? 0,
+                    price: item.price || 0,
+                    hotel: item.hotel_id,
+                    room: item.room_id,
+                })) as { id: number }
                 fieldsValue?.forEach((f, i) => {
                     if (f.field_id === fieldId) {
                         form.setValue(`data.${i}.id`, resp.id)
@@ -56,7 +50,7 @@ export default function TourCol({ day, data, hotels }: HotelItem) {
                 })
             }
         },
-        [fieldsValue, save, planId, form],
+        [fieldsValue, save, form],
     )
 
     function onBlur(event: React.FocusEvent<HTMLElement>, field_id: number) {

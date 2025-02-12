@@ -2,7 +2,6 @@ import CustomTable from "@/components/custom/table"
 import EditableBox from "@/components/form/editaable-box"
 import SelectField from "@/components/form/select-field"
 import { paymentTypes } from "@/lib/payment-types"
-import { useParams } from "@tanstack/react-router"
 import { useCallback } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 import CustomTableCol from "../custome-table-col"
@@ -15,7 +14,6 @@ function TourCol({
     data,
     transports,
 }: TransportTableItem & { transports: Transport[] }) {
-    const { id: planId } = useParams({ from: "/_main/packs/$pack/tour/$id" })
     const { save } = useEditableRequest()
 
     const form = useForm<TransportTableItem>({
@@ -41,15 +39,11 @@ function TourCol({
             )
 
             if (item) {
-                const resp = (await save(
-                    {
-                        ...item,
-                        payment_type: item.payment_type ?? 0,
-                        transport: item.transport_id ?? null,
-                    },
-                    "trans_in",
-                    planId,
-                )) as { id: number }
+                const resp = (await save({
+                    ...item,
+                    payment_type: item.payment_type ?? 0,
+                    transport: item.transport_id ?? null,
+                })) as { id: number }
                 fieldsValue?.forEach((f, i) => {
                     if (f.field_id === fieldId) {
                         form.setValue(`data.${i}.id`, resp.id)
@@ -57,7 +51,7 @@ function TourCol({
                 })
             }
         },
-        [fieldsValue, save, planId, form],
+        [fieldsValue, save, form],
     )
 
     function onBlur(event: React.FocusEvent<HTMLElement>, field_id: number) {

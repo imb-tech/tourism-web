@@ -33,10 +33,15 @@ export default function EditableBox<IForm extends FieldValues>({
 
     const handleInput = () => {
         if (ref.current) {
-            methods.setValue(
-                name,
-                ref.current.textContent as FieldPathValue<IForm, Path<IForm>>,
-            )
+            const value = ref.current.textContent as FieldPathValue<
+                IForm,
+                Path<IForm>
+            >
+            if (name.includes("price")) {
+                methods.setValue(name, value.replace(/\s+/g, ""))
+            } else {
+                methods.setValue(name, value)
+            }
         }
     }
 
