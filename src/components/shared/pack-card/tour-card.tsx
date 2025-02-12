@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { PLANS } from "@/constants/api-endpoints"
+import { ACCEPT, PLANS } from "@/constants/api-endpoints"
 import { PLAN_BENEFIT, TOUR_DATA } from "@/constants/localstorage-keys"
 import { useModal } from "@/hooks/use-modal"
 import { useStore } from "@/hooks/use-store"
@@ -43,6 +43,14 @@ function TourCard(props: PlanItem) {
         },
     })
 
+    const { mutate: select } = usePost({
+        onSuccess() {
+            queryClient.refetchQueries({
+                queryKey: [PLANS],
+            })
+        },
+    })
+
     const { openModal: openDeleteModal } = useModal("delete")
     const { openModal } = useModal(TOUR_DATA)
 
@@ -75,12 +83,17 @@ function TourCard(props: PlanItem) {
         mutate(PLANS, props)
     }
 
+    function handleSelect() {
+        select(ACCEPT + `/${id}/${pack}`, null)
+    }
+
     return (
         <Card
             className={cn(
-                "w-full max-w-sm p-4 shadow-none",
-                accepted && "border border-success",
+                "w-full max-w-sm p-4 shadow-none cursor-pointer",
+                accepted && "border border-primary",
             )}
+            onDoubleClick={handleSelect}
         >
             <CardHeader className="flex flex-row items-center justify-between">
                 <div className="text-sm text-muted-foreground">#{id}</div>
@@ -185,4 +198,7 @@ function TourCard(props: PlanItem) {
     )
 }
 
-export default memo(TourCard, (prev, next) => prev.id === next.id)
+export default memo(
+    TourCard,
+    (prev, next) => prev.id === next.id && prev.accepted === next.accepted,
+)
