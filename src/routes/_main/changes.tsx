@@ -1,9 +1,22 @@
-import { createFileRoute } from '@tanstack/react-router'
+import Header from "@/components/header"
+import ChangesMain from "@/pages/changes"
+import HomeFilter from "@/pages/home/home-filter"
+import { createFileRoute } from "@tanstack/react-router"
 
-export const Route = createFileRoute('/_main/changes')({
-  component: RouteComponent,
+export const Route = createFileRoute("/_main/changes")({
+    component: RouteComponent,
 })
 
 function RouteComponent() {
-  return <div>Hello "/_main/changes"!</div>
+    return (
+        <div>
+            <Header
+                links={[{ label: "Top Manager" }]}
+                rightRightChild={<HomeFilter />}
+            />
+            <div className="p-3">
+                <ChangesMain />
+            </div>
+        </div>
+    )
 }

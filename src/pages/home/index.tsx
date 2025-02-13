@@ -1,7 +1,9 @@
+import HomeDocumentsList from "./home-documents-list"
+
 const HomeMain = () => {
     return (
         <div>
-            <h1>Home</h1>
+            <HomeDocumentsList />
         </div>
     )
 }

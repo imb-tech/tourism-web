@@ -4,6 +4,7 @@ import { calcProgress } from "@/lib/calc-progress"
 import { Link } from "@tanstack/react-router"
 import { Eye } from "lucide-react"
 import { memo, useMemo } from "react"
+import { getPackStatus } from "./lib"
 import PackCardMenu from "./pack-card-menu"
 import Progress from "./progress"
 
@@ -21,6 +22,7 @@ function PackCard({
     nights,
     end,
     start,
+    tm_status,
     onDelete,
     onEdit,
 }: PackCardProps) {
@@ -31,9 +33,16 @@ function PackCard({
 
     return (
         <Card className="w-full max-w-sm p-4 shadow-none">
-            <CardHeader className="flex flex-row items-center justify-between">
+            <CardHeader className="flex flex-row items-center">
                 <div className="text-sm text-muted-foreground">#{id}</div>
-                <div className="font-medium">{country.name}</div>
+                {tm_status != null && (
+                    <span className="border-primary border px-2 text-primary rounded-md text-xs lowercase">
+                        {getPackStatus("0")}
+                    </span>
+                )}
+                <div className="font-medium flex-1 text-end">
+                    {country.name}
+                </div>
             </CardHeader>
             <CardContent className="space-y-4 p-0">
                 <div className="flex flex-col gap-1">

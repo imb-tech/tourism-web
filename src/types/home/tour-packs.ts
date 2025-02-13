@@ -12,6 +12,8 @@ type TourItem = {
     hotel_stars: number
 }
 
+type PackStatus = "-1" | "0" | "1"
+
 type PackItem = {
     id: number
     client: string
@@ -22,6 +24,7 @@ type PackItem = {
     nights: number
     status: number
     country: Country
+    tm_status: PackStatus
 }
 
 type CreatePack = PackItem & {

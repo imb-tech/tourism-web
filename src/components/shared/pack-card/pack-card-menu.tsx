@@ -6,7 +6,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { CheckCheck, EllipsisVertical, Pencil, Trash } from "lucide-react"
+import { CheckCheck, EllipsisVertical, Pencil, Send, Trash } from "lucide-react"
 import { memo, useRef } from "react"
 
 type Props = {
@@ -33,6 +33,10 @@ function PackCardMenu({ onDelete, onEdit }: Props) {
                     <DropdownMenuItem className="text-success">
                         <CheckCheck />
                         Yakunlash
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="text-primary">
+                        <Send />
+                        TM ga yuborish
                     </DropdownMenuItem>
                     <DropdownMenuItem className="text-primary" onClick={onEdit}>
                         <Pencil />
