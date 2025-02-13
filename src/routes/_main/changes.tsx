@@ -1,6 +1,6 @@
 import Header from "@/components/header"
 import ChangesMain from "@/pages/changes"
-import HomeFilter from "@/pages/home/home-filter"
+import HomeFilter from "@/pages/changes/changes-filter"
 import { createFileRoute } from "@tanstack/react-router"
 
 export const Route = createFileRoute("/_main/changes")({
