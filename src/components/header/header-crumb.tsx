@@ -27,7 +27,7 @@ export function HeaderCrumb({ links }: Props) {
                                 asChild
                                 className="max-w-20 truncate"
                             >
-                                <Link href={item.to}>{item.label}</Link>
+                                <Link to={item.to}>{item.label}</Link>
                             </BreadcrumbLink>
                             <BreadcrumbSeparator />
                         </BreadcrumbItem>
