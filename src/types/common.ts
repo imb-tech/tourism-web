@@ -9,3 +9,9 @@ type ListResponse<T> = {
     total_page: number
     results: T[]
 }
+
+type UserName = {
+    id: number
+    first_name: string
+    last_name: string
+}

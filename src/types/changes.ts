@@ -6,3 +6,17 @@ type ChangeDocumentItem = {
     comment: string
     manager_name: string
 }
+
+type ChangeDocumentForm = {
+    condition: number
+    comment: string
+}
+
+type ChangeDocumenContracttForm = ChangeDocumentForm & {
+    contract: Blob
+}
+
+type ChnagesSetStore = {
+    id: number
+    condition: number
+}

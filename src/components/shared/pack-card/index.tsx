@@ -4,13 +4,15 @@ import { calcProgress } from "@/lib/calc-progress"
 import { Link } from "@tanstack/react-router"
 import { Eye } from "lucide-react"
 import { memo, useMemo } from "react"
-import { getPackStatus } from "./lib"
+import { getPackStatus, getPackTMStatus } from "./lib"
 import PackCardMenu from "./pack-card-menu"
 import Progress from "./progress"
 
 type PackCardProps = PackItem & {
     onEdit?: () => void
     onDelete?: () => void
+    onSend?: () => void
+    onFinish?: () => void
 }
 
 function PackCard({
@@ -23,23 +25,38 @@ function PackCard({
     end,
     start,
     tm_status,
+    status,
     onDelete,
     onEdit,
+    onSend,
+    onFinish,
 }: PackCardProps) {
     const { total, current } = useMemo(
         () => calcProgress(start, end),
         [start, end],
     )
 
+    const { title, color } = getPackTMStatus(tm_status)
+    const { title: statusTitle, color: statusColor } = getPackStatus(status)
+
     return (
         <Card className="w-full max-w-sm p-4 shadow-none">
             <CardHeader className="flex flex-row items-center">
                 <div className="text-sm text-muted-foreground">#{id}</div>
                 {tm_status != null && (
-                    <span className="border-primary border px-2 text-primary rounded-md text-xs lowercase">
-                        {getPackStatus("0")}
+                    <span
+                        className={`border-${color} border px-2 text-${color} rounded-md text-xs lowercase`}
+                    >
+                        {title}
                     </span>
                 )}
+
+                <span
+                    className={`border-${statusColor} border px-2 text-${statusColor} rounded-md text-xs lowercase`}
+                >
+                    {statusTitle}
+                </span>
+
                 <div className="font-medium flex-1 text-end">
                     {country.name}
                 </div>
@@ -83,11 +100,16 @@ function PackCard({
                             Tur paketlar
                         </Button>
                     </Link>
-                    <PackCardMenu onDelete={onDelete} onEdit={onEdit} />
+                    <PackCardMenu
+                        onDelete={onDelete}
+                        onEdit={onEdit}
+                        onSend={onSend}
+                        onFinish={onFinish}
+                    />
                 </div>
             </CardContent>
         </Card>
     )
 }
 
-export default memo(PackCard, (prev, next) => prev.id === next.id)
+export default memo(PackCard)
