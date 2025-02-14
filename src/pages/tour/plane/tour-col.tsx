@@ -48,6 +48,7 @@ function TourCol({
                     to_city: item.to_city_id ?? null,
                     from_time: item.from_time || null,
                     to_time: item.to_time || null,
+                    expected_cost: 0,
                 })) as { id: number }
                 fieldsValue?.forEach((f, i) => {
                     if (f.field_id === fieldId) {

@@ -4,6 +4,7 @@ import { createFileRoute } from "@tanstack/react-router"
 
 type Params = {
     cash_id?: number | undefined
+    document?: number | undefined
 }
 
 export const Route = createFileRoute("/_main/")({
@@ -13,6 +14,7 @@ export const Route = createFileRoute("/_main/")({
     ): Params => {
         return {
             cash_id: search.cash_id || undefined,
+            document: search.document || undefined,
         }
     },
 })

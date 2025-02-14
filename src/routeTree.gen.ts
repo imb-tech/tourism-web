@@ -22,6 +22,7 @@ import { Route as MainSettingsIndexImport } from './routes/_main/settings/index'
 import { Route as MainPacksIndexImport } from './routes/_main/packs/index'
 import { Route as MainPacksPackIndexImport } from './routes/_main/packs/$pack/index'
 import { Route as MainPacksPackIdImport } from './routes/_main/packs/$pack/$id'
+import { Route as MainDocumentPlanDayImport } from './routes/_main/document/$plan/$day'
 import { Route as MainPacksPackTourIdImport } from './routes/_main/packs/$pack/tour/$id'
 
 // Create/Update Routes
@@ -88,6 +89,12 @@ const MainPacksPackIndexRoute = MainPacksPackIndexImport.update({
 const MainPacksPackIdRoute = MainPacksPackIdImport.update({
   id: '/packs/$pack/$id',
   path: '/packs/$pack/$id',
+  getParentRoute: () => MainRoute,
+} as any)
+
+const MainDocumentPlanDayRoute = MainDocumentPlanDayImport.update({
+  id: '/document/$plan/$day',
+  path: '/document/$plan/$day',
   getParentRoute: () => MainRoute,
 } as any)
 
@@ -164,6 +171,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainSettingsIndexImport
       parentRoute: typeof MainImport
     }
+    '/_main/document/$plan/$day': {
+      id: '/_main/document/$plan/$day'
+      path: '/document/$plan/$day'
+      fullPath: '/document/$plan/$day'
+      preLoaderRoute: typeof MainDocumentPlanDayImport
+      parentRoute: typeof MainImport
+    }
     '/_main/packs/$pack/$id': {
       id: '/_main/packs/$pack/$id'
       path: '/packs/$pack/$id'
@@ -198,6 +212,7 @@ interface MainRouteChildren {
   MainIndexRoute: typeof MainIndexRoute
   MainPacksIndexRoute: typeof MainPacksIndexRoute
   MainSettingsIndexRoute: typeof MainSettingsIndexRoute
+  MainDocumentPlanDayRoute: typeof MainDocumentPlanDayRoute
   MainPacksPackIdRoute: typeof MainPacksPackIdRoute
   MainPacksPackIndexRoute: typeof MainPacksPackIndexRoute
   MainPacksPackTourIdRoute: typeof MainPacksPackTourIdRoute
@@ -211,6 +226,7 @@ const MainRouteChildren: MainRouteChildren = {
   MainIndexRoute: MainIndexRoute,
   MainPacksIndexRoute: MainPacksIndexRoute,
   MainSettingsIndexRoute: MainSettingsIndexRoute,
+  MainDocumentPlanDayRoute: MainDocumentPlanDayRoute,
   MainPacksPackIdRoute: MainPacksPackIdRoute,
   MainPacksPackIndexRoute: MainPacksPackIndexRoute,
   MainPacksPackTourIdRoute: MainPacksPackTourIdRoute,
@@ -228,6 +244,7 @@ export interface FileRoutesByFullPath {
   '/': typeof MainIndexRoute
   '/packs': typeof MainPacksIndexRoute
   '/settings': typeof MainSettingsIndexRoute
+  '/document/$plan/$day': typeof MainDocumentPlanDayRoute
   '/packs/$pack/$id': typeof MainPacksPackIdRoute
   '/packs/$pack': typeof MainPacksPackIndexRoute
   '/packs/$pack/tour/$id': typeof MainPacksPackTourIdRoute
@@ -242,6 +259,7 @@ export interface FileRoutesByTo {
   '/': typeof MainIndexRoute
   '/packs': typeof MainPacksIndexRoute
   '/settings': typeof MainSettingsIndexRoute
+  '/document/$plan/$day': typeof MainDocumentPlanDayRoute
   '/packs/$pack/$id': typeof MainPacksPackIdRoute
   '/packs/$pack': typeof MainPacksPackIndexRoute
   '/packs/$pack/tour/$id': typeof MainPacksPackTourIdRoute
@@ -258,6 +276,7 @@ export interface FileRoutesById {
   '/_main/': typeof MainIndexRoute
   '/_main/packs/': typeof MainPacksIndexRoute
   '/_main/settings/': typeof MainSettingsIndexRoute
+  '/_main/document/$plan/$day': typeof MainDocumentPlanDayRoute
   '/_main/packs/$pack/$id': typeof MainPacksPackIdRoute
   '/_main/packs/$pack/': typeof MainPacksPackIndexRoute
   '/_main/packs/$pack/tour/$id': typeof MainPacksPackTourIdRoute
@@ -275,6 +294,7 @@ export interface FileRouteTypes {
     | '/'
     | '/packs'
     | '/settings'
+    | '/document/$plan/$day'
     | '/packs/$pack/$id'
     | '/packs/$pack'
     | '/packs/$pack/tour/$id'
@@ -288,6 +308,7 @@ export interface FileRouteTypes {
     | '/'
     | '/packs'
     | '/settings'
+    | '/document/$plan/$day'
     | '/packs/$pack/$id'
     | '/packs/$pack'
     | '/packs/$pack/tour/$id'
@@ -302,6 +323,7 @@ export interface FileRouteTypes {
     | '/_main/'
     | '/_main/packs/'
     | '/_main/settings/'
+    | '/_main/document/$plan/$day'
     | '/_main/packs/$pack/$id'
     | '/_main/packs/$pack/'
     | '/_main/packs/$pack/tour/$id'
@@ -342,6 +364,7 @@ export const routeTree = rootRoute
         "/_main/",
         "/_main/packs/",
         "/_main/settings/",
+        "/_main/document/$plan/$day",
         "/_main/packs/$pack/$id",
         "/_main/packs/$pack/",
         "/_main/packs/$pack/tour/$id"
@@ -376,6 +399,10 @@ export const routeTree = rootRoute
     },
     "/_main/settings/": {
       "filePath": "_main/settings/index.tsx",
+      "parent": "/_main"
+    },
+    "/_main/document/$plan/$day": {
+      "filePath": "_main/document/$plan/$day.tsx",
       "parent": "/_main"
     },
     "/_main/packs/$pack/$id": {

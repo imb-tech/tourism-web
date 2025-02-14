@@ -23,7 +23,7 @@ export default function Settings() {
                         content: <Hotels />,
                     },
                     {
-                        id: "enterances",
+                        id: "entrances",
                         name: "Joylar",
                         content: <Enterances />,
                     },
@@ -43,7 +43,7 @@ export default function Settings() {
                         content: <Categories />,
                     },
                     {
-                        id: "restaurans",
+                        id: "restaurants",
                         name: "Restoranlar",
                         content: <Restaurans />,
                     },

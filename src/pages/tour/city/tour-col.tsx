@@ -33,7 +33,7 @@ function TourCityCard(props: TourCityItem & { citiesList: City[] }) {
 
     return (
         <CustomTable grid={"grid-cols-3"}>
-            <p className="text-primary">Day {day}</p>
+            <p className="text-primary flex items-center">Day {day}</p>
             <div className="text-sm">
                 <SelectField
                     isMulti
@@ -50,7 +50,9 @@ function TourCityCard(props: TourCityItem & { citiesList: City[] }) {
                 />
             </div>
             <div
-                className={cn("text-sm outline-none focus:outline-none")}
+                className={cn(
+                    "text-sm outline-none focus:outline-none flex items-center",
+                )}
                 contentEditable={isEditing}
                 suppressContentEditableWarning
                 suppressHydrationWarning

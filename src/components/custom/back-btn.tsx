@@ -5,14 +5,9 @@ import { Button } from "../ui/button"
 type Props = {
     className?: string
     to?: string | undefined
-    text?: string
 }
 
-export default function BackBtn({
-    className = "",
-    to,
-    text = "Orqaga",
-}: Props) {
+export default function BackBtn({ className = "", to }: Props) {
     const navigate = useNavigate()
 
     const clickHandler = () => {
@@ -25,11 +20,10 @@ export default function BackBtn({
         <Button
             className={className}
             onClick={clickHandler}
-            variant={"outline"}
+            variant={"ghost"}
             size={"sm"}
         >
             <ArrowLeft size={16} />
-            {text}
         </Button>
     )
 }

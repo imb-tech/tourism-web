@@ -38,3 +38,4 @@ export const CHANGES = TOURS + "changers"
 
 export const DASHBOARD_STATUS = CHECKOUT + "dashboard/status"
 export const DASHBOARD_STATUS_AMOUNTS = CHECKOUT + "dashboard/status-amounts"
+export const DASHBOARD_STATUS_DETAIL = CHECKOUT + "dashboard/status-detail"

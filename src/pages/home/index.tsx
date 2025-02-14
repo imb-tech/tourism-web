@@ -1,3 +1,4 @@
+import DownloadAsExcel from "@/components/custom/download-as-excel"
 import { DASHBOARD_STATUS } from "@/constants/api-endpoints"
 import { useGet } from "@/services/default-requests"
 import HomeBalance from "./home-balance"
@@ -18,7 +19,10 @@ const HomeMain = () => {
             </div>
 
             <div className="bg-background p-3 rounded-md mt-3 flex flex-col gap-2">
-                <p>Kassa</p>
+                <div className="flex items-center justify-between">
+                    <p>Kassa</p>
+                    <DownloadAsExcel url="" name="test" />
+                </div>
                 <HomeTable
                     enableColumnVisibility
                     grid="grid-cols-10"

@@ -163,12 +163,12 @@ export default function HomeNestedTable<TData extends object>({
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     function handleCollapse(item: any) {
-        if (!item) {
+        if (item) {
             navigate({
-                to: "/",
-                search: {
-                    cash_id:
-                        Number(search.cash_id) == item.id ? undefined : item.id,
+                to: "/document/$plan/$day",
+                params: {
+                    plan: search?.cash_id,
+                    day: item.day.split(" ")[1],
                 },
             })
         }
@@ -290,7 +290,7 @@ export default function HomeNestedTable<TData extends object>({
                                         row.getIsSelected() && "selected"
                                     }
                                     className={cn(
-                                        `relative px-2 hover:bg-background cursor-pointer grid border-l border-secondary hover:border-primary transition-all duration-100`,
+                                        `relative px-2 cursor-pointer grid border-l border-secondary hover:border-primary transition-all duration-100 hover:bg-secondary/50`,
                                         setRowClassName ?
                                             setRowClassName(row.original)
                                         :   "",

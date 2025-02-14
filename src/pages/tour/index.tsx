@@ -1,4 +1,6 @@
 import InitialDataBox from "@/components/elements/initial-data-box"
+import { TOUR } from "@/constants/api-endpoints"
+import { useGet } from "@/services/default-requests"
 import { useParams, useSearch } from "@tanstack/react-router"
 import React, { Suspense, useMemo } from "react"
 import PackDetailHeader from "../pack-detail/pack-detail-header"
@@ -31,6 +33,9 @@ export default function Tour() {
         [type],
     )
 
+    const { data } = useGet<{ editable: false }>(TOUR + `/editable/${pack}`)
+    console.log(data)
+
     return (
         <section className="p-3">
             <PackDetailHeader
@@ -40,7 +45,11 @@ export default function Tour() {
             <div className="mt-3 bg-background p-3 rounded-md">
                 <TourTab />
                 <Suspense fallback={<InitialDataBox isLoading />}>
-                    <div>
+                    <div
+                        style={{
+                            pointerEvents: data?.editable ? "auto" : "none",
+                        }}
+                    >
                         <ComponentMain />
                     </div>
                 </Suspense>
