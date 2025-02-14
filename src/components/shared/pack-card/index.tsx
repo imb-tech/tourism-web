@@ -35,8 +35,9 @@ function PackCard({
         () => calcProgress(start, end),
         [start, end],
     )
+    console.log(total, current)
 
-    const { title, color } = getPackTMStatus(tm_status)
+    const { title, color } = getPackTMStatus(tm_status || 0)
     const { title: statusTitle, color: statusColor } = getPackStatus(status)
 
     return (
