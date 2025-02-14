@@ -4,7 +4,7 @@ import { calcProgress } from "@/lib/calc-progress"
 import { Link } from "@tanstack/react-router"
 import { Eye } from "lucide-react"
 import { memo, useMemo } from "react"
-import { getPackStatus } from "./lib"
+import { getPackStatus, getPackTMStatus } from "./lib"
 import PackCardMenu from "./pack-card-menu"
 import Progress from "./progress"
 
@@ -25,6 +25,7 @@ function PackCard({
     end,
     start,
     tm_status,
+    status,
     onDelete,
     onEdit,
     onSend,
@@ -35,7 +36,8 @@ function PackCard({
         [start, end],
     )
 
-    const { title, color } = getPackStatus(tm_status)
+    const { title, color } = getPackTMStatus(tm_status)
+    const { title: statusTitle, color: statusColor } = getPackStatus(status)
 
     return (
         <Card className="w-full max-w-sm p-4 shadow-none">
@@ -48,6 +50,13 @@ function PackCard({
                         {title}
                     </span>
                 )}
+
+                <span
+                    className={`border-${statusColor} border px-2 text-${statusColor} rounded-md text-xs lowercase`}
+                >
+                    {statusTitle}
+                </span>
+
                 <div className="font-medium flex-1 text-end">
                     {country.name}
                 </div>
