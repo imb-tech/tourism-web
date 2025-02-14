@@ -7,6 +7,7 @@ type Props = {
     className?: string
     disabled?: boolean
     submitName?: string
+    cancelName?: string
 }
 
 export default function FormAction({
@@ -14,6 +15,7 @@ export default function FormAction({
     disabled,
     className,
     submitName = "Saqlash",
+    cancelName = "Orqaga",
 }: Props) {
     return (
         <div
@@ -24,7 +26,7 @@ export default function FormAction({
         >
             <DialogClose disabled={disabled || loading}>
                 <div className={cn(buttonVariants({ variant: "outline" }))}>
-                    Orqaga
+                    {cancelName}
                 </div>
             </DialogClose>
             <Button loading={loading} type="submit" disabled={disabled}>

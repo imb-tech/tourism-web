@@ -1,7 +1,7 @@
-const obj: Record<PackStatus, string> = {
-    "-1": "Bekor qilingan",
-    "0": "Kutilmoqda",
-    "1": "Tasdiqlangan",
+const obj: Record<PackStatus, { title: string; color: string }> = {
+    "-1": { title: "Bekor qilingan", color: "destructive" },
+    "0": { title: "Kutilmoqda", color: "warning" },
+    "1": { title: "Tasdiqlangan", color: "success" },
 }
 
 export function getPackStatus(status: PackStatus) {

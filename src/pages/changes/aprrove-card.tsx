@@ -1,8 +1,33 @@
 import FlashIcon from "@/assets/images/flash-icon.png"
 import { Button } from "@/components/ui/button"
+import { CHANGE_DATA } from "@/constants/localstorage-keys"
+import { useModal } from "@/hooks/use-modal"
+import { useStore } from "@/hooks/use-store"
 import { CircleCheckBig, CircleX, FileText } from "lucide-react"
 
-export default function ApproveCard({ manager_name, id }: ChangeDocumentItem) {
+export default function ApproveCard({
+    manager_name,
+    id,
+    status,
+}: ChangeDocumentItem) {
+    const { openModal } = useModal()
+    const { openModal: confirmContractModal } = useModal("contract")
+    const { setStore } = useStore<ChnagesSetStore | undefined>(CHANGE_DATA)
+
+    function handleFileOpen() {
+        setStore({ id, condition: 1 })
+        confirmContractModal()
+    }
+
+    function handleApprove() {
+        setStore({ id, condition: 1 })
+        openModal()
+    }
+    function handelCancelChanges() {
+        setStore({ id, condition: -1 })
+        openModal()
+    }
+
     return (
         <div className="flex items-center gap-3">
             <img src={FlashIcon} alt="" width={48} height={48} />
@@ -15,13 +40,29 @@ export default function ApproveCard({ manager_name, id }: ChangeDocumentItem) {
                 </p>
             </div>
             <div className="flex items-center">
-                <Button size={"icon"} variant={"ghost"}>
-                    <FileText size={18} className="text-primary" />
-                </Button>
-                <Button size={"icon"} variant={"ghost"}>
-                    <CircleCheckBig size={18} className="text-success" />
-                </Button>
-                <Button size={"icon"} variant={"ghost"}>
+                {status === 20 && (
+                    <Button
+                        size={"icon"}
+                        variant={"ghost"}
+                        onClick={handleFileOpen}
+                    >
+                        <FileText size={18} className="text-primary" />
+                    </Button>
+                )}
+                {[10, 30].includes(status) && (
+                    <Button
+                        size={"icon"}
+                        variant={"ghost"}
+                        onClick={handleApprove}
+                    >
+                        <CircleCheckBig size={18} className="text-success" />
+                    </Button>
+                )}
+                <Button
+                    size={"icon"}
+                    variant={"ghost"}
+                    onClick={handelCancelChanges}
+                >
                     <CircleX size={18} className="text-destructive" />
                 </Button>
             </div>

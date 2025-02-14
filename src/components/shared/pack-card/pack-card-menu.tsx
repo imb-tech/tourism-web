@@ -12,9 +12,11 @@ import { memo, useRef } from "react"
 type Props = {
     onDelete?: () => void
     onEdit?: () => void
+    onSend?: () => void
+    onFinish?: () => void
 }
 
-function PackCardMenu({ onDelete, onEdit }: Props) {
+function PackCardMenu({ onDelete, onEdit, onSend, onFinish }: Props) {
     const ref = useRef<HTMLDivElement>(null)
     return (
         <DropdownMenu modal={false}>
@@ -30,11 +32,14 @@ function PackCardMenu({ onDelete, onEdit }: Props) {
                 side="top"
             >
                 <DropdownMenuGroup>
-                    <DropdownMenuItem className="text-success">
+                    <DropdownMenuItem
+                        className="text-success"
+                        onClick={onFinish}
+                    >
                         <CheckCheck />
                         Yakunlash
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="text-primary">
+                    <DropdownMenuItem className="text-primary" onClick={onSend}>
                         <Send />
                         TM ga yuborish
                     </DropdownMenuItem>
