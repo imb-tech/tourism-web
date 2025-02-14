@@ -3,6 +3,7 @@ const USER = "users/"
 const COMMON = "common/"
 const TOURS = "tours/"
 const SERVICES = "services/"
+const CHECKOUT = "checkout/"
 
 export const REFRESH_TOKEN = "refresh_token"
 
@@ -34,3 +35,6 @@ export const DETAIL = TOURS + "details"
 export const CHANGE = DETAIL + "/change/"
 export const SELECTION = SERVICES + "selection/"
 export const CHANGES = TOURS + "changers"
+
+export const DASHBOARD_STATUS = CHECKOUT + "dashboard/status"
+export const DASHBOARD_STATUS_AMOUNTS = CHECKOUT + "dashboard/status-amounts"

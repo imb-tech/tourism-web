@@ -1,5 +1,9 @@
-import { ColumnDef } from "@tanstack/react-table"
+import DateRangeProgress from "@/components/ui/date-range-progress"
+import formatMoney from "@/lib/format-money"
+import { ReactNode } from "@tanstack/react-router"
+import { CellContext, ColumnDef } from "@tanstack/react-table"
 import { useMemo } from "react"
+import { BadgeStatus } from "./status-badge"
 
 export const useHomeColumn = () => {
     return useMemo<ColumnDef<HomeTableItem>[]>(
@@ -7,11 +11,11 @@ export const useHomeColumn = () => {
             [
                 {
                     header: "ID",
-                    accessorKey: "id",
+                    accessorKey: "tour_id",
                 },
                 {
                     header: "Manager",
-                    accessorKey: "manager",
+                    accessorKey: "manager_name",
                 },
                 {
                     header: "Klient",
@@ -19,7 +23,15 @@ export const useHomeColumn = () => {
                 },
                 {
                     header: "Sana",
-                    accessorKey: "from_date",
+                    accessorKey: "start",
+                    cell: ({ row }: CellContext<HomeTableItem, ReactNode>) => {
+                        return (
+                            <DateRangeProgress
+                                start={row.original.start}
+                                end={row.original.end}
+                            />
+                        )
+                    },
                 },
                 {
                     header: "Turistlar soni",
@@ -28,22 +40,48 @@ export const useHomeColumn = () => {
                 {
                     header: "Status",
                     accessorKey: "status",
+                    cell: ({ row }: CellContext<HomeTableItem, ReactNode>) => {
+                        return (
+                            <BadgeStatus
+                                status={row.original.status.toString()}
+                            />
+                        )
+                    },
                 },
                 {
                     header: "Expected cost",
                     accessorKey: "expected_cost",
+                    cell: ({ row }: CellContext<HomeTableItem, ReactNode>) => {
+                        return formatMoney(row.original.expected_cost)
+                    },
                 },
                 {
                     header: "Actual cost",
                     accessorKey: "actual_cost",
+                    cell: ({ row }: CellContext<HomeTableItem, ReactNode>) => {
+                        return formatMoney(row.original.expected_cost)
+                    },
                 },
                 {
                     header: "Tushum",
-                    accessorKey: "income_present",
+                    accessorKey: "benefit",
+                    cell: ({ row }: CellContext<HomeTableItem, ReactNode>) => {
+                        return formatMoney(row.original.benefit, undefined, "%")
+                    },
                 },
                 {
                     header: "Tushum",
-                    accessorKey: "income",
+                    accessorKey: "benefit",
+                    cell: ({ row }: CellContext<HomeTableItem, ReactNode>) => {
+                        return formatMoney(
+                            Number(
+                                (
+                                    row.original.expected_cost *
+                                    (1 + row.original.benefit / 100)
+                                ).toFixed(2),
+                            ) - row.original.expected_cost,
+                        )
+                    },
                 },
             ]?.map((el) => ({ ...el, enableSorting: false })),
         [],
@@ -51,48 +89,93 @@ export const useHomeColumn = () => {
 }
 
 export const useHomeNestedColumn = () => {
-    return useMemo<ColumnDef<HomeTableItem>[]>(
+    return useMemo<ColumnDef<HomeNestedItem>[]>(
         () =>
             [
                 {
-                    header: "ID",
-                    accessorKey: "id",
+                    header: "Kun",
+                    accessorKey: "day",
                 },
                 {
-                    header: "Manager",
-                    accessorKey: "manager",
+                    header: "Shaxar",
+                    accessorKey: "cities",
                 },
                 {
-                    header: "Klient",
-                    accessorKey: "client",
+                    header: "Gid",
+                    accessorKey: "guide",
+                    cell: ({ row }: CellContext<HomeNestedItem, ReactNode>) => {
+                        return formatMoney(row.original.guide)
+                    },
                 },
                 {
-                    header: "Sana",
-                    accessorKey: "from_date",
+                    header: "Mehmonxona",
+                    accessorKey: "hotel",
+                    cell: ({ row }: CellContext<HomeNestedItem, ReactNode>) => {
+                        return formatMoney(row.original.hotel)
+                    },
                 },
                 {
-                    header: "Turistlar soni",
-                    accessorKey: "tourists_count",
+                    header: "Transport (shaxar)",
+                    accessorKey: "trans_out",
+                    cell: ({ row }: CellContext<HomeNestedItem, ReactNode>) => {
+                        return formatMoney(row.original.trans_out)
+                    },
                 },
                 {
-                    header: "Status",
-                    accessorKey: "status",
+                    header: "Transport (ichki)",
+                    accessorKey: "trans_in",
+                    cell: ({ row }: CellContext<HomeNestedItem, ReactNode>) => {
+                        return formatMoney(row.original.trans_in)
+                    },
                 },
                 {
-                    header: "Expected cost",
-                    accessorKey: "expected_cost",
+                    header: "Tushlk",
+                    accessorKey: "dinner",
+                    cell: ({ row }: CellContext<HomeNestedItem, ReactNode>) => {
+                        return formatMoney(row.original.dinner)
+                    },
                 },
                 {
-                    header: "Actual cost",
-                    accessorKey: "actual_cost",
+                    header: "Ujen",
+                    accessorKey: "lunch",
+                    cell: ({ row }: CellContext<HomeNestedItem, ReactNode>) => {
+                        return formatMoney(row.original.lunch)
+                    },
                 },
                 {
-                    header: "Tushum",
-                    accessorKey: "income_present",
+                    header: "Poyezd",
+                    accessorKey: "train",
+                    cell: ({ row }: CellContext<HomeNestedItem, ReactNode>) => {
+                        return formatMoney(row.original.train)
+                    },
                 },
                 {
-                    header: "Tushum",
-                    accessorKey: "income",
+                    header: "Samalyot",
+                    accessorKey: "plane",
+                    cell: ({ row }: CellContext<HomeNestedItem, ReactNode>) => {
+                        return formatMoney(row.original.plane)
+                    },
+                },
+                {
+                    header: "Entrances",
+                    accessorKey: "entrance",
+                    cell: ({ row }: CellContext<HomeNestedItem, ReactNode>) => {
+                        return formatMoney(row.original.entrance)
+                    },
+                },
+                {
+                    header: "Boshqa xarajat",
+                    accessorKey: "other",
+                    cell: ({ row }: CellContext<HomeNestedItem, ReactNode>) => {
+                        return formatMoney(row.original.other)
+                    },
+                },
+                {
+                    header: "Jami",
+                    accessorKey: "total",
+                    cell: ({ row }: CellContext<HomeNestedItem, ReactNode>) => {
+                        return formatMoney(row.original.total)
+                    },
                 },
             ]?.map((el) => ({ ...el, enableSorting: false })),
         [],

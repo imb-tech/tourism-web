@@ -18,8 +18,10 @@ import ParamPagination, { PaginationProps } from "@/components/param/pagination"
 import { Button } from "@/components/ui/button"
 import Loader from "@/components/ui/loader"
 import MultiSelect from "@/components/ui/multi-select"
+import { DASHBOARD_STATUS_AMOUNTS } from "@/constants/api-endpoints"
 import { usePersist } from "@/hooks/use-persist"
 import { cn } from "@/lib/utils"
+import { useGet } from "@/services/default-requests"
 import { useLocation, useNavigate, useSearch } from "@tanstack/react-router"
 import { ArrowDown, ArrowUp, ChevronRight, Settings } from "lucide-react"
 import HomeNestedTable from "./home-nested-table"
@@ -58,37 +60,7 @@ type HomeTableProps<TData> = {
     wrapperClassName?: string
     pageSizes?: number[]
     grid: `grid-cols-${number}`
-    subTableClassName?: string
 }
-
-const nestedData: HomeTableItem[] = [
-    {
-        id: 1,
-        manager: "Ahmad",
-        client: "Jesica",
-        from_date: "18-02-2025",
-        to_date: "18-02-2025",
-        tourists_count: 12,
-        status: 10,
-        expected_cost: 55000,
-        actual_cost: 43000,
-        income_present: 75,
-        income: 67000,
-    },
-    {
-        id: 2,
-        manager: "Doniyor",
-        client: "Doniyor",
-        from_date: "18-02-2025",
-        to_date: "18-02-2025",
-        tourists_count: 12,
-        status: 10,
-        expected_cost: 55000,
-        actual_cost: 43000,
-        income_present: 75,
-        income: 67000,
-    },
-]
 
 export default function HomeTable<TData extends object>({
     data,
@@ -118,7 +90,6 @@ export default function HomeTable<TData extends object>({
     wrapperClassName,
     pageSizes,
     grid,
-    subTableClassName,
 }: Omit<HomeTableProps<TData>, "paginationProps" | "cursorPagination"> & {
     totalPages?: number
     pageSize?: number
@@ -205,6 +176,38 @@ export default function HomeTable<TData extends object>({
             },
         })
     }
+
+    const { data: statsData } = useGet<Record<number, HomeNestedItem>>(
+        DASHBOARD_STATUS_AMOUNTS + `/${search?.cash_id}`,
+        {
+            options: {
+                enabled: !!search?.cash_id,
+            },
+        },
+    )
+    const tableData = React.useMemo(() => {
+        if (statsData) {
+            return Object.values(statsData)?.map((el, i) => ({
+                ...el,
+                guide: el.guide || 0,
+                hotel: el.hotel || 0,
+                trans_out: el.trans_out || 0,
+                trans_in: el.trans_in || 0,
+                dinner: el.dinner || 0,
+                lunch: el.lunch || 0,
+                train: el.train || 0,
+                plane: el.plane || 0,
+                entrance: el.entrance || 0,
+                other: el.other || 0,
+                total: Object.values(el).reduce(
+                    (acc, item, i) => (i > 1 ? acc + item : acc + 0),
+                    0,
+                ),
+                day: `Day ${i + 1}`,
+                colSpan: i == 2 ? 2 : 1,
+            }))
+        } else return []
+    }, [statsData])
 
     const nestedColumns = useHomeNestedColumn()
 
@@ -367,29 +370,24 @@ export default function HomeTable<TData extends object>({
                                         </div>
                                     ))}
 
-                                    <div
-                                        className={cn(
-                                            "col-span-10 overflow-hidden",
-                                            (
-                                                Number(search?.cash_id) ==
-                                                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                                                    (row.original as any)?.id
-                                            ) ?
-                                                "py-2 transition-all duration-150 ease-linear " +
-                                                    subTableClassName
-                                            :   "h-0 transition-all duration-150 ease-linear",
-                                        )}
-                                    >
-                                        <HomeNestedTable
-                                            columns={nestedColumns}
-                                            grid="grid-cols-10"
-                                            data={nestedData}
-                                            setCellClassName={() =>
-                                                "text-xs font-light"
-                                            }
-                                            viewAll
-                                        />
-                                    </div>
+                                    {Number(search?.cash_id) ==
+                                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                        (row.original as any)?.id && (
+                                        <div
+                                            className={cn(
+                                                "col-span-10 overflow-hidden py-2 transition-all duration-150 ease-linear",
+                                            )}
+                                        >
+                                            <HomeNestedTable
+                                                columns={nestedColumns}
+                                                data={tableData}
+                                                setCellClassName={() =>
+                                                    "text-xs font-light"
+                                                }
+                                                viewAll
+                                            />
+                                        </div>
+                                    )}
                                     <Button
                                         size={"icon"}
                                         variant={"ghost"}

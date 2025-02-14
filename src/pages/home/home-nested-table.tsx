@@ -55,7 +55,6 @@ type HomeNestedTableProps<TData> = {
     onView?: (data: Row<TData>) => void
     wrapperClassName?: string
     pageSizes?: number[]
-    grid: `grid-cols-${number}`
     isRowClick?: boolean
 }
 
@@ -86,7 +85,6 @@ export default function HomeNestedTable<TData extends object>({
     onView,
     wrapperClassName,
     pageSizes,
-    grid,
 }: Omit<HomeNestedTableProps<TData>, "paginationProps" | "cursorPagination"> & {
     totalPages?: number
     pageSize?: number
@@ -190,7 +188,10 @@ export default function HomeNestedTable<TData extends object>({
                         {table.getHeaderGroups().map((headerGroup, i) => (
                             <div
                                 key={headerGroup.id + "-" + i}
-                                className={cn("grid px-2 pb-4 relative", grid)}
+                                className={cn("grid px-2 pb-4 relative")}
+                                style={{
+                                    gridTemplateColumns: "repeat(14, 1fr)",
+                                }}
                             >
                                 {headerGroup.headers
                                     ?.slice(
@@ -213,6 +214,7 @@ export default function HomeNestedTable<TData extends object>({
                                                     :   `!w-[${header.column.getSize()}px]`
                                                 } text-xs text-primary`,
                                                 j == 0 ? "pl-2" : "",
+                                                `col-span-${j === 1 ? 2 : 1}`,
                                             )}
                                         >
                                             {header.isPlaceholder ?
@@ -292,8 +294,10 @@ export default function HomeNestedTable<TData extends object>({
                                         setRowClassName ?
                                             setRowClassName(row.original)
                                         :   "",
-                                        grid,
                                     )}
+                                    style={{
+                                        gridTemplateColumns: "repeat(14, 1fr)",
+                                    }}
                                     onClick={() => handleCollapse(row.original)}
                                 >
                                     {row.getVisibleCells().map((cell, j) => (
@@ -314,6 +318,7 @@ export default function HomeNestedTable<TData extends object>({
                                                 :   "",
                                                 "py-3",
                                                 j === 0 && "pl-2",
+                                                `col-span-${j === 1 ? 2 : 1}`,
                                             )}
                                         >
                                             {flexRender(
@@ -337,7 +342,12 @@ export default function HomeNestedTable<TData extends object>({
                                     </Button>
                                 </div>
                             ))
-                        :   <div className={cn("grid", grid)}>
+                        :   <div
+                                className={cn("grid")}
+                                style={{
+                                    gridTemplateColumns: "repeat(14, 1fr)",
+                                }}
+                            >
                                 <div className="h-24 text-center col-span-full">
                                     Mavjud emas
                                 </div>

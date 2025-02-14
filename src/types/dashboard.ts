@@ -1,27 +1,20 @@
 type HomeTableItem = {
     id: number
-    manager: string
+    tour_id: number
+    manager_name: string
     client: string
-    from_date: string
-    to_date: string
+    start: string
+    end: string
+    days: number
     tourists_count: number
     status: number
     expected_cost: number
     actual_cost: number
-    income: number
-    income_present: number
+    benefit: number
 }
 
-type HomeNestedItem = {
+type HomeNestedItem = Record<packTab, number> & {
+    cities: number
     id: number
-    manager: string
-    client: string
-    from_date: string
-    to_date: string
-    tourists_count: number
-    status: number
-    expected_cost: number
-    actual_cost: number
-    income: number
-    income_present: number
+    total: number
 }
