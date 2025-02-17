@@ -1,7 +1,6 @@
 import {
     Link,
     Outlet,
-    ScrollRestoration,
     createRootRouteWithContext,
 } from "@tanstack/react-router"
 // import { TanStackRouterDevtools } from "@tanstack/router-devtools"
@@ -41,7 +40,7 @@ function Root() {
     return (
         <>
             <ModalProvider>
-                <ScrollRestoration getKey={(location) => location.pathname} />
+                {/* <ScrollRestoration getKey={(location) => location.pathname} /> */}
                 <Outlet />
             </ModalProvider>
             {/* <TanStackRouterDevtools /> */}

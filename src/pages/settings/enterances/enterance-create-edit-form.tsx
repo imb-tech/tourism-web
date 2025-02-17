@@ -47,7 +47,6 @@ export default function EnteranceCreateEditForm() {
 
     function handleSubmit(vals: CreaateEnterance) {
         const formData = new FormData()
-        console.log(dirty)
 
         for (const key in dirty) {
             if (

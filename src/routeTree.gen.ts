@@ -14,12 +14,13 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as LoginImport } from './routes/login'
 import { Route as MainImport } from './routes/_main'
 import { Route as MainIndexImport } from './routes/_main/index'
-import { Route as MainCostImport } from './routes/_main/cost'
 import { Route as MainChangesImport } from './routes/_main/changes'
 import { Route as MainBankImport } from './routes/_main/bank'
 import { Route as MainAdminImport } from './routes/_main/admin'
 import { Route as MainSettingsIndexImport } from './routes/_main/settings/index'
 import { Route as MainPacksIndexImport } from './routes/_main/packs/index'
+import { Route as MainCostIndexImport } from './routes/_main/cost/index'
+import { Route as MainCostIdImport } from './routes/_main/cost/$id'
 import { Route as MainPacksPackIndexImport } from './routes/_main/packs/$pack/index'
 import { Route as MainPacksPackIdImport } from './routes/_main/packs/$pack/$id'
 import { Route as MainDocumentPlanDayImport } from './routes/_main/document/$plan/$day'
@@ -41,12 +42,6 @@ const MainRoute = MainImport.update({
 const MainIndexRoute = MainIndexImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => MainRoute,
-} as any)
-
-const MainCostRoute = MainCostImport.update({
-  id: '/cost',
-  path: '/cost',
   getParentRoute: () => MainRoute,
 } as any)
 
@@ -77,6 +72,18 @@ const MainSettingsIndexRoute = MainSettingsIndexImport.update({
 const MainPacksIndexRoute = MainPacksIndexImport.update({
   id: '/packs/',
   path: '/packs/',
+  getParentRoute: () => MainRoute,
+} as any)
+
+const MainCostIndexRoute = MainCostIndexImport.update({
+  id: '/cost/',
+  path: '/cost/',
+  getParentRoute: () => MainRoute,
+} as any)
+
+const MainCostIdRoute = MainCostIdImport.update({
+  id: '/cost/$id',
+  path: '/cost/$id',
   getParentRoute: () => MainRoute,
 } as any)
 
@@ -143,18 +150,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainChangesImport
       parentRoute: typeof MainImport
     }
-    '/_main/cost': {
-      id: '/_main/cost'
-      path: '/cost'
-      fullPath: '/cost'
-      preLoaderRoute: typeof MainCostImport
-      parentRoute: typeof MainImport
-    }
     '/_main/': {
       id: '/_main/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof MainIndexImport
+      parentRoute: typeof MainImport
+    }
+    '/_main/cost/$id': {
+      id: '/_main/cost/$id'
+      path: '/cost/$id'
+      fullPath: '/cost/$id'
+      preLoaderRoute: typeof MainCostIdImport
+      parentRoute: typeof MainImport
+    }
+    '/_main/cost/': {
+      id: '/_main/cost/'
+      path: '/cost'
+      fullPath: '/cost'
+      preLoaderRoute: typeof MainCostIndexImport
       parentRoute: typeof MainImport
     }
     '/_main/packs/': {
@@ -208,8 +222,9 @@ interface MainRouteChildren {
   MainAdminRoute: typeof MainAdminRoute
   MainBankRoute: typeof MainBankRoute
   MainChangesRoute: typeof MainChangesRoute
-  MainCostRoute: typeof MainCostRoute
   MainIndexRoute: typeof MainIndexRoute
+  MainCostIdRoute: typeof MainCostIdRoute
+  MainCostIndexRoute: typeof MainCostIndexRoute
   MainPacksIndexRoute: typeof MainPacksIndexRoute
   MainSettingsIndexRoute: typeof MainSettingsIndexRoute
   MainDocumentPlanDayRoute: typeof MainDocumentPlanDayRoute
@@ -222,8 +237,9 @@ const MainRouteChildren: MainRouteChildren = {
   MainAdminRoute: MainAdminRoute,
   MainBankRoute: MainBankRoute,
   MainChangesRoute: MainChangesRoute,
-  MainCostRoute: MainCostRoute,
   MainIndexRoute: MainIndexRoute,
+  MainCostIdRoute: MainCostIdRoute,
+  MainCostIndexRoute: MainCostIndexRoute,
   MainPacksIndexRoute: MainPacksIndexRoute,
   MainSettingsIndexRoute: MainSettingsIndexRoute,
   MainDocumentPlanDayRoute: MainDocumentPlanDayRoute,
@@ -240,8 +256,9 @@ export interface FileRoutesByFullPath {
   '/admin': typeof MainAdminRoute
   '/bank': typeof MainBankRoute
   '/changes': typeof MainChangesRoute
-  '/cost': typeof MainCostRoute
   '/': typeof MainIndexRoute
+  '/cost/$id': typeof MainCostIdRoute
+  '/cost': typeof MainCostIndexRoute
   '/packs': typeof MainPacksIndexRoute
   '/settings': typeof MainSettingsIndexRoute
   '/document/$plan/$day': typeof MainDocumentPlanDayRoute
@@ -255,8 +272,9 @@ export interface FileRoutesByTo {
   '/admin': typeof MainAdminRoute
   '/bank': typeof MainBankRoute
   '/changes': typeof MainChangesRoute
-  '/cost': typeof MainCostRoute
   '/': typeof MainIndexRoute
+  '/cost/$id': typeof MainCostIdRoute
+  '/cost': typeof MainCostIndexRoute
   '/packs': typeof MainPacksIndexRoute
   '/settings': typeof MainSettingsIndexRoute
   '/document/$plan/$day': typeof MainDocumentPlanDayRoute
@@ -272,8 +290,9 @@ export interface FileRoutesById {
   '/_main/admin': typeof MainAdminRoute
   '/_main/bank': typeof MainBankRoute
   '/_main/changes': typeof MainChangesRoute
-  '/_main/cost': typeof MainCostRoute
   '/_main/': typeof MainIndexRoute
+  '/_main/cost/$id': typeof MainCostIdRoute
+  '/_main/cost/': typeof MainCostIndexRoute
   '/_main/packs/': typeof MainPacksIndexRoute
   '/_main/settings/': typeof MainSettingsIndexRoute
   '/_main/document/$plan/$day': typeof MainDocumentPlanDayRoute
@@ -290,8 +309,9 @@ export interface FileRouteTypes {
     | '/admin'
     | '/bank'
     | '/changes'
-    | '/cost'
     | '/'
+    | '/cost/$id'
+    | '/cost'
     | '/packs'
     | '/settings'
     | '/document/$plan/$day'
@@ -304,8 +324,9 @@ export interface FileRouteTypes {
     | '/admin'
     | '/bank'
     | '/changes'
-    | '/cost'
     | '/'
+    | '/cost/$id'
+    | '/cost'
     | '/packs'
     | '/settings'
     | '/document/$plan/$day'
@@ -319,8 +340,9 @@ export interface FileRouteTypes {
     | '/_main/admin'
     | '/_main/bank'
     | '/_main/changes'
-    | '/_main/cost'
     | '/_main/'
+    | '/_main/cost/$id'
+    | '/_main/cost/'
     | '/_main/packs/'
     | '/_main/settings/'
     | '/_main/document/$plan/$day'
@@ -360,8 +382,9 @@ export const routeTree = rootRoute
         "/_main/admin",
         "/_main/bank",
         "/_main/changes",
-        "/_main/cost",
         "/_main/",
+        "/_main/cost/$id",
+        "/_main/cost/",
         "/_main/packs/",
         "/_main/settings/",
         "/_main/document/$plan/$day",
@@ -385,12 +408,16 @@ export const routeTree = rootRoute
       "filePath": "_main/changes.tsx",
       "parent": "/_main"
     },
-    "/_main/cost": {
-      "filePath": "_main/cost.tsx",
-      "parent": "/_main"
-    },
     "/_main/": {
       "filePath": "_main/index.tsx",
+      "parent": "/_main"
+    },
+    "/_main/cost/$id": {
+      "filePath": "_main/cost/$id.tsx",
+      "parent": "/_main"
+    },
+    "/_main/cost/": {
+      "filePath": "_main/cost/index.tsx",
       "parent": "/_main"
     },
     "/_main/packs/": {

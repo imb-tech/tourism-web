@@ -9,7 +9,7 @@ export default function CustomTableCol({ children, className }: Props) {
     return (
         <div
             className={cn(
-                "flex flex-col justify-center text-sm font-light",
+                "flex flex-col justify-center text-xs font-light",
                 className,
             )}
         >

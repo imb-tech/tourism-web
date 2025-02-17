@@ -26,6 +26,7 @@ type PackItem = {
     status: PackStatus
     country: Country
     tm_status: PackTMStatus
+    plan_id: number
 }
 
 type CreatePack = PackItem & {

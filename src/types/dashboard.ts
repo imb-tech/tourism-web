@@ -23,7 +23,7 @@ type DocumentDay = {
     cities: string
 }
 
-interface DetailData {
+type DetailData = {
     id: number
     price?: string
     tourists_count?: number
@@ -57,14 +57,14 @@ interface DetailData {
     category_name: string
 }
 
-interface DataItem {
+type DataItem = {
     id: number
     amount: number
     payment_type: number
     dashboard_data: DetailData
 }
 
-interface ApiResponse {
+type ApiResponse = {
     cities: string
     days: number
     entrance: DataItem[]

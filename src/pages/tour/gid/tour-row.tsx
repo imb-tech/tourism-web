@@ -14,38 +14,25 @@ export function groupByDay<
     DayKey extends keyof T,
     DetailKey extends keyof T,
     Item,
->(list: T[], key: DayKey, detailKey: DetailKey) {
-    const days: Record<
-        string,
-        {
-            day: number
-            data: D[]
+>(list: T[], key: DayKey, detailKey: DetailKey): Item[] {
+    const days = new Map<number, { day: number; data: D[] }>()
+
+    for (const item of list) {
+        const dayValue = Number(item[key]) // Kalitni son ko‘rinishiga o'tkazamiz
+        const detailData =
+            item[detailKey] ? { ...(item[detailKey] as D), ...item } : undefined
+
+        if (!days.has(dayValue)) {
+            days.set(dayValue, {
+                day: dayValue,
+                data: detailData ? [detailData] : [],
+            })
+        } else if (detailData) {
+            days.get(dayValue)!.data.push(detailData)
         }
-    > = {}
-    list?.forEach((item) => {
-        if (days[item[key] as string] && item[detailKey]) {
-            days[item[key] as string].data.push({
-                ...item[detailKey],
-                ...item,
-                [detailKey]: undefined,
-            } as D)
-        } else {
-            days[item[key] as string] = {
-                day: Number(item[key]),
-                data:
-                    item[detailKey] ?
-                        [
-                            {
-                                ...item[detailKey],
-                                ...item,
-                                [detailKey]: undefined,
-                            } as D,
-                        ]
-                    :   [],
-            }
-        }
-    })
-    return Object.values(days) as Item[]
+    }
+
+    return Array.from(days.values()) as Item[]
 }
 
 export default function TourGidRow() {
@@ -69,7 +56,7 @@ export default function TourGidRow() {
             header: "Tili",
         },
         {
-            header: "Qo’shimcha ma’lumot",
+            header: "Izoh",
         },
     ]
 

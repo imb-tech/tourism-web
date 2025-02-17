@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { calcProgress } from "@/lib/calc-progress"
-import { Link } from "@tanstack/react-router"
+import { Link, useLocation } from "@tanstack/react-router"
 import { Eye } from "lucide-react"
 import { memo, useMemo } from "react"
 import { getPackStatus, getPackTMStatus } from "./lib"
@@ -26,6 +26,7 @@ function PackCard({
     start,
     tm_status,
     status,
+    plan_id,
     onDelete,
     onEdit,
     onSend,
@@ -35,7 +36,7 @@ function PackCard({
         () => calcProgress(start, end),
         [start, end],
     )
-    console.log(total, current)
+    const { pathname } = useLocation()
 
     const { title, color } = getPackTMStatus(tm_status || 0)
     const { title: statusTitle, color: statusColor } = getPackStatus(status)
@@ -93,8 +94,15 @@ function PackCard({
                 <div className="flex gap-2">
                     <Link
                         className="flex-1"
-                        to="/packs/$pack"
-                        params={{ pack: id.toString() }}
+                        to={
+                            pathname.startsWith("/cost") ? "/cost/$id" : (
+                                "/packs/$pack"
+                            )
+                        }
+                        params={{
+                            pack: id.toString(),
+                            id: plan_id ? plan_id.toString() : undefined,
+                        }}
                     >
                         <Button className="w-full gap-1 font-light">
                             <Eye size={18} className="font-light" />

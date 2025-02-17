@@ -106,7 +106,6 @@ export default function TransportCreateEdit() {
             post(TRANSPORTS, formData)
         }
     }
-    console.log(fields, deleted_images)
 
     return (
         <form

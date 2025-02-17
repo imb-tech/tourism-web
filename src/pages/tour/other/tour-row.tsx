@@ -56,7 +56,6 @@ export default function TourRow() {
             ),
         [list],
     )
-    console.log(renderedList)
 
     return (
         <TourTableContainer loading={isFetching}>

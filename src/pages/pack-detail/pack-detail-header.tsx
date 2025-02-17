@@ -18,7 +18,7 @@ const PackDetailHeader = ({ title = "Pack Detail", backUrl }: Props) => {
                     <ChevronLeft />
                 </Button>
             </Link>
-            <p className="text-3xl">{title}</p>
+            <p className="text-2xl">{title}</p>
             {loading && <Loader2 className="h-4 w-4 animate-spin" />}
         </div>
     )

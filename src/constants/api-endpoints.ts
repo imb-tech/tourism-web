@@ -4,6 +4,7 @@ const COMMON = "common/"
 const TOURS = "tours/"
 const SERVICES = "services/"
 const CHECKOUT = "checkout/"
+const COSTS = "tours/costs/"
 
 export const REFRESH_TOKEN = "refresh_token"
 
@@ -41,3 +42,7 @@ export const DASHBOARD_STATUS = CHECKOUT + "dashboard/status"
 export const DASHBOARD_STATUS_AMOUNTS = CHECKOUT + "dashboard/status-amounts"
 export const DASHBOARD_STATUS_DETAIL = CHECKOUT + "dashboard/status-detail"
 export const LOGS = COMMON + "logs"
+
+export const REAL_COST = COSTS + "real"
+export const REAL_COST_DETAIL = COSTS + "real"
+export const UPLOAD_INVOICE = COSTS + "upload-invoice"
