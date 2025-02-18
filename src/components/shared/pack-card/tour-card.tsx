@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { ACCEPT, PLANS } from "@/constants/api-endpoints"
+import { ACCEPT, PDF_FILE, PLANS } from "@/constants/api-endpoints"
 import { PLAN_BENEFIT, TOUR_DATA } from "@/constants/localstorage-keys"
 import { useModal } from "@/hooks/use-modal"
 import { useStore } from "@/hooks/use-store"
 import { cn } from "@/lib/utils"
+import { baseURL } from "@/services/axios-instance"
 import { usePost } from "@/services/default-requests"
 import { useQueryClient } from "@tanstack/react-query"
 import { useNavigate, useParams } from "@tanstack/react-router"
@@ -87,6 +88,10 @@ function TourCard(props: PlanItem) {
         select(ACCEPT + `/${id}/${pack}`, null)
     }
 
+    function handleDownload() {
+        window.open(`${baseURL}/${PDF_FILE}${id}`)
+    }
+
     return (
         <Card
             className={cn(
@@ -156,6 +161,7 @@ function TourCard(props: PlanItem) {
                         size="icon"
                         variant={"primary-muted"}
                         className="h-10 w-10 rounded-lg"
+                        onClick={handleDownload}
                     >
                         <Download size={18} className="font-light" />
                     </Button>

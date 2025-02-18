@@ -1,8 +1,7 @@
 import DownloadAsExcel from "@/components/custom/download-as-excel"
 import { DASHBOARD_STATUS } from "@/constants/api-endpoints"
 import { useGet } from "@/services/default-requests"
-import HomeBalance from "./home-balance"
-import HomeStat from "./home-stat"
+import Statistics from "./dashboard-statistcis"
 import HomeTable from "./home-table"
 import { useHomeColumn } from "./useCols"
 
@@ -12,11 +11,7 @@ const HomeMain = () => {
 
     return (
         <section>
-            <div className="grid grid-cols-3 gap-3">
-                <HomeStat type="cash" />
-                <HomeStat type="bank" />
-                <HomeBalance />
-            </div>
+            <Statistics />
 
             <div className="bg-background p-3 rounded-md mt-3 flex flex-col gap-2">
                 <div className="flex items-center justify-between">

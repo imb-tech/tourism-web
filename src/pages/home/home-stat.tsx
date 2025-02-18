@@ -1,11 +1,15 @@
 import BankSign from "@/assets/images/bank-sign.png"
 import UsdSign from "@/assets/images/usd-sign.png"
+import formatMoney from "@/lib/format-money"
 
 type Props = {
     type: "bank" | "cash"
+    balance: number
+    expense: number
+    income: number
 }
 
-export default function HomeStat({ type }: Props) {
+export default function HomeStat({ type, balance, expense, income }: Props) {
     return (
         <div className="bg-background p-4 rounded-md flex flex-col gap-3">
             <div className="flex justify-between">
@@ -13,7 +17,9 @@ export default function HomeStat({ type }: Props) {
                     <p className="text-black/40 font-light">
                         Balans {type === "bank" ? "bank" : "naqd"}
                     </p>
-                    <span>10 000 000</span>
+                    <span>
+                        {formatMoney(type === "bank" ? balance : expense)}
+                    </span>
                 </div>
                 <img
                     src={type === "bank" ? BankSign : UsdSign}
@@ -26,7 +32,7 @@ export default function HomeStat({ type }: Props) {
                     <p className="text-black/40 font-light">
                         Shu oy sarflangan naqd
                     </p>
-                    <span>10 000 000</span>
+                    <span>{formatMoney(expense)}</span>
                 </div>
             </div>
 
@@ -35,7 +41,7 @@ export default function HomeStat({ type }: Props) {
                     <p className="text-black/40 font-light">
                         Oy ohirigacha naqdda kutilayotgan tushum
                     </p>
-                    <span>10 000 000</span>
+                    <span>{formatMoney(income)}</span>
                 </div>
             </div>
         </div>
