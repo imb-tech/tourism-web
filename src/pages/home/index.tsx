@@ -20,7 +20,7 @@ const HomeMain = () => {
 
             <div className="bg-background p-3 rounded-md mt-3 flex flex-col gap-2">
                 <div className="flex items-center justify-between">
-                    <p>Kassa</p>
+                    <p>Tur paketlar</p>
                     <DownloadAsExcel url="" name="test" />
                 </div>
                 <HomeTable

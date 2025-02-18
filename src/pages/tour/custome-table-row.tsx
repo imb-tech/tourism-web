@@ -25,7 +25,7 @@ export default function CustomTableRow({
     return (
         <div
             className={cn(
-                "min-w-full flex-1 py-2 px-1 relative grid",
+                "min-w-full flex-1  px-1 relative grid",
                 i > 0 && "border-t border-secondary",
                 className,
                 grid,

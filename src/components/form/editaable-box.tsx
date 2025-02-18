@@ -1,6 +1,6 @@
 import formatMoney from "@/lib/format-money"
 import { cn } from "@/lib/utils"
-import { HTMLAttributes, useRef, useState } from "react"
+import { HTMLAttributes, useMemo, useRef, useState } from "react"
 import {
     FieldPathValue,
     FieldValues,
@@ -56,11 +56,23 @@ export default function EditableBox<IForm extends FieldValues>({
         })
     }
 
+    function handleEdit() {
+        if (editable) {
+            setIsEditing(true)
+        }
+    }
+
+    const isShow = useMemo(() => {
+        if (ref.current) {
+            return ref.current.textContent === "" && !editable
+        }
+    }, [ref.current, editable])
+
     return (
         <div
             ref={ref}
             className={cn(
-                "text-sm outline-none focus:outline-none flex items-center",
+                "text-sm outline-none focus:outline-none flex items-center py-2 relative",
                 className,
             )}
             contentEditable={isEditing}
@@ -68,10 +80,12 @@ export default function EditableBox<IForm extends FieldValues>({
             suppressHydrationWarning
             onInput={handleInput}
             onBlur={handleBlur}
-            onDoubleClick={() => (editable ? setIsEditing(true) : null)}
+            onClick={handleEdit}
             id={name + fieldKey}
         >
-            {isNumber && children ?
+            {isShow ?
+                ""
+            : isNumber && children ?
                 formatMoney((children as number) || 0)
             :   children || "—"}
         </div>

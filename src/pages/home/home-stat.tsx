@@ -11,7 +11,7 @@ export default function HomeStat({ type }: Props) {
             <div className="flex justify-between">
                 <div>
                     <p className="text-black/40 font-light">
-                        Oy boshidagi naqd
+                        Balans {type === "bank" ? "bank" : "naqd"}
                     </p>
                     <span>10 000 000</span>
                 </div>
@@ -24,7 +24,7 @@ export default function HomeStat({ type }: Props) {
             <div>
                 <div>
                     <p className="text-black/40 font-light">
-                        Oy boshidagi naqd
+                        Shu oy sarflangan naqd
                     </p>
                     <span>10 000 000</span>
                 </div>
@@ -33,7 +33,7 @@ export default function HomeStat({ type }: Props) {
             <div>
                 <div>
                     <p className="text-black/40 font-light">
-                        Oy boshidagi naqd
+                        Oy ohirigacha naqdda kutilayotgan tushum
                     </p>
                     <span>10 000 000</span>
                 </div>

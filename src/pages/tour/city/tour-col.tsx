@@ -1,14 +1,15 @@
 import CustomTable from "@/components/custom/table"
+import EditableBox from "@/components/form/editaable-box"
 import SelectField from "@/components/form/select-field"
 import { DETAIL } from "@/constants/api-endpoints"
-import { cn } from "@/lib/utils"
 import { usePost } from "@/services/default-requests"
 import { useParams } from "@tanstack/react-router"
-import { memo, useState } from "react"
+import { memo } from "react"
 import { useForm } from "react-hook-form"
+import CustomTableCol from "../custome-table-col"
 
 function TourCityCard(props: TourCityItem & { citiesList: City[] }) {
-    const { day, desc, citiesList, cities } = props
+    const { day, desc, citiesList, cities, id } = props
     const { id: planId } = useParams({ from: "/_main/packs/$pack/tour/$id" })
     const form = useForm<TourCityItem>({
         defaultValues: {
@@ -16,15 +17,14 @@ function TourCityCard(props: TourCityItem & { citiesList: City[] }) {
             cities: cities || [],
         },
     })
-    const [isEditing, setIsEditing] = useState(false)
     const { mutate } = usePost({
-        onSuccess: () => {
+        onSuccess: (data: { id: number }) => {
+            form.setValue("id", data.id)
             document.body.style.cursor = "default"
         },
     })
 
     function save() {
-        setIsEditing(false)
         mutate(DETAIL + "/city", {
             ...form.getValues(),
             plan_id: Number(planId),
@@ -49,24 +49,16 @@ function TourCityCard(props: TourCityItem & { citiesList: City[] }) {
                     options={citiesList}
                 />
             </div>
-            <div
-                className={cn(
-                    "text-sm outline-none focus:outline-none flex items-center",
-                )}
-                contentEditable={isEditing}
-                suppressContentEditableWarning
-                suppressHydrationWarning
-                onBlur={save}
-                onDoubleClick={() => setIsEditing(true)}
-                onInput={async (v) => {
-                    await form.setValue(
-                        "desc",
-                        v.currentTarget.textContent?.toString() || "",
-                    )
-                }}
-            >
-                {desc || "-"}
-            </div>
+            <CustomTableCol>
+                <EditableBox
+                    methods={form}
+                    name={"desc"}
+                    onBlur={save}
+                    dayId={id}
+                >
+                    {desc}
+                </EditableBox>
+            </CustomTableCol>
         </CustomTable>
     )
 }
