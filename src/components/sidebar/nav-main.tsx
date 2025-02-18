@@ -35,6 +35,9 @@ export function NavMain() {
         linkOptions({
             to: "/bank",
             icon: <DollarSign />,
+            search: {
+                type: undefined,
+            },
             enabled: true,
             title: "Kassa",
         }),

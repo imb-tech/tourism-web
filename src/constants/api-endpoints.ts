@@ -5,6 +5,7 @@ const TOURS = "tours/"
 const SERVICES = "services/"
 const CHECKOUT = "checkout/"
 const COSTS = "tours/costs/"
+const PAYMENTS = "payments/"
 
 export const REFRESH_TOKEN = "refresh_token"
 
@@ -46,3 +47,5 @@ export const LOGS = COMMON + "logs"
 export const REAL_COST = COSTS + "real"
 export const REAL_COST_DETAIL = COSTS + "real"
 export const UPLOAD_INVOICE = COSTS + "upload-invoice"
+export const CREATE_INCOME_OTHER = CHECKOUT + PAYMENTS + "financial-flows"
+export const FINANCIAL_CATEGORIES = COMMON + "financial-categories"

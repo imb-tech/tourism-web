@@ -307,7 +307,7 @@ export default function ChangesTable<TData extends object>({
                                 </div>
                             ))
                         :   <div className={cn("grid", grid)}>
-                                <div className="h-24 text-center col-span-full">
+                                <div className="h-24 flex items-center justify-center col-span-full text-black/20">
                                     Mavjud emas
                                 </div>
                             </div>

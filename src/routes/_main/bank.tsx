@@ -1,9 +1,33 @@
-import { createFileRoute } from '@tanstack/react-router'
+import Header from "@/components/header"
+import BankHome from "@/pages/bank"
+import HomeFilter from "@/pages/changes/changes-filter"
+import { createFileRoute } from "@tanstack/react-router"
 
-export const Route = createFileRoute('/_main/bank')({
-  component: RouteComponent,
+type Params = {
+    type: string | undefined
+}
+
+export const Route = createFileRoute("/_main/bank")({
+    component: RouteComponent,
+    validateSearch: (
+        search: Record<keyof Params, string | undefined>,
+    ): Params => {
+        return {
+            type: search.type || undefined,
+        }
+    },
 })
 
 function RouteComponent() {
-  return <div>Hello "/_main/bank"!</div>
+    return (
+        <div>
+            <Header
+                links={[{ label: "Kassa" }]}
+                rightRightChild={<HomeFilter />}
+            />
+            <div className="p-3">
+                <BankHome />
+            </div>
+        </div>
+    )
 }

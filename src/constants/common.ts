@@ -4,3 +4,7 @@ export const SEARCH_KEY = "search"
 export const SEARCH_WITH_ENTER_KEY = "q"
 export const UZS_SIGN = "UZS"
 export const USD_SIGN = "USD"
+export const CHECKOUT_ID_BANK = 1
+export const CHECKOUT_ID_CASH = 2
+export const INCOME_TYPE = 1
+export const EXPENCE_TYPE = 0

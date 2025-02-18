@@ -29,12 +29,15 @@ export default function useUpload<T extends FieldValues>(
             formData.append("real_cost", data.real_cost.toString() || "0")
 
             if (typeof data.invoice !== "string") {
-                formData.append("invoice", data.invoice)
+                if (!data.invoice) {
+                    formData.append("invoice", "")
+                } else formData.append("invoice", data.invoice)
             }
             formData.append("id", id.toString())
 
             mutate(UPLOAD_INVOICE + `/${id}`, formData)
         },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [values],
     )
 

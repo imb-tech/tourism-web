@@ -44,24 +44,24 @@ function PackCard({
     return (
         <Card className="w-full max-w-sm p-4 shadow-none">
             <CardHeader className="flex flex-row items-center">
-                <div className="text-sm text-muted-foreground">#{id}</div>
+                <div className="text-sm text-muted-foreground flex-1 ">
+                    #{id}
+                </div>
                 {tm_status != null && (
                     <span
-                        className={`border-${color} border px-2 text-${color} rounded-md text-xs lowercase`}
+                        className={`border-${color} border px-1 text-${color} rounded-md text-xs lowercase`}
                     >
                         {title}
                     </span>
                 )}
 
                 <span
-                    className={`border-${statusColor} border px-2 text-${statusColor} rounded-md text-xs lowercase`}
+                    className={`border-${statusColor} border px-1 text-${statusColor} rounded-md text-xs lowercase`}
                 >
                     {statusTitle}
                 </span>
 
-                <div className="font-medium flex-1 text-end">
-                    {country.name}
-                </div>
+                <div className="font-medium text-end">{country.name}</div>
             </CardHeader>
             <CardContent className="space-y-4 p-0">
                 <div className="flex flex-col gap-1">
