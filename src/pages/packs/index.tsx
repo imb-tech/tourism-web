@@ -8,7 +8,7 @@ import { CHANGERS, MOVE_REAL, TOUR } from "@/constants/api-endpoints"
 import { TOUR_DATA } from "@/constants/localstorage-keys"
 import { useModal } from "@/hooks/use-modal"
 import { useStore } from "@/hooks/use-store"
-import { useGet, usePost } from "@/services/default-requests"
+import { useGet, usePost, usePut } from "@/services/default-requests"
 import { Grid2x2Plus } from "lucide-react"
 import { useState } from "react"
 import CreatePackForm from "./create-pack-form"
@@ -22,6 +22,7 @@ const Packs = () => {
     const { openModal } = useModal()
     const { openModal: openDeleteModal } = useModal("delete")
     const { openModal: openConfirmModal } = useModal("confirm")
+    const { openModal: openUndoModal } = useModal("undo")
     const { openModal: openMoveToRealModal } = useModal("move-to-real")
     const [item, setItem] = useState<PackItem | null>(null)
     const { setStore } = useStore<PackItem | undefined>(TOUR_DATA)
@@ -30,6 +31,7 @@ const Packs = () => {
     const { data, isLoading, isError, isSuccess } = useGet<
         PacksResponse | undefined
     >(TOUR)
+    const { mutateAsync: put } = usePut()
 
     function handleDelete(v: PackItem) {
         setItem(v)
@@ -51,6 +53,11 @@ const Packs = () => {
         openMoveToRealModal()
     }
 
+    function handleUndo(v: PackItem) {
+        setItem(v)
+        openUndoModal()
+    }
+
     async function onConfirmSend() {
         try {
             await sendTm(CHANGERS, { tour: item?.id })
@@ -63,6 +70,17 @@ const Packs = () => {
     async function onFinishSend() {
         try {
             await sendTm(MOVE_REAL + `${item?.id}`, {})
+            return Promise.resolve()
+        } catch (error) {
+            return Promise.reject()
+        }
+    }
+
+    async function onConfirmUndo() {
+        try {
+            await put("tours/rollback/" + item?.id, {
+                status: 0,
+            })
             return Promise.resolve()
         } catch (error) {
             return Promise.reject()
@@ -85,6 +103,7 @@ const Packs = () => {
                         onDelete={() => handleDelete(pack)}
                         onSend={() => handleSend(pack)}
                         onFinish={() => handleOnFinishSend(pack)}
+                        onUndo={() => handleUndo(pack)}
                     />
                 ))}
 
@@ -105,6 +124,13 @@ const Packs = () => {
                     refetch
                     refetchKey={TOUR}
                     modalKey="move-to-real"
+                />
+
+                <ConfirmCancelModal
+                    onSuccessAction={onConfirmUndo}
+                    modalKey="undo"
+                    refetch
+                    refetchKey={TOUR}
                 />
             </section>
         :   <InitialDataBox isLoading={isLoading} isError={isError} />

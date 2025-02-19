@@ -6,7 +6,6 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useLocation } from "@tanstack/react-router"
 import {
     CheckCheck,
     EllipsisVertical,
@@ -15,7 +14,7 @@ import {
     Trash,
     Undo2,
 } from "lucide-react"
-import { memo, useMemo, useRef } from "react"
+import { memo, useRef } from "react"
 
 type Props = {
     onDelete?: () => void
@@ -35,8 +34,6 @@ function PackCardMenu({
     status,
 }: Props) {
     const ref = useRef<HTMLDivElement>(null)
-    const { pathname } = useLocation()
-    const isCost = useMemo(() => pathname.includes("cost"), [pathname])
 
     return (
         <DropdownMenu modal={false}>
@@ -51,50 +48,30 @@ function PackCardMenu({
                 align="end"
                 side="top"
             >
-                {!isCost ?
-                    <DropdownMenuGroup>
-                        {status != "30" && (
-                            <DropdownMenuItem
-                                className="text-success"
-                                onClick={onFinish}
-                            >
-                                <CheckCheck />
-                                Yakunlash
-                            </DropdownMenuItem>
-                        )}
+                <DropdownMenuGroup>
+                    {status == "20" && (
+                        <DropdownMenuItem
+                            className="text-success"
+                            onClick={onFinish}
+                        >
+                            <CheckCheck />
+                            Yakunlash
+                        </DropdownMenuItem>
+                    )}
+                    <DropdownMenuItem className="text-primary" onClick={onSend}>
+                        <Send />
+                        TM ga yuborish
+                    </DropdownMenuItem>
+                    {Number(status) < 20 && (
                         <DropdownMenuItem
                             className="text-primary"
-                            onClick={onSend}
+                            onClick={onEdit}
                         >
-                            <Send />
-                            TM ga yuborish
+                            <Pencil />
+                            Tahrirlash
                         </DropdownMenuItem>
-                        {status != "30" && (
-                            <DropdownMenuItem
-                                className="text-primary"
-                                onClick={onEdit}
-                            >
-                                <Pencil />
-                                Tahrirlash
-                            </DropdownMenuItem>
-                        )}
-                        <DropdownMenuItem
-                            className="text-destructive"
-                            onClick={onDelete}
-                        >
-                            <Trash />
-                            O'chirish
-                        </DropdownMenuItem>
-                    </DropdownMenuGroup>
-                :   <DropdownMenuGroup>
-                        <DropdownMenuItem
-                            className="text-primary"
-                            onClick={onSend}
-                        >
-                            <Send />
-                            TM ga yuborish
-                        </DropdownMenuItem>
-
+                    )}
+                    {(status == "30" || status == "20") && (
                         <DropdownMenuItem
                             className="text-destructive"
                             onClick={onUndo}
@@ -102,8 +79,16 @@ function PackCardMenu({
                             <Undo2 />
                             Qaytarish
                         </DropdownMenuItem>
-                    </DropdownMenuGroup>
-                }
+                    )}
+
+                    <DropdownMenuItem
+                        className="text-destructive"
+                        onClick={onDelete}
+                    >
+                        <Trash />
+                        O'chirish
+                    </DropdownMenuItem>
+                </DropdownMenuGroup>
             </DropdownMenuContent>
         </DropdownMenu>
     )
