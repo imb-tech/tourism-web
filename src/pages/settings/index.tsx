@@ -38,14 +38,14 @@ export default function Settings() {
                         content: <Foods />,
                     },
                     {
-                        id: "categories",
-                        name: "Kategoriyalar",
-                        content: <Categories />,
-                    },
-                    {
                         id: "restaurants",
                         name: "Restoranlar",
                         content: <Restaurans />,
+                    },
+                    {
+                        id: "categories",
+                        name: "Kategoriyalar",
+                        content: <Categories />,
                     },
                 ]}
             />

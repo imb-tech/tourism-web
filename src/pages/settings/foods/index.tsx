@@ -14,7 +14,7 @@ import FoodCreateEdit from "./food-create-edit"
 export default function Foods() {
     const { data: foods, isLoading } = useGet<Food[]>(FOODS)
     const { openModal } = useModal(FOODS)
-    const { openModal: openDeleteModal } = useModal()
+    const { openModal: openDeleteModal } = useModal("delete")
     const { remove, setStore, store } = useStore<Food>(FOOD_DATA)
     const [deleteItem, setDeleteItem] = useState<Food["id"] | null>(null)
 

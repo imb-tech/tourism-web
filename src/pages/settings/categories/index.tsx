@@ -16,7 +16,7 @@ export default function Categories() {
         useGet<Category[]>(CATEGORIES)
 
     const { openModal: openCategoryModal } = useModal(CATEGORIES)
-    const { openModal: openCategoryDeleteModal } = useModal()
+    const { openModal: openCategoryDeleteModal } = useModal("delete")
 
     const [deleteItem, setDeleteItem] = useState<Category["id"] | null>(null)
 
