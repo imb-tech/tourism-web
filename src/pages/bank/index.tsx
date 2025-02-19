@@ -21,6 +21,7 @@ import { useMemo } from "react"
 import ChangesTable from "../changes/shanges-table"
 import ApproveBankForm from "./approve-bank-form"
 import BankRequest from "./bank-request"
+import ExpenceCreateForm from "./expence-create-form"
 import IncomeCreateForm from "./income-create-form"
 
 const columns: ColumnDef<Transaction>[] = [
@@ -64,7 +65,7 @@ export default function BankHome() {
         expense_page_size,
     } = useSearch({ from: "/_main/bank" })
 
-    const { setStore, store } = useStore<number>("modal-type")
+    const { setStore } = useStore<number>("modal-type")
 
     const { data, isLoading } = useGet<BankRequest[]>(
         PAYMENT_REQUESTS + (type ?? "bank"),
@@ -84,6 +85,7 @@ export default function BankHome() {
     >(urlTransactions, getParams(EXPENCE_TYPE, expense_page, expense_page_size))
 
     const { openModal } = useModal("create-income")
+    const { openModal: openExpenceModal } = useModal("create-expence")
 
     return (
         <section className="flex flex-col">
@@ -155,7 +157,7 @@ export default function BankHome() {
                     <Button
                         size={"sm"}
                         onClick={() => {
-                            openModal()
+                            openExpenceModal()
                             setStore(EXPENCE_TYPE)
                         }}
                     >
@@ -181,9 +183,17 @@ export default function BankHome() {
             <Modal
                 modalKey="create-income"
                 className="max-w-xl p-3"
-                title={`${store === INCOME_TYPE ? "Kirim" : "Chiqim"} qo'shish`}
+                title={"Kirim qo'shish"}
             >
                 <IncomeCreateForm />
+            </Modal>
+
+            <Modal
+                modalKey="create-expence"
+                className="max-w-xl p-3"
+                title={"Chiqim qo'shish"}
+            >
+                <ExpenceCreateForm />
             </Modal>
         </section>
     )

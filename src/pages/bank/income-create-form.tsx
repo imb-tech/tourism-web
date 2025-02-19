@@ -8,6 +8,7 @@ import FormTextarea from "@/components/form/textarea"
 import ParamAnimatedTabs from "@/components/param/animated-tab"
 import {
     CREATE_INCOME_OTHER,
+    CREATE_INCOME_TOUR,
     FINANCIAL_CATEGORIES,
     TRANSACTIONS,
 } from "@/constants/api-endpoints"
@@ -21,7 +22,7 @@ import { useForm } from "react-hook-form"
 
 export default function IncomeCreateForm() {
     const form = useForm<InvoiceCreate>()
-    const { type } = useSearch({ from: "/_main/bank" })
+    const { type, income_type } = useSearch({ from: "/_main/bank" })
     const queryClient = useQueryClient()
     const { closeModal } = useModal("create-income")
     const { store, remove } = useStore<number>("modal-type")
@@ -55,9 +56,14 @@ export default function IncomeCreateForm() {
             }
         }
 
-        formDats.append("type", store?.toString() ?? "")
-        formDats.append("checkout_type", type || "bank")
-        mutate(CREATE_INCOME_OTHER, formDats)
+        if (Number(income_type) == 2) {
+            formDats.append("checkout_type", type || "bank")
+            formDats.append("type", store?.toString() ?? "")
+            mutate(CREATE_INCOME_OTHER, formDats)
+        } else {
+            formDats.append("type", type || "bank")
+            mutate(CREATE_INCOME_TOUR, formDats)
+        }
     }
 
     const { data: categories } = useGet<FinancialCategory[]>(
@@ -76,12 +82,11 @@ export default function IncomeCreateForm() {
                 name: "Tur bo'yicha",
                 content: (
                     <div className="p-1">
-                        <SelectField
-                            label="Tur paket"
+                        <FormNumberInput
+                            label="Tur paket ID"
                             methods={form}
                             required
                             name="tour"
-                            options={[]}
                             wrapperClassName="mb-3"
                         />
 
@@ -115,7 +120,7 @@ export default function IncomeCreateForm() {
 
     return (
         <form onSubmit={form.handleSubmit(handleSubmit)}>
-            <ParamAnimatedTabs paramName="income-type" options={options} />
+            <ParamAnimatedTabs paramName="income_type" options={options} />
 
             <div className="p-1 mt-2">
                 <FormNumberInput
@@ -132,7 +137,12 @@ export default function IncomeCreateForm() {
                     wrapperClassName="mt-3"
                 />
 
-                <DropZone label="Chek" methods={form} name="file" required />
+                <DropZone
+                    label="Chek"
+                    methods={form}
+                    name="file"
+                    required={type === "bank"}
+                />
             </div>
 
             <FormAction className="p-1" loading={isPending} />

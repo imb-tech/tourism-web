@@ -5,6 +5,7 @@ import { createFileRoute } from "@tanstack/react-router"
 
 type Params = {
     type: string | undefined
+    income_type?: number | undefined
     income_page?: number | undefined
     expense_page?: number | undefined
     income_page_size?: number | undefined

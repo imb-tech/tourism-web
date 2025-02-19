@@ -122,9 +122,7 @@ export default function DocumentTab() {
                                 <Column key={u.id}>
                                     <Text>{u.dashboard_data.full_name}</Text>
                                     <Text>{u.dashboard_data.phone}</Text>
-                                    <Text>
-                                        {formatMoney(u.dashboard_data.price)}
-                                    </Text>
+                                    <Text>{formatMoney(u.amount)}</Text>
                                 </Column>
                             ))}
                         </Flex>

@@ -1,9 +1,10 @@
 import Img from "@/assets/images/drop-img.png"
 import FormAction from "@/components/custom/form-action"
+import { PAYMENT_CONFIRM } from "@/constants/api-endpoints"
 import { useModal } from "@/hooks/use-modal"
 import { useStore } from "@/hooks/use-store"
 import formatMoney from "@/lib/format-money"
-import { usePost } from "@/services/default-requests"
+import { usePut } from "@/services/default-requests"
 import { useRef, useState } from "react"
 
 export default function ApproveBankForm() {
@@ -54,7 +55,7 @@ export default function ApproveBankForm() {
         }
     }
 
-    const { mutate, isPending } = usePost(
+    const { mutate, isPending } = usePut(
         {
             onSuccess() {
                 closeModal()
@@ -69,10 +70,11 @@ export default function ApproveBankForm() {
 
     function handleSubmit() {
         const formData = new FormData()
+        formData.append("status", "1")
         if (files) {
-            formData.append("invoice", files)
+            formData.append("file", files)
         }
-        mutate("", files)
+        mutate(`${PAYMENT_CONFIRM}${store?.uuid}`, formData)
     }
 
     return (
