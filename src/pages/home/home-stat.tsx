@@ -6,12 +6,11 @@ type Props = {
     type: "bank" | "cash"
     balance: number
     expense: number
-    income: number
 }
 
-export default function HomeStat({ type, balance, expense, income }: Props) {
+export default function HomeStat({ type, balance, expense }: Props) {
     return (
-        <div className="bg-background p-4 rounded-md flex flex-col gap-3">
+        <div className="bg-background p-4 rounded-md flex flex-col gap-3 ">
             <div className="flex justify-between">
                 <div>
                     <p className="text-black/40 font-light">
@@ -33,15 +32,6 @@ export default function HomeStat({ type, balance, expense, income }: Props) {
                         Shu oy sarflangan naqd
                     </p>
                     <span>{formatMoney(expense)}</span>
-                </div>
-            </div>
-
-            <div>
-                <div>
-                    <p className="text-black/40 font-light">
-                        Oy ohirigacha naqdda kutilayotgan tushum
-                    </p>
-                    <span>{formatMoney(income)}</span>
                 </div>
             </div>
         </div>

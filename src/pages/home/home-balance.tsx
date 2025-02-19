@@ -1,29 +1,42 @@
 import Down from "@/assets/images/down.png"
 import Up from "@/assets/images/up.png"
+import formatMoney from "@/lib/format-money"
 
-export default function HomeBalance() {
+type Props = {
+    income: number
+    expense: number
+    expected_expense: number
+}
+
+export default function HomeBalance({
+    income,
+    expense,
+    expected_expense,
+}: Props) {
     return (
         <div className="bg-background p-4 rounded-md flex flex-col gap-3">
-            <div className="flex gap-3 items-center">
-                <img
-                    width={44}
-                    src={Up}
-                    className="min-w-[44px] max-h-[44px]"
-                />
-                <div>
-                    <p className="text-black/40 font-light">Tushum</p>
-                    <span>10 000 000</span>
+            <div className="grid grid-cols-2">
+                <div className="flex gap-3 items-center">
+                    <img
+                        width={44}
+                        src={Up}
+                        className="min-w-[44px] max-h-[44px]"
+                    />
+                    <div>
+                        <p className="text-black/40 font-light">Tushum</p>
+                        <span>{formatMoney(income)}</span>
+                    </div>
                 </div>
-            </div>
-            <div className="flex gap-3 items-center">
-                <img
-                    width={44}
-                    src={Down}
-                    className="min-w-[44px] max-h-[44px]"
-                />
-                <div>
-                    <p className="text-black/40 font-light">Xarajat</p>
-                    <span>10 000 000</span>
+                <div className="flex gap-3 items-center">
+                    <img
+                        width={44}
+                        src={Down}
+                        className="min-w-[44px] max-h-[44px]"
+                    />
+                    <div>
+                        <p className="text-black/40 font-light">Xarajat</p>
+                        <span>{formatMoney(expense)}</span>
+                    </div>
                 </div>
             </div>
             <div className="flex gap-3 items-center">
@@ -36,7 +49,7 @@ export default function HomeBalance() {
                     <p className="text-black/40 font-light">
                         Oy ohirigacha kutilayotgan xarajat
                     </p>
-                    <span>10 000 000</span>
+                    <span>{formatMoney(expected_expense)}</span>
                 </div>
             </div>
         </div>

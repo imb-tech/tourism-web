@@ -7,7 +7,6 @@ import HomeStat from "./home-stat"
 const Statistics = () => {
     const { data: statisticsData, isLoading } =
         useGet<DashboardStatistics>(STATISTICS)
-    console.log(statisticsData)
 
     return (
         <section>
@@ -18,15 +17,19 @@ const Statistics = () => {
                         type="cash"
                         balance={statisticsData?.cash.balance ?? 0}
                         expense={statisticsData?.cash.expense ?? 0}
-                        income={statisticsData?.cash.income ?? 0}
                     />
                     <HomeStat
                         type="bank"
                         balance={statisticsData?.bank.balance ?? 0}
                         expense={statisticsData?.bank.expense ?? 0}
-                        income={statisticsData?.bank.income ?? 0}
                     />
-                    <HomeBalance />
+                    <HomeBalance
+                        income={statisticsData?.balance.income ?? 0}
+                        expense={statisticsData?.balance.expense ?? 0}
+                        expected_expense={
+                            statisticsData?.balance.expected_expense ?? 0
+                        }
+                    />
                 </div>
             }
         </section>
