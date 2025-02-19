@@ -25,6 +25,7 @@ export default function Tour() {
         plane: () => import("@/pages/tour/plane/tour-row"),
         entrance: () => import("@/pages/tour/enterence/tour-row"),
         other: () => import("@/pages/tour/other/tour-row"),
+        criteria: () => import("@/pages/tour/inclusion/tour-row"),
     }
 
     const ComponentMain = useMemo(

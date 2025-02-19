@@ -102,7 +102,7 @@ export default function BankHome() {
             />
             <InitialDataBox isLoading={isLoading} />
             {data?.length ?
-                <div className="bg-background p-3 rounded-md">
+                <div className="bg-background p-3 rounded-md mb-3">
                     <p className="text-xl mb-3">Chiqimlarni tasdiqlash</p>
                     <ul className="flex flex-col gap-2">
                         {data?.map((el) => (
@@ -134,7 +134,7 @@ export default function BankHome() {
                     </Button>
                 </div>
                 <ChangesTable
-                    grid="grid-cols-6"
+                    grid="grid-cols-4"
                     columns={columns}
                     setCellClassName={() => "text-sm"}
                     viewAll
@@ -164,7 +164,7 @@ export default function BankHome() {
                     </Button>
                 </div>
                 <ChangesTable
-                    grid="grid-cols-6"
+                    grid="grid-cols-4"
                     columns={columns}
                     setCellClassName={() => "text-sm"}
                     viewAll

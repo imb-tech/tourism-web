@@ -139,7 +139,7 @@ export default function TourCol({ day, data, hotels }: HotelItem) {
                                 name={`data.${i}.count`}
                                 onBlur={handleSave}
                             >
-                                {el?.count || "-"}
+                                {el?.count}
                             </EditableBox>
                         </CustomTableCol>
 

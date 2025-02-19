@@ -9,7 +9,7 @@ type Props = {
     className?: string
     grid: `grid-cols-${number}`
     rowId: number
-    day: number
+    day: number | string
 }
 
 export default function CustomTableRow({

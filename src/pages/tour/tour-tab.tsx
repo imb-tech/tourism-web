@@ -13,6 +13,7 @@ const options: { id: packTab; name: string }[] = [
     { id: "plane", name: "Samolyot" },
     { id: "entrance", name: "Enterence" },
     { id: "other", name: "Boshqa" },
+    { id: "criteria", name: "Inclusion & Exclusion" },
 ]
 
 export default function TourTab() {

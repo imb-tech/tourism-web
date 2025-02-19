@@ -34,3 +34,13 @@ type Transaction = {
     condition: 1
     checkout_id: 1
 }
+
+type Inclusion = {
+    id: number | null
+    text: string
+    type: "inclusion" | "exclusion"
+}
+
+type InclusionForm = {
+    data: Inclusion[]
+}

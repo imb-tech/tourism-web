@@ -24,3 +24,4 @@ type packTab =
     | "plane"
     | "entrance"
     | "other"
+    | "criteria"
