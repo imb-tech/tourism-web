@@ -4,7 +4,7 @@ import Modal from "@/components/custom/modal"
 import InitialDataBox from "@/components/elements/initial-data-box"
 import AddButton from "@/components/shared/add-button"
 import PackCard from "@/components/shared/pack-card"
-import { CHANGERS, TOUR } from "@/constants/api-endpoints"
+import { CHANGERS, MOVE_REAL, TOUR } from "@/constants/api-endpoints"
 import { TOUR_DATA } from "@/constants/localstorage-keys"
 import { useModal } from "@/hooks/use-modal"
 import { useStore } from "@/hooks/use-store"
@@ -22,9 +22,9 @@ const Packs = () => {
     const { openModal } = useModal()
     const { openModal: openDeleteModal } = useModal("delete")
     const { openModal: openConfirmModal } = useModal("confirm")
+    const { openModal: openMoveToRealModal } = useModal("move-to-real")
     const [item, setItem] = useState<PackItem | null>(null)
     const { setStore } = useStore<PackItem | undefined>(TOUR_DATA)
-    const [sendItem, setSendItem] = useState<PackItem | null>(null)
     const { mutateAsync: sendTm } = usePost()
 
     const { data, isLoading, isError, isSuccess } = useGet<
@@ -42,13 +42,27 @@ const Packs = () => {
     }
 
     function handleSend(v: PackItem) {
-        setSendItem(v)
+        setItem(v)
         openConfirmModal()
+    }
+
+    function handleOnFinishSend(v: PackItem) {
+        setItem(v)
+        openMoveToRealModal()
     }
 
     async function onConfirmSend() {
         try {
-            await sendTm(CHANGERS, { tour: sendItem?.id })
+            await sendTm(CHANGERS, { tour: item?.id })
+            return Promise.resolve()
+        } catch (error) {
+            return Promise.reject()
+        }
+    }
+
+    async function onFinishSend() {
+        try {
+            await sendTm(MOVE_REAL + `${item?.id}`, {})
             return Promise.resolve()
         } catch (error) {
             return Promise.reject()
@@ -70,6 +84,7 @@ const Packs = () => {
                         onEdit={() => handleEdit(pack)}
                         onDelete={() => handleDelete(pack)}
                         onSend={() => handleSend(pack)}
+                        onFinish={() => handleOnFinishSend(pack)}
                     />
                 ))}
 
@@ -83,6 +98,13 @@ const Packs = () => {
                     onSuccessAction={onConfirmSend}
                     refetch
                     refetchKey={TOUR}
+                />
+
+                <ConfirmCancelModal
+                    onSuccessAction={onFinishSend}
+                    refetch
+                    refetchKey={TOUR}
+                    modalKey="move-to-real"
                 />
             </section>
         :   <InitialDataBox isLoading={isLoading} isError={isError} />

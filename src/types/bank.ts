@@ -27,7 +27,7 @@ type Transaction = {
     uuid: string
     amount: string
     comment: string
-    executor: string
+    executor_name: string
     through: "FinancialFlow" | "TourExpense" | "TourIncome"
     instance_pk: "2"
     type: 1

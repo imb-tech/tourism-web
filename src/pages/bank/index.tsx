@@ -41,7 +41,7 @@ const columns: ColumnDef<Transaction>[] = [
     },
     {
         header: "Tasdiqlovchi",
-        accessorKey: "executor",
+        accessorKey: "executor_name",
     },
 ]
 

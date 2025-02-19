@@ -28,6 +28,7 @@ export const CATEGORIES = COMMON + "categories"
 export const EXPECTED = PLANS + "/expected"
 export const ACCEPT = PLANS + "/accept"
 export const CHANGERS = TOURS + "changers"
+export const MOVE_REAL = COSTS + "move-real/"
 
 export const TOURISTS = TOURS + "tourists"
 export const ENTERANCES = SERVICES + "entrances"

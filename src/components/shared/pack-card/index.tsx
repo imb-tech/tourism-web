@@ -114,6 +114,7 @@ function PackCard({
                         onEdit={onEdit}
                         onSend={onSend}
                         onFinish={onFinish}
+                        status={status}
                     />
                 </div>
             </CardContent>

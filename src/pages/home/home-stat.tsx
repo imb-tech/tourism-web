@@ -16,9 +16,7 @@ export default function HomeStat({ type, balance, expense }: Props) {
                     <p className="text-black/40 font-light">
                         Balans {type === "bank" ? "bank" : "naqd"}
                     </p>
-                    <span>
-                        {formatMoney(type === "bank" ? balance : expense)}
-                    </span>
+                    <span>{formatMoney(balance)}</span>
                 </div>
                 <img
                     src={type === "bank" ? BankSign : UsdSign}

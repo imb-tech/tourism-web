@@ -1,7 +1,7 @@
 import ParamAnimatedTabs from "@/components/param/animated-tab"
-import Categories from "./categories"
 import CityAndCountries from "./city-and-countries"
 import Enterances from "./enterances"
+import FinancialCategoriesAndCategories from "./financial-cat-and-categories"
 import Foods from "./foods"
 import Hotels from "./hotels"
 import Restaurans from "./restaurans"
@@ -45,7 +45,7 @@ export default function Settings() {
                     {
                         id: "categories",
                         name: "Kategoriyalar",
-                        content: <Categories />,
+                        content: <FinancialCategoriesAndCategories />,
                     },
                 ]}
             />

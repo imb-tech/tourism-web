@@ -49,7 +49,7 @@ export default function ApproveCard({
                         <FileText size={18} className="text-primary" />
                     </Button>
                 )}
-                {[10, 30].includes(status) && (
+                {[10, 40].includes(status) && (
                     <Button
                         size={"icon"}
                         variant={"ghost"}

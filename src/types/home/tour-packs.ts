@@ -13,7 +13,7 @@ type TourItem = {
 }
 
 type PackTMStatus = "-1" | "0" | "1"
-type PackStatus = "0" | "10" | "20" | "30"
+type PackStatus = "0" | "10" | "20" | "30" | "40"
 
 type PackItem = {
     id: number

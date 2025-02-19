@@ -14,9 +14,10 @@ type Props = {
     onEdit?: () => void
     onSend?: () => void
     onFinish?: () => void
+    status: string
 }
 
-function PackCardMenu({ onDelete, onEdit, onSend, onFinish }: Props) {
+function PackCardMenu({ onDelete, onEdit, onSend, onFinish, status }: Props) {
     const ref = useRef<HTMLDivElement>(null)
     return (
         <DropdownMenu modal={false}>
@@ -32,21 +33,28 @@ function PackCardMenu({ onDelete, onEdit, onSend, onFinish }: Props) {
                 side="top"
             >
                 <DropdownMenuGroup>
-                    <DropdownMenuItem
-                        className="text-success"
-                        onClick={onFinish}
-                    >
-                        <CheckCheck />
-                        Yakunlash
-                    </DropdownMenuItem>
+                    {status != "30" && (
+                        <DropdownMenuItem
+                            className="text-success"
+                            onClick={onFinish}
+                        >
+                            <CheckCheck />
+                            Yakunlash
+                        </DropdownMenuItem>
+                    )}
                     <DropdownMenuItem className="text-primary" onClick={onSend}>
                         <Send />
                         TM ga yuborish
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="text-primary" onClick={onEdit}>
-                        <Pencil />
-                        Tahrirlash
-                    </DropdownMenuItem>
+                    {status != "30" && (
+                        <DropdownMenuItem
+                            className="text-primary"
+                            onClick={onEdit}
+                        >
+                            <Pencil />
+                            Tahrirlash
+                        </DropdownMenuItem>
+                    )}
                     <DropdownMenuItem
                         className="text-destructive"
                         onClick={onDelete}
