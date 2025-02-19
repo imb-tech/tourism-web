@@ -6,7 +6,8 @@ type GetMe = {
 }
 
 type ListResponse<T> = {
-    total_page: number
+    total_pages: number
+    count: number
     results: T[]
 }
 

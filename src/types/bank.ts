@@ -22,3 +22,15 @@ type FinancialCategory = {
     id: number
     name: string
 }
+
+type Transaction = {
+    uuid: string
+    amount: string
+    comment: string
+    executor: string
+    through: "FinancialFlow" | "TourExpense" | "TourIncome"
+    instance_pk: "2"
+    type: 1
+    condition: 1
+    checkout_id: 1
+}

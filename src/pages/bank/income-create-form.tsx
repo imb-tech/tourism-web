@@ -9,9 +9,12 @@ import ParamAnimatedTabs from "@/components/param/animated-tab"
 import {
     CREATE_INCOME_OTHER,
     FINANCIAL_CATEGORIES,
+    TRANSACTIONS,
 } from "@/constants/api-endpoints"
-import { INCOME_TYPE } from "@/constants/common"
+import { useModal } from "@/hooks/use-modal"
+import { useStore } from "@/hooks/use-store"
 import { useGet, usePost } from "@/services/default-requests"
+import { useQueryClient } from "@tanstack/react-query"
 import { useSearch } from "@tanstack/react-router"
 import { useMemo } from "react"
 import { useForm } from "react-hook-form"
@@ -19,12 +22,26 @@ import { useForm } from "react-hook-form"
 export default function IncomeCreateForm() {
     const form = useForm<InvoiceCreate>()
     const { type } = useSearch({ from: "/_main/bank" })
+    const queryClient = useQueryClient()
+    const { closeModal } = useModal("create-income")
+    const { store, remove } = useStore<number>("modal-type")
 
-    const { mutate } = usePost(undefined, {
-        headers: {
-            "Content-Type": "multipart/form-data",
+    const { mutate, isPending } = usePost(
+        {
+            onSuccess: () => {
+                queryClient.removeQueries({
+                    queryKey: [TRANSACTIONS + (type || "bank")],
+                })
+                remove()
+                closeModal()
+            },
         },
-    })
+        {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        },
+    )
 
     function handleSubmit(values: InvoiceCreate) {
         const formDats = new FormData()
@@ -38,7 +55,7 @@ export default function IncomeCreateForm() {
             }
         }
 
-        formDats.append("type", INCOME_TYPE.toString())
+        formDats.append("type", store?.toString() ?? "")
         formDats.append("checkout_type", type || "bank")
         mutate(CREATE_INCOME_OTHER, formDats)
     }
@@ -118,7 +135,7 @@ export default function IncomeCreateForm() {
                 <DropZone label="Chek" methods={form} name="file" required />
             </div>
 
-            <FormAction className="p-1" />
+            <FormAction className="p-1" loading={isPending} />
         </form>
     )
 }
