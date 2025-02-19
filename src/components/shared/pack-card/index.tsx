@@ -13,6 +13,7 @@ type PackCardProps = PackItem & {
     onDelete?: () => void
     onSend?: () => void
     onFinish?: () => void
+    onUndo?: () => void
 }
 
 function PackCard({
@@ -31,12 +32,14 @@ function PackCard({
     onEdit,
     onSend,
     onFinish,
+    onUndo,
 }: PackCardProps) {
     const { total, current } = useMemo(
         () => calcProgress(start, end),
         [start, end],
     )
     const { pathname } = useLocation()
+    const isCost = useMemo(() => pathname.includes("cost"), [pathname])
 
     const { title, color } = getPackTMStatus(tm_status || 0)
     const { title: statusTitle, color: statusColor } = getPackStatus(status)
@@ -94,11 +97,7 @@ function PackCard({
                 <div className="flex gap-2">
                     <Link
                         className="flex-1"
-                        to={
-                            pathname.startsWith("/cost") ? "/cost/$id" : (
-                                "/packs/$pack"
-                            )
-                        }
+                        to={isCost ? "/cost/$id" : "/packs/$pack"}
                         params={{
                             pack: id.toString(),
                             id: plan_id ? plan_id.toString() : undefined,
@@ -114,6 +113,7 @@ function PackCard({
                         onEdit={onEdit}
                         onSend={onSend}
                         onFinish={onFinish}
+                        onUndo={onUndo}
                         status={status}
                     />
                 </div>

@@ -3,7 +3,7 @@ import InitialDataBox from "@/components/elements/initial-data-box"
 import PackCard from "@/components/shared/pack-card"
 import { CHANGERS, REAL_COST } from "@/constants/api-endpoints"
 import { useModal } from "@/hooks/use-modal"
-import { useGet, usePost } from "@/services/default-requests"
+import { useGet, usePost, usePut } from "@/services/default-requests"
 import { useState } from "react"
 
 const CostHome = () => {
@@ -12,16 +12,34 @@ const CostHome = () => {
     >(REAL_COST)
     const [item, setItem] = useState<PackItem | null>(null)
     const { openModal: openConfirmModal } = useModal("confirm")
+    const { openModal: openUndoModal } = useModal("undo")
     const { mutateAsync: sendTm } = usePost()
+    const { mutateAsync: put } = usePut()
 
     function handleSend(v: PackItem) {
         setItem(v)
         openConfirmModal()
     }
 
+    function handleUndo(v: PackItem) {
+        setItem(v)
+        openUndoModal()
+    }
+
     async function onConfirmSend() {
         try {
             await sendTm(CHANGERS, { tour: item?.id })
+            return Promise.resolve()
+        } catch (error) {
+            return Promise.reject()
+        }
+    }
+
+    async function onConfirmUndo() {
+        try {
+            await put("tours/rollback/" + item?.id, {
+                status: 0,
+            })
             return Promise.resolve()
         } catch (error) {
             return Promise.reject()
@@ -35,11 +53,19 @@ const CostHome = () => {
                         key={pack.id}
                         {...pack}
                         onSend={() => handleSend(pack)}
+                        onUndo={() => handleUndo(pack)}
                     />
                 ))}
 
                 <ConfirmCancelModal
                     onSuccessAction={onConfirmSend}
+                    refetch
+                    refetchKey={REAL_COST}
+                />
+
+                <ConfirmCancelModal
+                    onSuccessAction={onConfirmUndo}
+                    modalKey="undo"
                     refetch
                     refetchKey={REAL_COST}
                 />
