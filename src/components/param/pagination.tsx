@@ -1,4 +1,4 @@
-import { PAGE_KEY, PAGE_SIZE_KEY } from "@/constants/common"
+import { DEFAULT_PAGE_SIZE, PAGE_KEY, PAGE_SIZE_KEY } from "@/constants/common"
 import { cn } from "@/lib/utils"
 import { useNavigate, useSearch } from "@tanstack/react-router"
 import { ChevronLeft, ChevronRight } from "lucide-react"
@@ -19,7 +19,7 @@ export default function ParamPagination({
     pageSizeParamName = PAGE_SIZE_KEY,
     disabled = false,
     changePageSize = true,
-    pageSize = 25,
+    pageSize = DEFAULT_PAGE_SIZE,
     clearOthers,
 }: PaginationProps) {
     const navigate = useNavigate()
