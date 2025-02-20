@@ -1,4 +1,5 @@
 import ConfirmCancelModal from "@/components/custom/confirm-modal"
+import EmptyBox from "@/components/elements/empty-box"
 import InitialDataBox from "@/components/elements/initial-data-box"
 import PackCard from "@/components/shared/pack-card"
 import { CHANGERS, REAL_COST } from "@/constants/api-endpoints"
@@ -48,6 +49,7 @@ const CostHome = () => {
 
     return isSuccess ?
             <section className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-3">
+                <EmptyBox count={data?.length} />
                 {data?.map((pack) => (
                     <PackCard
                         key={pack.id}

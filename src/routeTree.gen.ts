@@ -16,14 +16,16 @@ import { Route as MainImport } from './routes/_main'
 import { Route as MainIndexImport } from './routes/_main/index'
 import { Route as MainChangesImport } from './routes/_main/changes'
 import { Route as MainBankImport } from './routes/_main/bank'
-import { Route as MainAdminImport } from './routes/_main/admin'
 import { Route as MainSettingsIndexImport } from './routes/_main/settings/index'
 import { Route as MainPacksIndexImport } from './routes/_main/packs/index'
 import { Route as MainCostIndexImport } from './routes/_main/cost/index'
+import { Route as MainAdminIndexImport } from './routes/_main/admin/index'
 import { Route as MainCostIdImport } from './routes/_main/cost/$id'
 import { Route as MainPacksPackIndexImport } from './routes/_main/packs/$pack/index'
 import { Route as MainPacksPackIdImport } from './routes/_main/packs/$pack/$id'
 import { Route as MainDocumentPlanDayImport } from './routes/_main/document/$plan/$day'
+import { Route as MainAdminRolesCreateImport } from './routes/_main/admin/roles/create'
+import { Route as MainAdminRolesIdImport } from './routes/_main/admin/roles/$id'
 import { Route as MainPacksPackTourIdImport } from './routes/_main/packs/$pack/tour/$id'
 
 // Create/Update Routes
@@ -57,12 +59,6 @@ const MainBankRoute = MainBankImport.update({
   getParentRoute: () => MainRoute,
 } as any)
 
-const MainAdminRoute = MainAdminImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => MainRoute,
-} as any)
-
 const MainSettingsIndexRoute = MainSettingsIndexImport.update({
   id: '/settings/',
   path: '/settings/',
@@ -78,6 +74,12 @@ const MainPacksIndexRoute = MainPacksIndexImport.update({
 const MainCostIndexRoute = MainCostIndexImport.update({
   id: '/cost/',
   path: '/cost/',
+  getParentRoute: () => MainRoute,
+} as any)
+
+const MainAdminIndexRoute = MainAdminIndexImport.update({
+  id: '/admin/',
+  path: '/admin/',
   getParentRoute: () => MainRoute,
 } as any)
 
@@ -105,6 +107,18 @@ const MainDocumentPlanDayRoute = MainDocumentPlanDayImport.update({
   getParentRoute: () => MainRoute,
 } as any)
 
+const MainAdminRolesCreateRoute = MainAdminRolesCreateImport.update({
+  id: '/admin/roles/create',
+  path: '/admin/roles/create',
+  getParentRoute: () => MainRoute,
+} as any)
+
+const MainAdminRolesIdRoute = MainAdminRolesIdImport.update({
+  id: '/admin/roles/$id',
+  path: '/admin/roles/$id',
+  getParentRoute: () => MainRoute,
+} as any)
+
 const MainPacksPackTourIdRoute = MainPacksPackTourIdImport.update({
   id: '/packs/$pack/tour/$id',
   path: '/packs/$pack/tour/$id',
@@ -128,13 +142,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/login'
       preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
-    }
-    '/_main/admin': {
-      id: '/_main/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof MainAdminImport
-      parentRoute: typeof MainImport
     }
     '/_main/bank': {
       id: '/_main/bank'
@@ -164,6 +171,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainCostIdImport
       parentRoute: typeof MainImport
     }
+    '/_main/admin/': {
+      id: '/_main/admin/'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof MainAdminIndexImport
+      parentRoute: typeof MainImport
+    }
     '/_main/cost/': {
       id: '/_main/cost/'
       path: '/cost'
@@ -183,6 +197,20 @@ declare module '@tanstack/react-router' {
       path: '/settings'
       fullPath: '/settings'
       preLoaderRoute: typeof MainSettingsIndexImport
+      parentRoute: typeof MainImport
+    }
+    '/_main/admin/roles/$id': {
+      id: '/_main/admin/roles/$id'
+      path: '/admin/roles/$id'
+      fullPath: '/admin/roles/$id'
+      preLoaderRoute: typeof MainAdminRolesIdImport
+      parentRoute: typeof MainImport
+    }
+    '/_main/admin/roles/create': {
+      id: '/_main/admin/roles/create'
+      path: '/admin/roles/create'
+      fullPath: '/admin/roles/create'
+      preLoaderRoute: typeof MainAdminRolesCreateImport
       parentRoute: typeof MainImport
     }
     '/_main/document/$plan/$day': {
@@ -219,14 +247,16 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface MainRouteChildren {
-  MainAdminRoute: typeof MainAdminRoute
   MainBankRoute: typeof MainBankRoute
   MainChangesRoute: typeof MainChangesRoute
   MainIndexRoute: typeof MainIndexRoute
   MainCostIdRoute: typeof MainCostIdRoute
+  MainAdminIndexRoute: typeof MainAdminIndexRoute
   MainCostIndexRoute: typeof MainCostIndexRoute
   MainPacksIndexRoute: typeof MainPacksIndexRoute
   MainSettingsIndexRoute: typeof MainSettingsIndexRoute
+  MainAdminRolesIdRoute: typeof MainAdminRolesIdRoute
+  MainAdminRolesCreateRoute: typeof MainAdminRolesCreateRoute
   MainDocumentPlanDayRoute: typeof MainDocumentPlanDayRoute
   MainPacksPackIdRoute: typeof MainPacksPackIdRoute
   MainPacksPackIndexRoute: typeof MainPacksPackIndexRoute
@@ -234,14 +264,16 @@ interface MainRouteChildren {
 }
 
 const MainRouteChildren: MainRouteChildren = {
-  MainAdminRoute: MainAdminRoute,
   MainBankRoute: MainBankRoute,
   MainChangesRoute: MainChangesRoute,
   MainIndexRoute: MainIndexRoute,
   MainCostIdRoute: MainCostIdRoute,
+  MainAdminIndexRoute: MainAdminIndexRoute,
   MainCostIndexRoute: MainCostIndexRoute,
   MainPacksIndexRoute: MainPacksIndexRoute,
   MainSettingsIndexRoute: MainSettingsIndexRoute,
+  MainAdminRolesIdRoute: MainAdminRolesIdRoute,
+  MainAdminRolesCreateRoute: MainAdminRolesCreateRoute,
   MainDocumentPlanDayRoute: MainDocumentPlanDayRoute,
   MainPacksPackIdRoute: MainPacksPackIdRoute,
   MainPacksPackIndexRoute: MainPacksPackIndexRoute,
@@ -253,14 +285,16 @@ const MainRouteWithChildren = MainRoute._addFileChildren(MainRouteChildren)
 export interface FileRoutesByFullPath {
   '': typeof MainRouteWithChildren
   '/login': typeof LoginRoute
-  '/admin': typeof MainAdminRoute
   '/bank': typeof MainBankRoute
   '/changes': typeof MainChangesRoute
   '/': typeof MainIndexRoute
   '/cost/$id': typeof MainCostIdRoute
+  '/admin': typeof MainAdminIndexRoute
   '/cost': typeof MainCostIndexRoute
   '/packs': typeof MainPacksIndexRoute
   '/settings': typeof MainSettingsIndexRoute
+  '/admin/roles/$id': typeof MainAdminRolesIdRoute
+  '/admin/roles/create': typeof MainAdminRolesCreateRoute
   '/document/$plan/$day': typeof MainDocumentPlanDayRoute
   '/packs/$pack/$id': typeof MainPacksPackIdRoute
   '/packs/$pack': typeof MainPacksPackIndexRoute
@@ -269,14 +303,16 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
-  '/admin': typeof MainAdminRoute
   '/bank': typeof MainBankRoute
   '/changes': typeof MainChangesRoute
   '/': typeof MainIndexRoute
   '/cost/$id': typeof MainCostIdRoute
+  '/admin': typeof MainAdminIndexRoute
   '/cost': typeof MainCostIndexRoute
   '/packs': typeof MainPacksIndexRoute
   '/settings': typeof MainSettingsIndexRoute
+  '/admin/roles/$id': typeof MainAdminRolesIdRoute
+  '/admin/roles/create': typeof MainAdminRolesCreateRoute
   '/document/$plan/$day': typeof MainDocumentPlanDayRoute
   '/packs/$pack/$id': typeof MainPacksPackIdRoute
   '/packs/$pack': typeof MainPacksPackIndexRoute
@@ -287,14 +323,16 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/_main': typeof MainRouteWithChildren
   '/login': typeof LoginRoute
-  '/_main/admin': typeof MainAdminRoute
   '/_main/bank': typeof MainBankRoute
   '/_main/changes': typeof MainChangesRoute
   '/_main/': typeof MainIndexRoute
   '/_main/cost/$id': typeof MainCostIdRoute
+  '/_main/admin/': typeof MainAdminIndexRoute
   '/_main/cost/': typeof MainCostIndexRoute
   '/_main/packs/': typeof MainPacksIndexRoute
   '/_main/settings/': typeof MainSettingsIndexRoute
+  '/_main/admin/roles/$id': typeof MainAdminRolesIdRoute
+  '/_main/admin/roles/create': typeof MainAdminRolesCreateRoute
   '/_main/document/$plan/$day': typeof MainDocumentPlanDayRoute
   '/_main/packs/$pack/$id': typeof MainPacksPackIdRoute
   '/_main/packs/$pack/': typeof MainPacksPackIndexRoute
@@ -306,14 +344,16 @@ export interface FileRouteTypes {
   fullPaths:
     | ''
     | '/login'
-    | '/admin'
     | '/bank'
     | '/changes'
     | '/'
     | '/cost/$id'
+    | '/admin'
     | '/cost'
     | '/packs'
     | '/settings'
+    | '/admin/roles/$id'
+    | '/admin/roles/create'
     | '/document/$plan/$day'
     | '/packs/$pack/$id'
     | '/packs/$pack'
@@ -321,14 +361,16 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
-    | '/admin'
     | '/bank'
     | '/changes'
     | '/'
     | '/cost/$id'
+    | '/admin'
     | '/cost'
     | '/packs'
     | '/settings'
+    | '/admin/roles/$id'
+    | '/admin/roles/create'
     | '/document/$plan/$day'
     | '/packs/$pack/$id'
     | '/packs/$pack'
@@ -337,14 +379,16 @@ export interface FileRouteTypes {
     | '__root__'
     | '/_main'
     | '/login'
-    | '/_main/admin'
     | '/_main/bank'
     | '/_main/changes'
     | '/_main/'
     | '/_main/cost/$id'
+    | '/_main/admin/'
     | '/_main/cost/'
     | '/_main/packs/'
     | '/_main/settings/'
+    | '/_main/admin/roles/$id'
+    | '/_main/admin/roles/create'
     | '/_main/document/$plan/$day'
     | '/_main/packs/$pack/$id'
     | '/_main/packs/$pack/'
@@ -379,14 +423,16 @@ export const routeTree = rootRoute
     "/_main": {
       "filePath": "_main.tsx",
       "children": [
-        "/_main/admin",
         "/_main/bank",
         "/_main/changes",
         "/_main/",
         "/_main/cost/$id",
+        "/_main/admin/",
         "/_main/cost/",
         "/_main/packs/",
         "/_main/settings/",
+        "/_main/admin/roles/$id",
+        "/_main/admin/roles/create",
         "/_main/document/$plan/$day",
         "/_main/packs/$pack/$id",
         "/_main/packs/$pack/",
@@ -395,10 +441,6 @@ export const routeTree = rootRoute
     },
     "/login": {
       "filePath": "login.tsx"
-    },
-    "/_main/admin": {
-      "filePath": "_main/admin.tsx",
-      "parent": "/_main"
     },
     "/_main/bank": {
       "filePath": "_main/bank.tsx",
@@ -416,6 +458,10 @@ export const routeTree = rootRoute
       "filePath": "_main/cost/$id.tsx",
       "parent": "/_main"
     },
+    "/_main/admin/": {
+      "filePath": "_main/admin/index.tsx",
+      "parent": "/_main"
+    },
     "/_main/cost/": {
       "filePath": "_main/cost/index.tsx",
       "parent": "/_main"
@@ -426,6 +472,14 @@ export const routeTree = rootRoute
     },
     "/_main/settings/": {
       "filePath": "_main/settings/index.tsx",
+      "parent": "/_main"
+    },
+    "/_main/admin/roles/$id": {
+      "filePath": "_main/admin/roles/$id.tsx",
+      "parent": "/_main"
+    },
+    "/_main/admin/roles/create": {
+      "filePath": "_main/admin/roles/create.tsx",
       "parent": "/_main"
     },
     "/_main/document/$plan/$day": {
