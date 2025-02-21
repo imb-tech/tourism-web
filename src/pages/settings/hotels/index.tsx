@@ -72,11 +72,14 @@ export default function Hotels() {
                 title={
                     store ? "Mehmonxonani tahrirlash" : "Mehmonxonani qo'shish"
                 }
-                className="max-w-xl"
+                className="max-w-4xl"
             >
-                {!loading ?
-                    <HotelCreateForm />
-                :   <InitialDataBox isLoading />}
+                {
+                    !loading ?
+                        <HotelCreateForm />
+                        // <HotelNewCreateForm />
+                    :   <InitialDataBox isLoading />
+                }
             </Modal>
         </>
     )

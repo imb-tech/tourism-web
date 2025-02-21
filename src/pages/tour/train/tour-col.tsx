@@ -61,6 +61,10 @@ function TourCol({
         },
     })
 
+    const {
+        formState: { isDirty },
+    } = form
+
     const { fields } = useFieldArray({
         control: form.control,
         name: "data",
@@ -71,39 +75,56 @@ function TourCol({
 
     const handleSave = useCallback(
         async (event: React.FocusEvent<HTMLElement>) => {
+            if (!isDirty) {
+                return
+            }
             const fieldId = Number(event.currentTarget.textContent)
             const item = fieldsValue?.find(
                 (field) => field.field_id === fieldId,
             )
 
             if (item) {
-                const resp = (await save({
-                    ...item,
-                    payment_type: item.payment_type ?? 0,
-                    from_city: item.from_city_id ?? null,
-                    to_city: item.to_city_id ?? null,
-                    from_time: undefined,
-                    to_time: undefined,
-                })) as { id: number }
-                fieldsValue?.forEach((f, i) => {
-                    if (f.field_id === fieldId) {
-                        form.setValue(`data.${i}.id`, resp.id)
-                    }
-                })
+                try {
+                    const resp = (await save({
+                        ...item,
+                        payment_type: item.payment_type ?? 0,
+                        from_city: item.from_city_id ?? null,
+                        to_city: item.to_city_id ?? null,
+                        from_time: undefined,
+                        to_time: undefined,
+                    })) as { id: number }
+                    form.reset(undefined, { keepValues: true, keepDirty: true })
+
+                    fieldsValue?.forEach((f, i) => {
+                        if (f.field_id === fieldId) {
+                            form.setValue(`data.${i}.id`, resp.id, {
+                                shouldDirty: true,
+                            })
+                        }
+                    })
+                } catch (error) {
+                    console.error("Error saving data:", error)
+                }
             }
         },
-        [fieldsValue, save, form],
+        [fieldsValue, save, isDirty, form],
     )
 
-    function onBlur(event: React.FocusEvent<HTMLElement>, field_id: number) {
-        handleSave({
-            ...event,
-            currentTarget: {
-                ...event.currentTarget,
-                textContent: field_id.toString(),
-            },
-        })
-    }
+    const onBlur = useCallback(
+        (event: React.FocusEvent<HTMLElement>, field_id: number) => {
+            if (!isDirty) {
+                return
+            }
+            handleSave({
+                ...event,
+                currentTarget: {
+                    ...event.currentTarget,
+                    textContent: field_id.toString(),
+                },
+            })
+        },
+        [isDirty, handleSave],
+    )
 
     function handleCityChange(field_id: number) {
         const item = fieldsValue?.find((f) => f.field_id === field_id)
@@ -134,7 +155,7 @@ function TourCol({
             setTimes(obj)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [fieldsValue, times])
 
     return (
         <CustomTable grid="grid-cols-10">
@@ -160,6 +181,7 @@ function TourCol({
                                     form.setValue(
                                         `data.${i}.date`,
                                         date?.toString() || null,
+                                        { shouldDirty: true },
                                     )
                                     handleCityChange(el.field_id)
                                 }}
@@ -177,6 +199,7 @@ function TourCol({
                                     form.setValue(
                                         `data.${i}.from_city_id`,
                                         city.id,
+                                        { shouldDirty: true },
                                     )
                                     form.setValue(
                                         `data.${i}.dep`,
@@ -203,6 +226,7 @@ function TourCol({
                                     form.setValue(
                                         `data.${i}.to_city_id`,
                                         city.id,
+                                        { shouldDirty: true },
                                     )
                                     form.setValue(
                                         `data.${i}.des`,
@@ -232,14 +256,22 @@ function TourCol({
                                 loadingMessage={() => "Yuklanmoqda..."}
                                 onMenuOpen={() => {
                                     const dep = cities?.find(
-                                        (e) => e.id == el.from_city_id,
+                                        (e) =>
+                                            e.id ==
+                                            form.watch(
+                                                `data.${i}.from_city_id`,
+                                            ),
                                     )?.train_code
                                     const des = cities?.find(
-                                        (e) => e.id == el.to_city_id,
+                                        (e) =>
+                                            e.id ==
+                                            form.watch(`data.${i}.to_city_id`),
                                     )?.train_code
                                     if (dep && des) {
                                         getTimes(
-                                            el.date?.toString(),
+                                            form
+                                                .watch(`data.${i}.date`)
+                                                ?.toString(),
                                             dep,
                                             des,
                                             el.field_id,
@@ -248,7 +280,9 @@ function TourCol({
                                 }}
                                 onChange={(v) => {
                                     const d = v as TrainTime
-                                    form.setValue(`data.${i}.times`, d.times)
+                                    form.setValue(`data.${i}.times`, d.times, {
+                                        shouldDirty: true,
+                                    })
                                     form.setValue(`data.${i}.klass`, null)
                                 }}
                                 classNames={{
@@ -278,7 +312,9 @@ function TourCol({
                                         name: string
                                         price: string
                                     }
-                                    form.setValue(`data.${i}.klass`, d.id)
+                                    form.setValue(`data.${i}.klass`, d.id, {
+                                        shouldDirty: true,
+                                    })
                                     form.setValue(`data.${i}.price`, d.price)
                                     setFieldValue(
                                         `data.${i}.price`,
@@ -288,7 +324,11 @@ function TourCol({
                                 }}
                                 options={
                                     times[el.field_id]
-                                        ?.find((e) => e.times == el.times)
+                                        ?.find(
+                                            (e) =>
+                                                e.times ==
+                                                form.watch(`data.${i}.times`),
+                                        )
                                         ?.klasses?.map((e) => ({
                                             id: e.klass,
                                             name:

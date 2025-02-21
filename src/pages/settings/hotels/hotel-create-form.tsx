@@ -1,7 +1,6 @@
 import FormAction from "@/components/custom/form-action"
 import FormImageInput from "@/components/form/image-input"
 import FormInput from "@/components/form/input"
-import FormNumberInput from "@/components/form/number-input"
 import SelectField from "@/components/form/select-field"
 import { Button } from "@/components/ui/button"
 import { CITIES, HOTELS } from "@/constants/api-endpoints"
@@ -11,8 +10,9 @@ import { useStore } from "@/hooks/use-store"
 import { useGet, usePatch, usePost } from "@/services/default-requests"
 import { useQueryClient } from "@tanstack/react-query"
 import { Trash2 } from "lucide-react"
-import { useMemo } from "react"
+import { useMemo, useState } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
+import HotelRoomTypes from "./hotel-room-types"
 
 const headers = {
     "Content-Type": "multipart/form-data",
@@ -44,12 +44,29 @@ export default function HotelCreateForm() {
                 name: "",
                 city: 1,
                 images: [{ id: null, image: "none" }],
-                rooms: [{ name: "", price: 0 }],
+                rooms: [
+                    {
+                        name: "",
+                        price: 0,
+                        seasons: [
+                            {
+                                id: null,
+                                start_date: "",
+                                end_date: "",
+                                price: 0,
+                            },
+                        ],
+                    },
+                ],
                 star: 0,
                 id: null,
             }
         }
     }, [store])
+
+    const [deletetSeasons, setDeletedSeasons] = useState<number[]>([])
+    const [deletetRooms, setDeletedRooms] = useState<number[]>([])
+    const [deletedImages, setDeletedImages] = useState<number[]>([])
 
     const form = useForm<HotelCreate>({ defaultValues })
 
@@ -68,6 +85,7 @@ export default function HotelCreateForm() {
     } = useFieldArray({
         control: form.control,
         name: "rooms",
+        keyName: "key",
     })
 
     const {
@@ -89,6 +107,16 @@ export default function HotelCreateForm() {
         formData.append("star", data.star.toString())
         formData.append("rooms", JSON.stringify(data.rooms))
 
+        if (deletetSeasons.length) {
+            formData.append("deleted_seasons", `[${deletetSeasons.join(",")}]`)
+        }
+        if (deletetRooms.length) {
+            formData.append("deleted_rooms", `[${deletetRooms.join(",")}]`)
+        }
+        if (deletedImages.length) {
+            formData.append("deleted_images", `[${deletedImages.join(",")}]`)
+        }
+
         for (const image of data.images) {
             if (image.image && !image.id && image.image !== "none") {
                 formData.append("images", image.image)
@@ -99,6 +127,28 @@ export default function HotelCreateForm() {
             patch(HOTELS + `/${store.id}`, formData)
         } else {
             mutate(HOTELS, formData)
+        }
+    }
+
+    function handleDeleteRoom(id: number | null, index: number) {
+        removeRoom(index)
+        if (id) {
+            setDeletedRooms?.((c) => [...c, id])
+        }
+    }
+
+    function handleDeleteImage(id: number | null, index: number) {
+        remove(index)
+        if (images.length > 1) {
+            remove(index)
+        } else {
+            update(index, {
+                id: null,
+                image: "none",
+            })
+        }
+        if (id) {
+            setDeletedImages?.((c) => [...c, id])
         }
     }
 
@@ -150,16 +200,7 @@ export default function HotelCreateForm() {
                         />
                         <span
                             className=" cursor-pointer flex items-center justify-center rounded-md"
-                            onClick={() => {
-                                if (images.length > 1) {
-                                    remove(i)
-                                } else {
-                                    update(i, {
-                                        id: null,
-                                        image: "none",
-                                    })
-                                }
-                            }}
+                            onClick={() => handleDeleteImage(field.id, i)}
                         >
                             <Trash2 size={20} className="text-destructive" />
                         </span>
@@ -167,40 +208,52 @@ export default function HotelCreateForm() {
                 ))}
             </div>
 
-            {rooms?.map((room, i) => (
-                <div key={room.id} className="flex gap-2 mb-2 items-end">
-                    <FormInput
-                        methods={form}
-                        name={`rooms.${i}.name`}
-                        label={i === 0 ? "Xona nomi" : ""}
-                        placeholder="Xona nomi"
-                        required
-                    />
-                    <FormNumberInput
-                        methods={form}
-                        name={`rooms.${i}.price`}
-                        label={i === 0 ? "Xona narxi" : ""}
-                        placeholder="Xona narxi"
-                        required
-                    />
-                    <Button
-                        size={"icon"}
-                        variant={"destructive-muted"}
-                        className={"min-w-8"}
-                        onClick={() => removeRoom(i)}
-                    >
-                        <Trash2 />
-                    </Button>
-                </div>
-            ))}
+            <div className="flex flex-col gap-5">
+                {rooms.map((field, i) => (
+                    <div key={field.key} className="grid grid-cols-4">
+                        <FormInput
+                            methods={form}
+                            name={`rooms.${i}.name`}
+                            label="Xona nomi"
+                            wrapperClassName="col-span-3"
+                        />
+                        <Button
+                            size={"icon"}
+                            className="mt-4 ml-2"
+                            variant={"destructive-muted"}
+                            onClick={() => handleDeleteRoom(field.id, i)}
+                        >
+                            <Trash2 />
+                        </Button>
+                        <HotelRoomTypes
+                            roomIndex={i}
+                            methods={form}
+                            setDeletedSeasons={setDeletedSeasons}
+                        />
+                    </div>
+                ))}
+            </div>
 
             <Button
                 type="button"
                 variant={"outline"}
-                onClick={() => appendRoom({ name: "", price: 0, id: null })}
+                onClick={() =>
+                    appendRoom({
+                        id: null,
+                        name: "",
+                        seasons: [
+                            {
+                                id: null,
+                                start_date: "",
+                                end_date: "",
+                                price: 0,
+                            },
+                        ],
+                    })
+                }
                 className="w-full border-dashed"
             >
-                Qo'shish
+                Xona qo'shish
             </Button>
 
             <FormAction loading={isPending || isUpdating} />

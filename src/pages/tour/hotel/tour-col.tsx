@@ -1,6 +1,7 @@
 import CustomTable from "@/components/custom/table"
 import EditableBox from "@/components/form/editaable-box"
 import SelectField from "@/components/form/select-field"
+import { DatePicker } from "@/components/ui/date-picker"
 import formatMoney from "@/lib/format-money"
 import { paymentTypes } from "@/lib/payment-types"
 import { useCallback } from "react"
@@ -64,19 +65,37 @@ export default function TourCol({ day, data, hotels }: HotelItem) {
     }
 
     return (
-        <CustomTable grid="grid-cols-7">
+        <CustomTable grid="grid-cols-8">
             <div className="flex flex-col justify-center">
                 <p className="text-primary">Day {day}</p>
             </div>
-            <div className="flex flex-col col-span-6">
+            <div className="flex flex-col col-span-7">
                 {fields?.map((el, i) => (
                     <CustomTableRow
-                        grid="grid-cols-6"
+                        grid="grid-cols-7"
                         in={i}
                         key={el.id}
                         rowId={el?.id}
                         day={day}
                     >
+                        <CustomTableCol className="-ml-4">
+                            <DatePicker
+                                className="!border-none w-auto shadow-none"
+                                placeholder="Sana tanlang"
+                                format="yyyy-MM-dd"
+                                // date={form.watch(`data.${i}.date`) || undefined}
+                                date={"2025-02-20"}
+                                setDate={(date) => {
+                                    console.log(date)
+
+                                    // form.setValue(
+                                    //     `data.${i}.date`,
+                                    //     date?.toString() || null,
+                                    // )
+                                    // handleCityChange(el.field_id)
+                                }}
+                            />
+                        </CustomTableCol>
                         <CustomTableCol>
                             <SelectField
                                 name={`data.${i}.hotel_id`}

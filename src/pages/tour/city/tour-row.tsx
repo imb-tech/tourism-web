@@ -10,7 +10,12 @@ export default function TourCityRow() {
     const { pack, id } = useParams({ from: "/_main/packs/$pack/tour/$id" })
     const url = DETAIL + `/city/${pack}/${id}`
 
-    const { data: list, isLoading } = useGet<PlanCity[] | undefined>(url)
+    const { data: list, isFetching } = useGet<PlanCity[] | undefined>(url, {
+        options: {
+            staleTime: 0,
+        },
+    })
+
     const { data: cities } = useGet<City[]>(CITIES)
 
     const columns: TableColumns<TourCityItem>[] = [
@@ -29,7 +34,7 @@ export default function TourCityRow() {
     ]
 
     return (
-        <TourTableContainer loading={isLoading}>
+        <TourTableContainer loading={isFetching}>
             <TourTableHeader columns={columns} grid={"grid-cols-3"} />
             {list?.map((item, ind) => (
                 <TourCityCard key={ind} {...item} citiesList={cities || []} />

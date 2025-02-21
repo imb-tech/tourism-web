@@ -4,7 +4,7 @@ import SelectField from "@/components/form/select-field"
 import { DETAIL } from "@/constants/api-endpoints"
 import { usePost } from "@/services/default-requests"
 import { useParams } from "@tanstack/react-router"
-import { memo } from "react"
+import { memo, useCallback } from "react"
 import { useForm } from "react-hook-form"
 import CustomTableCol from "../custome-table-col"
 
@@ -20,16 +20,18 @@ function TourCityCard(props: TourCityItem & { citiesList: City[] }) {
     const { mutate } = usePost({
         onSuccess: (data: { id: number }) => {
             form.setValue("id", data.id)
-            document.body.style.cursor = "default"
         },
     })
 
-    function save() {
+    const formValues = form.watch()
+
+    const save = useCallback(() => {
+        console.log("=> ", formValues)
         mutate(DETAIL + "/city", {
-            ...form.getValues(),
+            ...formValues,
             plan_id: Number(planId),
         })
-    }
+    }, [formValues])
 
     return (
         <CustomTable grid={"grid-cols-3"}>
