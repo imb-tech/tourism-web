@@ -9,6 +9,7 @@ import { useFieldArray, useForm } from "react-hook-form"
 import CustomTableCol from "../custome-table-col"
 import CustomTableRow from "../custome-table-row"
 import useEditableRequest from "../editable-request"
+import filterHotelsByDate from "../lib"
 import { setFieldValue } from "../restoran2/tour-col"
 
 export default function TourCol({ day, data, hotels }: HotelItem) {
@@ -64,6 +65,11 @@ export default function TourCol({ day, data, hotels }: HotelItem) {
         })
     }
 
+    const filteredHotels = useCallback(
+        (date: string | null) => filterHotelsByDate(hotels, date),
+        [],
+    )
+
     return (
         <CustomTable grid="grid-cols-8">
             <div className="flex flex-col justify-center">
@@ -83,16 +89,12 @@ export default function TourCol({ day, data, hotels }: HotelItem) {
                                 className="!border-none w-auto shadow-none"
                                 placeholder="Sana tanlang"
                                 format="yyyy-MM-dd"
-                                // date={form.watch(`data.${i}.date`) || undefined}
-                                date={"2025-02-20"}
+                                date={form.watch(`data.${i}.date`) || undefined}
                                 setDate={(date) => {
-                                    console.log(date)
-
-                                    // form.setValue(
-                                    //     `data.${i}.date`,
-                                    //     date?.toString() || null,
-                                    // )
-                                    // handleCityChange(el.field_id)
+                                    form.setValue(
+                                        `data.${i}.date`,
+                                        date?.toString() || null,
+                                    )
                                 }}
                             />
                         </CustomTableCol>
@@ -113,7 +115,9 @@ export default function TourCol({ day, data, hotels }: HotelItem) {
                                     control: () => "!border-none w-auto",
                                     indicatorsContainer: () => "!hidden",
                                 }}
-                                options={hotels}
+                                options={filteredHotels(
+                                    form.watch(`data.${i}.date`),
+                                )}
                             />
                         </CustomTableCol>
 
@@ -142,11 +146,13 @@ export default function TourCol({ day, data, hotels }: HotelItem) {
                                     form.setValue(`data.${i}.room_id`, room.id)
                                 }}
                                 options={
-                                    hotels?.find(
+                                    filteredHotels(
+                                        form.watch(`data.${i}.date`) || null,
+                                    )?.find(
                                         (el) =>
                                             el.id ===
                                             form.watch(`data.${i}.hotel_id`),
-                                    )?.rooms_dict || []
+                                    )?.rooms || []
                                 }
                             />
                         </CustomTableCol>

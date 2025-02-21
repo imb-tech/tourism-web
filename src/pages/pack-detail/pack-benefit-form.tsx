@@ -77,6 +77,7 @@ export default function PackBenefitForm() {
                         placeholder="0"
                         className="font-medium"
                         wrapperClassName={"w-full"}
+                        suffix=" %"
                     />
                 </div>
                 <p className="text-lg font-medium mt-1">

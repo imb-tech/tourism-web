@@ -41,11 +41,13 @@ export default function HotelCreateForm() {
             }
         } else {
             return {
+                id: null,
                 name: "",
-                city: 1,
+                city: null,
                 images: [{ id: null, image: "none" }],
                 rooms: [
                     {
+                        id: null,
                         name: "",
                         price: 0,
                         seasons: [
@@ -59,7 +61,6 @@ export default function HotelCreateForm() {
                     },
                 ],
                 star: 0,
-                id: null,
             }
         }
     }, [store])
@@ -68,7 +69,9 @@ export default function HotelCreateForm() {
     const [deletetRooms, setDeletedRooms] = useState<number[]>([])
     const [deletedImages, setDeletedImages] = useState<number[]>([])
 
-    const form = useForm<HotelCreate>({ defaultValues })
+    const form = useForm<HotelCreate>({
+        defaultValues: defaultValues as HotelCreate,
+    })
 
     const { data: cities } = useGet<City[]>(CITIES)
 

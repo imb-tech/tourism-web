@@ -9,29 +9,29 @@ type HotelImage = {
     image: Blob | string
 }
 
+type HotelCreate = Hotel & {
+    city: number
+    rooms: Room[]
+}
+
+type Season = {
+    id: number | null
+    price: number
+    start_date: string
+    end_date: string
+}
+
+type Room = {
+    id: number | null
+    name: string
+    seasons: Season[]
+}
+
 type Hotel = {
     id: number | null
     name: string
     star: number
     city: City
     images: HotelImage[]
-    rooms: HotelRoom[]
-}
-
-type HotelCreate = Omit<Hotel, "id"> & {
-    city: number
     rooms: Room[]
-}
-
-type RoomTime = {
-    id: number | null
-    start_date: string
-    end_date: string
-    price: number
-}
-
-type Room = {
-    id: number | null
-    name: string
-    seasons: RoomTime[]
 }

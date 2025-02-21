@@ -84,30 +84,26 @@ function TourCol({
             )
 
             if (item) {
-                try {
-                    const resp = (await save({
-                        ...item,
-                        payment_type: item.payment_type ?? 0,
-                        from_city: item.from_city_id ?? null,
-                        to_city: item.to_city_id ?? null,
-                        from_time: undefined,
-                        to_time: undefined,
-                    })) as { id: number }
-                    form.reset(undefined, { keepValues: true, keepDirty: true })
+                const resp = (await save({
+                    ...item,
+                    payment_type: item.payment_type ?? 0,
+                    from_city: item.from_city_id ?? null,
+                    to_city: item.to_city_id ?? null,
+                    from_time: undefined,
+                    to_time: undefined,
+                })) as { id: number }
+                form.reset(undefined, { keepValues: true })
 
-                    fieldsValue?.forEach((f, i) => {
-                        if (f.field_id === fieldId) {
-                            form.setValue(`data.${i}.id`, resp.id, {
-                                shouldDirty: true,
-                            })
-                        }
-                    })
-                } catch (error) {
-                    console.error("Error saving data:", error)
-                }
+                fieldsValue?.forEach((f, i) => {
+                    if (f.field_id === fieldId) {
+                        form.setValue(`data.${i}.id`, resp.id, {
+                            shouldDirty: true,
+                        })
+                    }
+                })
             }
         },
-        [fieldsValue, save, isDirty, form],
+        [fieldsValue, save, isDirty],
     )
 
     const onBlur = useCallback(
@@ -123,7 +119,7 @@ function TourCol({
                 },
             })
         },
-        [isDirty, handleSave],
+        [isDirty],
     )
 
     function handleCityChange(field_id: number) {
@@ -155,7 +151,7 @@ function TourCol({
             setTimes(obj)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fieldsValue, times])
+    }, [])
 
     return (
         <CustomTable grid="grid-cols-10">

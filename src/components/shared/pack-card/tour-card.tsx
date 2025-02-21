@@ -95,8 +95,8 @@ function TourCard(props: PlanItem) {
     return (
         <Card
             className={cn(
-                "w-full max-w-sm p-4 shadow-none cursor-pointer",
-                accepted && "border border-primary",
+                "w-full max-w-sm p-4 shadow-none cursor-pointer border-2 border-background",
+                accepted && "border-primary",
             )}
             onDoubleClick={handleSelect}
         >

@@ -7,6 +7,7 @@ type HotelDetailData = {
     price: number
     field_id: number
     expected_cost: number
+    date: string | null
 }
 
 type HotelItemResponse = {
@@ -20,7 +21,7 @@ type HotelItemResponse = {
 type HotelItem = {
     id: number
     day: number
-    hotels: HotelByCityItem[]
+    hotels: Hotel[]
     data: HotelDetailData[]
 }
 
@@ -33,7 +34,7 @@ type RoomItem = {
 type HotelByCityItem = {
     id: number
     name: string
-    rooms_dict: RoomItem[]
+    rooms: RoomItem[]
 }
 
-type HotelByCityResponse = Record<number, HotelByCityItem[]>
+type HotelByCityResponse = Record<number, Hotel[]>
