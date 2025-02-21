@@ -52,13 +52,14 @@ export default function PackBenefitForm() {
     return (
         <div>
             <p className="text-lg font-medium">
-                Cash:{" "}
+                Cash:
                 <span className="font-light">
+                    {data?.cash || 0} * 1.12 ={" "}
                     {formatMoney(totatCash, undefined, "$")}
                 </span>
             </p>
             <p className="text-lg font-medium">
-                Bank:{" "}
+                Bank:
                 <span className="font-light">
                     {formatMoney(data?.bank || 0, undefined, "$")}
                 </span>
@@ -81,7 +82,7 @@ export default function PackBenefitForm() {
                     />
                 </div>
                 <p className="text-lg font-medium mt-1">
-                    Jami:{" "}
+                    Jami:
                     <span className="font-light">
                         {formatMoney(totalAmount, undefined, "$")}
                     </span>
