@@ -72,14 +72,14 @@ const ChangesMain = () => {
                     <InitialDataBox isLoading={isLoading} />
                 :   <ChangesDocumentsList
                         type="start"
-                        data={data?.filter((el) => el.status !== 30) ?? []}
+                        data={data?.filter((el) => el.status !== 40) ?? []}
                     />
                 }
                 {isLoading ?
                     <InitialDataBox isLoading={isLoading} />
                 :   <ChangesDocumentsList
                         type="end"
-                        data={data?.filter((el) => el.status === 30) ?? []}
+                        data={data?.filter((el) => el.status === 40) ?? []}
                     />
                 }
             </div>
