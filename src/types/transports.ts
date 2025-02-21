@@ -8,5 +8,6 @@ type Transport = {
     name: string
     size: number
     price: number
+    year: number
     images: TransportImage[]
 }

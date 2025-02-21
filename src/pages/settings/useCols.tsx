@@ -137,6 +137,10 @@ export const useTransportColumns = () =>
                 accessorKey: "price",
                 header: "Narxi",
             },
+            {
+                accessorKey: "year",
+                header: "Yili",
+            },
         ],
         [],
     )

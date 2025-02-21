@@ -36,6 +36,7 @@ export default function TransportCreateEdit() {
                     name: "",
                     size: 0,
                     price: 0,
+                    year: 0,
                     images: [
                         {
                             id: null,
@@ -96,6 +97,7 @@ export default function TransportCreateEdit() {
         formData.append("name", vals.name)
         formData.append("size", String(vals.size))
         formData.append("price", String(vals.price))
+        formData.append("year", String(vals.year))
         for (const image of deleted_images) {
             formData.append("deleted_images", image.toString())
         }
@@ -127,6 +129,14 @@ export default function TransportCreateEdit() {
                 label="Narxi"
                 methods={form}
                 name="price"
+                required
+            />
+
+            <FormNumberInput
+                thousandSeparator=""
+                label="Yili"
+                methods={form}
+                name="year"
                 required
             />
 
