@@ -29,6 +29,7 @@ type CostDetailData = {
     entrance_name: string
     tourist_count: number
     category_name: string
+    cities_name: string
 }
 
 type ICostItem = {

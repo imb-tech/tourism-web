@@ -8,9 +8,9 @@ import useTourLoading from "./loading"
 export default function useEditableRequest<T>() {
     const { setLoading } = useTourLoading()
     const queryClient = useQueryClient()
-    const { id: planid } = useParams({ from: "/_main/packs/$pack/tour/$id" })
+    const { id: planid } = useParams({ strict: false })
     const { type } = useSearch({
-        from: "/_main/packs/$pack/tour/$id",
+        strict: false,
     })
     const [creating, setCreating] = useState(false)
 

@@ -17,7 +17,7 @@ function CostItem({ day, data }: CostGeneratedItem) {
             <form className="flex flex-col col-span-2">
                 {data?.map((item) => (
                     <div className="grid grid-cols-2" key={item.id}>
-                        <CustomTableCol>f</CustomTableCol>
+                        <CustomTableCol>{item.cities_name}</CustomTableCol>
                         <CustomTableCol>{item.desc}</CustomTableCol>
                     </div>
                 ))}

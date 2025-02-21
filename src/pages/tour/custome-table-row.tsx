@@ -1,3 +1,5 @@
+import { useModal } from "@/hooks/use-modal"
+import { useStore } from "@/hooks/use-store"
 import { cn } from "@/lib/utils"
 import { Plus, Trash2 } from "lucide-react"
 import { useState } from "react"
@@ -21,7 +23,15 @@ export default function CustomTableRow({
     day,
 }: Props) {
     const [isVisible, setIsVisible] = useState(false)
-    const { clear, duplicate } = useEditableRequest()
+    const { duplicate } = useEditableRequest()
+    const { openModal } = useModal("tour-detail-delete")
+    const { setStore } = useStore("tour-detail-delete")
+
+    function handleDelete() {
+        setStore(rowId)
+        openModal()
+    }
+
     return (
         <div
             className={cn(
@@ -44,7 +54,7 @@ export default function CustomTableRow({
                     <Trash2
                         size={16}
                         className="text-destructive cursor-pointer"
-                        onClick={() => clear(rowId)}
+                        onClick={handleDelete}
                     />
                 </span>
             )}

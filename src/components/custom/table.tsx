@@ -1,4 +1,8 @@
+import { useModal } from "@/hooks/use-modal"
+import { useStore } from "@/hooks/use-store"
 import { cn } from "@/lib/utils"
+import useEditableRequest from "@/pages/tour/editable-request"
+import ConfirmCancelModal from "./confirm-modal"
 
 export interface CustomTableProps {
     children: React.ReactNode
@@ -11,6 +15,17 @@ export default function CustomTable({
     children,
     grid,
 }: CustomTableProps) {
+    const { clear } = useEditableRequest()
+    const { closeModal } = useModal("tour-detail-delete")
+    const { store, remove } = useStore<number>("tour-detail-delete")
+
+    async function handleClear() {
+        if (!store) return
+        await clear(store)
+        closeModal()
+        remove()
+    }
+
     return (
         <div
             className={cn(
@@ -20,6 +35,11 @@ export default function CustomTable({
             )}
         >
             {children}
+
+            <ConfirmCancelModal
+                modalKey="tour-detail-delete"
+                onSuccessAction={handleClear}
+            />
         </div>
     )
 }

@@ -34,7 +34,9 @@ export default function Tour() {
         [type],
     )
 
-    const { data } = useGet<{ editable: false }>(TOUR + `/editable/${pack}`)
+    const { data } = useGet<{ editable: false }>(
+        TOUR + `/editable/${pack}/detail`,
+    )
 
     return (
         <section className="p-3">
