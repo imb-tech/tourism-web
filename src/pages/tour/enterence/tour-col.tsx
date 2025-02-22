@@ -1,12 +1,28 @@
 import CustomTable from "@/components/custom/table"
 import EditableBox from "@/components/form/editaable-box"
 import SelectField from "@/components/form/select-field"
+import formatMoney from "@/lib/format-money"
 import { paymentTypes } from "@/lib/payment-types"
 import useEditableRequest from "@/pages/tour/editable-request"
 import { useCallback } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 import CustomTableCol from "../custome-table-col"
 import CustomTableRow from "../custome-table-row"
+import { setFieldValue } from "../restoran2/tour-col"
+
+export function getExpectedCost(
+    count: number | null,
+    price: number | null,
+    expected_cost: number,
+) {
+    const amount = Number(count || 0) * Number(price || 0)
+
+    if (amount == 0 || !count || !price) {
+        if (Number(expected_cost)) {
+            return formatMoney(Number(expected_cost))
+        } else return "0"
+    } else return formatMoney(amount)
+}
 
 export default function TourGidCard({
     day,
@@ -86,6 +102,22 @@ export default function TourGidCard({
                                 onBlur={(event) =>
                                     onBlur(event, field?.field_id)
                                 }
+                                onChange={(v) => {
+                                    const place = v as Enterance
+                                    setFieldValue(
+                                        `data.${i}.price`,
+                                        place.price,
+                                        field.key,
+                                    )
+                                    form.setValue(
+                                        `data.${i}.price`,
+                                        place.price,
+                                    )
+                                    form.setValue(
+                                        `data.${i}.entrance_id`,
+                                        place.id,
+                                    )
+                                }}
                                 placeholder="Tanlang"
                                 classNames={{
                                     control: () => "!border-none w-auto",
@@ -112,6 +144,7 @@ export default function TourGidCard({
                                 name={`data.${i}.price`}
                                 onBlur={handleSave}
                                 dayId={field.field_id}
+                                id={`data.${i}.room_id` + field.key}
                                 isNumber
                             >
                                 {field?.price}
@@ -142,10 +175,14 @@ export default function TourGidCard({
                             <EditableBox
                                 methods={form}
                                 name={`data.${i}.expected_cost`}
-                                onBlur={handleSave}
+                                editable={false}
                                 dayId={field.id}
                             >
-                                {field?.expected_cost}
+                                {getExpectedCost(
+                                    fieldsValue[i].price,
+                                    fieldsValue[i].tourist_count,
+                                    field.expected_cost,
+                                )}
                             </EditableBox>
                         </CustomTableCol>
                     </CustomTableRow>

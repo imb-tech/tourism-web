@@ -7,6 +7,7 @@ import { useFieldArray, useForm } from "react-hook-form"
 import CustomTableCol from "../custome-table-col"
 import CustomTableRow from "../custome-table-row"
 import useEditableRequest from "../editable-request"
+import { getExpectedCost } from "../enterence/tour-col"
 
 // eslint-disable-next-line react-refresh/only-export-components
 export function setFieldValue(id: string, value: string | number, key: string) {
@@ -181,7 +182,11 @@ export default function TourCol({
                                 dayId={el.field_id}
                                 name={`data.${i}.expected_cost`}
                             >
-                                {formatMoney(el.expected_cost)}
+                                {getExpectedCost(
+                                    fieldsValue[i].price,
+                                    fieldsValue[i].tourists_count,
+                                    el.expected_cost,
+                                )}
                             </EditableBox>
                         </CustomTableCol>
                     </CustomTableRow>

@@ -23,6 +23,7 @@ type Props = {
     onFinish?: () => void
     onUndo?: () => void
     status: string
+    className?: string
 }
 
 function PackCardMenu({
@@ -32,13 +33,18 @@ function PackCardMenu({
     onFinish,
     onUndo,
     status,
+    className,
 }: Props) {
     const ref = useRef<HTMLDivElement>(null)
 
     return (
         <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
-                <Button variant="primary-muted" size={"icon"}>
+                <Button
+                    variant="primary-muted"
+                    className={className}
+                    size={"icon"}
+                >
                     <EllipsisVertical />
                 </Button>
             </DropdownMenuTrigger>

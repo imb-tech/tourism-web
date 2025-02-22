@@ -35,7 +35,6 @@ export default function UserCreateForm() {
         } else {
             mutate(USERS, values)
         }
-        console.log(values)
     }
 
     return (

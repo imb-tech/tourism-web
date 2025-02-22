@@ -26,7 +26,6 @@ function TourCityCard(props: TourCityItem & { citiesList: City[] }) {
     const formValues = form.watch()
 
     const save = useCallback(() => {
-        console.log("=> ", formValues)
         mutate(DETAIL + "/city", {
             ...formValues,
             plan_id: Number(planId),

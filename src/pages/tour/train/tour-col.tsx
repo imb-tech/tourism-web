@@ -9,6 +9,7 @@ import { useFieldArray, useForm } from "react-hook-form"
 import CustomTableCol from "../custome-table-col"
 import CustomTableRow from "../custome-table-row"
 import useEditableRequest from "../editable-request"
+import { getExpectedCost } from "../enterence/tour-col"
 import { setFieldValue } from "../restoran2/tour-col"
 
 type GetTimesPayload = {
@@ -61,10 +62,6 @@ function TourCol({
         },
     })
 
-    const {
-        formState: { isDirty },
-    } = form
-
     const { fields } = useFieldArray({
         control: form.control,
         name: "data",
@@ -75,9 +72,6 @@ function TourCol({
 
     const handleSave = useCallback(
         async (event: React.FocusEvent<HTMLElement>) => {
-            if (!isDirty) {
-                return
-            }
             const fieldId = Number(event.currentTarget.textContent)
             const item = fieldsValue?.find(
                 (field) => field.field_id === fieldId,
@@ -96,21 +90,16 @@ function TourCol({
 
                 fieldsValue?.forEach((f, i) => {
                     if (f.field_id === fieldId) {
-                        form.setValue(`data.${i}.id`, resp.id, {
-                            shouldDirty: true,
-                        })
+                        form.setValue(`data.${i}.id`, resp.id)
                     }
                 })
             }
         },
-        [fieldsValue, save, isDirty],
+        [fieldsValue, save],
     )
 
     const onBlur = useCallback(
         (event: React.FocusEvent<HTMLElement>, field_id: number) => {
-            if (!isDirty) {
-                return
-            }
             handleSave({
                 ...event,
                 currentTarget: {
@@ -119,7 +108,7 @@ function TourCol({
                 },
             })
         },
-        [isDirty],
+        [],
     )
 
     function handleCityChange(field_id: number) {
@@ -177,7 +166,6 @@ function TourCol({
                                     form.setValue(
                                         `data.${i}.date`,
                                         date?.toString() || null,
-                                        { shouldDirty: true },
                                     )
                                     handleCityChange(el.field_id)
                                 }}
@@ -195,7 +183,6 @@ function TourCol({
                                     form.setValue(
                                         `data.${i}.from_city_id`,
                                         city.id,
-                                        { shouldDirty: true },
                                     )
                                     form.setValue(
                                         `data.${i}.dep`,
@@ -222,7 +209,6 @@ function TourCol({
                                     form.setValue(
                                         `data.${i}.to_city_id`,
                                         city.id,
-                                        { shouldDirty: true },
                                     )
                                     form.setValue(
                                         `data.${i}.des`,
@@ -276,9 +262,7 @@ function TourCol({
                                 }}
                                 onChange={(v) => {
                                     const d = v as TrainTime
-                                    form.setValue(`data.${i}.times`, d.times, {
-                                        shouldDirty: true,
-                                    })
+                                    form.setValue(`data.${i}.times`, d.times)
                                     form.setValue(`data.${i}.klass`, null)
                                 }}
                                 classNames={{
@@ -308,9 +292,7 @@ function TourCol({
                                         name: string
                                         price: string
                                     }
-                                    form.setValue(`data.${i}.klass`, d.id, {
-                                        shouldDirty: true,
-                                    })
+                                    form.setValue(`data.${i}.klass`, d.id)
                                     form.setValue(`data.${i}.price`, d.price)
                                     setFieldValue(
                                         `data.${i}.price`,
@@ -336,6 +318,7 @@ function TourCol({
                                 }
                             />
                         </CustomTableCol>
+
                         <CustomTableCol>
                             <EditableBox
                                 methods={form}
@@ -348,6 +331,7 @@ function TourCol({
                                 {el.price}
                             </EditableBox>
                         </CustomTableCol>
+
                         <CustomTableCol>
                             <SelectField
                                 name={`data.${i}.payment_type`}
@@ -379,17 +363,11 @@ function TourCol({
                         </CustomTableCol>
 
                         <CustomTableCol>
-                            <EditableBox
-                                methods={form}
-                                name={`data.${i}.expected_cost`}
-                                onBlur={handleSave}
-                                dayId={el.field_id}
-                                fieldKey={el.key}
-                                editable={false}
-                                isNumber
-                            >
-                                {el.expected_cost}
-                            </EditableBox>
+                            {getExpectedCost(
+                                Number(fieldsValue[i].price),
+                                fieldsValue[i].tourists_count,
+                                el.expected_cost,
+                            )}
                         </CustomTableCol>
                     </CustomTableRow>
                 ))}

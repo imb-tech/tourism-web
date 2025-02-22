@@ -63,7 +63,7 @@ function CostItem({ day, data }: CostGeneratedItem) {
                             />
                         </CustomTableCol>
                         <CustomTableCol>
-                            {formatMoney(data[i].price)}
+                            {formatMoney(data[i].expected_cost)}
                         </CustomTableCol>
                         <CustomTableCol className="pr-4">
                             <FileInput

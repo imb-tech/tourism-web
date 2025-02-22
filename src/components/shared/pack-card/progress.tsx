@@ -4,9 +4,10 @@ import { memo } from "react"
 type Props = {
     size: number
     finished: number
+    className?: string
 }
 
-const Progress = ({ size, finished }: Props) => {
+const Progress = ({ size, finished, className }: Props) => {
     return (
         <div className="flex gap-1 w-full">
             {Array(size)
@@ -17,6 +18,7 @@ const Progress = ({ size, finished }: Props) => {
                         className={cn(
                             "w-full p-1 rounded-md bg-secondary",
                             finished > i && "bg-primary",
+                            className ? className : "",
                         )}
                     ></div>
                 ))}

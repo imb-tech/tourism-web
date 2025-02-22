@@ -2,13 +2,13 @@ import CustomTable from "@/components/custom/table"
 import EditableBox from "@/components/form/editaable-box"
 import SelectField from "@/components/form/select-field"
 import { DatePicker } from "@/components/ui/date-picker"
-import formatMoney from "@/lib/format-money"
 import { paymentTypes } from "@/lib/payment-types"
 import { useCallback } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 import CustomTableCol from "../custome-table-col"
 import CustomTableRow from "../custome-table-row"
 import useEditableRequest from "../editable-request"
+import { getExpectedCost } from "../enterence/tour-col"
 import filterHotelsByDate from "../lib"
 import { setFieldValue } from "../restoran2/tour-col"
 
@@ -67,7 +67,7 @@ export default function TourCol({ day, data, hotels }: HotelItem) {
 
     const filteredHotels = useCallback(
         (date: string | null) => filterHotelsByDate(hotels, date),
-        [],
+        [fields?.map((el) => el.date)],
     )
 
     return (
@@ -189,9 +189,10 @@ export default function TourCol({ day, data, hotels }: HotelItem) {
                                 name={`data.${i}.payment_type`}
                                 onBlur={handleSave}
                             >
-                                {formatMoney(
-                                    Number(form.watch(`data.${i}.price`)) *
-                                        Number(form.watch(`data.${i}.count`)),
+                                {getExpectedCost(
+                                    fieldsValue[i].price,
+                                    fieldsValue[i].count,
+                                    el.expected_cost,
                                 )}
                             </EditableBox>
                         </CustomTableCol>

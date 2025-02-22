@@ -60,7 +60,7 @@ export const deleteRequest = (url: string, config?: AxiosRequestConfig) =>
 
 // --------------------------------------------------------------------------------
 
-const DEFAULT_STALE_TIME = 1000 * 60
+const DEFAULT_STALE_TIME = 1000 * 5
 
 export type UseGetArgs<TData = any, TQueryFnData = unknown, TError = any> = {
     deps?: QueryKey
