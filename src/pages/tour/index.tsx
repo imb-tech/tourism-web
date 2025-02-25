@@ -1,14 +1,29 @@
+import ConfirmCancelModal from "@/components/custom/confirm-modal"
 import InitialDataBox from "@/components/elements/initial-data-box"
 import { TOUR } from "@/constants/api-endpoints"
+import { useModal } from "@/hooks/use-modal"
+import { useStore } from "@/hooks/use-store"
 import { useGet } from "@/services/default-requests"
 import { useParams, useSearch } from "@tanstack/react-router"
 import React, { Suspense, useMemo } from "react"
 import PackDetailHeader from "../pack-detail/pack-detail-header"
+import useEditableRequest from "./editable-request"
 import TourTab from "./tour-tab"
 
 export default function Tour() {
     const { pack } = useParams({ from: "/_main/packs/$pack/tour/$id" })
     const { type } = useSearch({ from: "/_main/packs/$pack/tour/$id" })
+
+    const { clear } = useEditableRequest()
+    const { closeModal } = useModal("tour-detail-delete")
+    const { store, remove } = useStore<number>("tour-detail-delete")
+
+    async function handleClear() {
+        if (!store) return
+        await clear(store)
+        closeModal()
+        remove()
+    }
 
     const allowedTabs: Record<
         packTab,
@@ -56,6 +71,11 @@ export default function Tour() {
                     </div>
                 </Suspense>
             </div>
+
+            <ConfirmCancelModal
+                modalKey="tour-detail-delete"
+                onSuccessAction={handleClear}
+            />
         </section>
     )
 }
