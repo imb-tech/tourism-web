@@ -202,7 +202,8 @@ function TourCol({
                                 editable={false}
                                 isNumber
                             >
-                                {el.expected_cost}
+                                {form.watch(`data.${i}.price`) *
+                                    form.watch(`data.${i}.tourists_count`)}
                             </EditableBox>
                         </CustomTableCol>
                     </CustomTableRow>

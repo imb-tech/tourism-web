@@ -1,7 +1,7 @@
 import CustomTable from "@/components/custom/table"
 import EditableBox from "@/components/form/editaable-box"
 import SelectField from "@/components/form/select-field"
-import formatMoney from "@/lib/format-money"
+import formatMoney, { formatMoneyFn } from "@/lib/format-money"
 import { useCallback } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 import CustomTableCol from "../custome-table-col"
@@ -13,7 +13,7 @@ import { getExpectedCost } from "../enterence/tour-col"
 export function setFieldValue(id: string, value: string | number, key: string) {
     const field = document.getElementById(id + key)
     if (field) {
-        field.textContent = value.toString()
+        field.textContent = formatMoneyFn(Number(value || 0))
     }
 }
 

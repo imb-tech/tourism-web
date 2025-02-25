@@ -136,14 +136,23 @@ export default function TourCol({ day, data, hotels }: HotelItem) {
                                     indicatorsContainer: () => "!hidden",
                                 }}
                                 onChange={(v) => {
-                                    const room = v as RoomItem
+                                    const room = v as Room
+                                    console.log(room)
                                     setFieldValue(
                                         `data.${i}.price`,
-                                        room.price,
+                                        room.seasons[0].price,
                                         el.key,
                                     )
-                                    form.setValue(`data.${i}.price`, room.price)
-                                    form.setValue(`data.${i}.room_id`, room.id)
+                                    form.setValue(
+                                        `data.${i}.price`,
+                                        room.seasons[0].price,
+                                    )
+                                    if (room.id) {
+                                        form.setValue(
+                                            `data.${i}.room_id`,
+                                            room.id,
+                                        )
+                                    }
                                 }}
                                 options={
                                     filteredHotels(
@@ -174,7 +183,7 @@ export default function TourCol({ day, data, hotels }: HotelItem) {
                                 dayId={el.field_id}
                                 name={`data.${i}.price`}
                                 onBlur={handleSave}
-                                id={`data.${i}.room_id` + el.key}
+                                fieldKey={el.key}
                                 isNumber
                             >
                                 {el.price}
