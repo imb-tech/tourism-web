@@ -83,6 +83,10 @@ export const useEnteranceColumns = () =>
                     </SeeInView>
                 ),
             },
+            {
+                accessorKey: "desc",
+                header: "Tavsif",
+            },
         ],
         [],
     )

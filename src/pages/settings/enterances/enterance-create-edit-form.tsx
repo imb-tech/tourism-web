@@ -3,6 +3,7 @@ import FormImagePicker from "@/components/form/image-picker"
 import FormInput from "@/components/form/input"
 import FormNumberInput from "@/components/form/number-input"
 import SelectField from "@/components/form/select-field"
+import FormTextarea from "@/components/form/textarea"
 import { CITIES, ENTERANCES } from "@/constants/api-endpoints"
 import { ENTERANCE_DATA } from "@/constants/localstorage-keys"
 import { useModal } from "@/hooks/use-modal"
@@ -93,6 +94,7 @@ export default function EnteranceCreateEditForm() {
                 name="city"
                 required
             />
+            <FormTextarea methods={form} name="desc" required label="Tavsif" />
 
             <FormImagePicker
                 methods={form}
