@@ -30,6 +30,9 @@ export default function UserCreateForm() {
     })
 
     function handleSubmit(values: User) {
+        if (values.password == "" || !values.password) {
+            delete values.password
+        }
         if (store?.id) {
             patch(USERS + `/${store?.id}`, values)
         } else {
@@ -47,6 +50,8 @@ export default function UserCreateForm() {
             <FormInput methods={form} name="last_name" label="Familiya" />
 
             <FormInput methods={form} name="username" label="Username" />
+
+            <FormInput methods={form} name="password" label="Password" />
 
             <SelectField
                 label="Rol"

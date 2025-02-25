@@ -15,57 +15,59 @@ import {
     SidebarMenuItem,
     useSidebar,
 } from "@/components/ui/sidebar"
-import { Link, linkOptions } from "@tanstack/react-router"
+import usePermissions from "@/hooks/use-permissions"
+import { Link } from "@tanstack/react-router"
 
 export function NavMain() {
     const { setOpenMobile } = useSidebar()
+    const permissions = usePermissions()
+
     const links = [
-        linkOptions({
+        {
             to: "/",
             icon: <LayoutDashboard />,
-            enabled: true,
             title: "Home",
-        }),
-        linkOptions({
+            enabled: permissions?.dashboard_korish,
+        },
+        {
             to: "/packs",
             icon: <Plane />,
-            enabled: true,
             title: "Tur paketlar",
-        }),
-        linkOptions({
+            enabled: permissions?.tur_paketlar_faqat_korish,
+        },
+        {
             to: "/bank",
             icon: <DollarSign />,
-            search: {
-                type: undefined,
-            },
-            enabled: true,
             title: "Kassa",
-        }),
-        linkOptions({
+            enabled:
+                permissions?.kassa_bank_korish ||
+                permissions?.kassa_naqd_korish,
+        },
+        {
             to: "/cost",
             icon: <HandCoins />,
-            enabled: true,
             title: "Real xarajat",
-        }),
-        linkOptions({
+            enabled: permissions?.real_xarajatlar_korish,
+        },
+        {
             to: "/changes",
             icon: <Clock4 />,
-            enabled: true,
             title: "O'zgarishlar",
-        }),
-        linkOptions({
+            enabled: permissions?.ozgarishlar_korish,
+        },
+        {
             to: "/admin",
             icon: <UserCog />,
-            enabled: true,
             title: "Admin",
-        }),
-        linkOptions({
+            enabled: permissions?.admin_korish,
+        },
+        {
             to: "/settings",
             icon: <Settings />,
-            enabled: true,
             title: "Sozlamalar",
-        }),
-    ]
+            enabled: permissions?.sozlamalar_korish,
+        },
+    ].filter((link) => link.enabled) // Faqat ruxsat berilganlarni qoldiramiz
 
     return (
         <SidebarGroup>
