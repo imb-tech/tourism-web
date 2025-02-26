@@ -145,6 +145,22 @@ export const useTransportColumns = () =>
                 accessorKey: "year",
                 header: "Yili",
             },
+            {
+                accessorKey: "images",
+                header: "Rasmlar",
+                cell: ({ row }) =>
+                    row.original.images[0] ?
+                        <SeeInView url={String(row.original.images[0].image)}>
+                            <Img
+                                width={50}
+                                height={50}
+                                src={String(row.original.images[0].image)}
+                                alt=""
+                                className="w-16 min-h-16 max-h-16 object-cover"
+                            />
+                        </SeeInView>
+                    :   "Yo'q",
+            },
         ],
         [],
     )
