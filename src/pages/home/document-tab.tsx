@@ -1,3 +1,4 @@
+import InitialDataBox from "@/components/elements/initial-data-box"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { DASHBOARD_STATUS_DETAIL } from "@/constants/api-endpoints"
 import formatMoney from "@/lib/format-money"
@@ -49,7 +50,7 @@ export default function DocumentTab() {
     const { day, plan } = useParams({ from: "/_main/document/$plan/$day" })
     const navigate = useNavigate()
 
-    const { data } = useGet<ApiResponse>(
+    const { data, isLoading } = useGet<ApiResponse>(
         DASHBOARD_STATUS_DETAIL + `/${plan}/${day}`,
     )
 
@@ -63,34 +64,39 @@ export default function DocumentTab() {
 
     return (
         <div className="px-3">
-            <Tabs
-                value={day || "1"}
-                className="relative overflow-auto p-0 mb-5"
-                onValueChange={(value) => {
-                    navigate({
-                        to: "/document/$plan/$day",
-                        params: {
-                            plan,
-                            day: value,
-                        },
-                    })
-                }}
-            >
-                <div className={cn("flex items-center w-max overflow-auto")}>
-                    <TabsList className="relative flex items-center justify-between overflow-hidden p-0 h-auto">
-                        {options.map((t, i) => (
-                            <TabsTrigger
-                                key={i}
-                                data-index={t?.id}
-                                value={t.id.toString()}
-                                className="min-w-24 transition-all duration-150 text-sm"
-                            >
-                                {t.name}
-                            </TabsTrigger>
-                        ))}
-                    </TabsList>
-                </div>
-            </Tabs>
+            {isLoading ?
+                <InitialDataBox isLoading />
+            :   <Tabs
+                    value={day || "1"}
+                    className="relative overflow-auto p-0 mb-5"
+                    onValueChange={(value) => {
+                        navigate({
+                            to: "/document/$plan/$day",
+                            params: {
+                                plan,
+                                day: value,
+                            },
+                        })
+                    }}
+                >
+                    <div
+                        className={cn("flex items-center w-max overflow-auto")}
+                    >
+                        <TabsList className="relative flex items-center justify-between overflow-hidden p-0 h-auto">
+                            {options.map((t, i) => (
+                                <TabsTrigger
+                                    key={i}
+                                    data-index={t?.id}
+                                    value={t.id.toString()}
+                                    className="min-w-24 transition-all duration-150 text-sm"
+                                >
+                                    {t.name}
+                                </TabsTrigger>
+                            ))}
+                        </TabsList>
+                    </div>
+                </Tabs>
+            }
 
             <section className="max-w-full">
                 {data?.cities && (
