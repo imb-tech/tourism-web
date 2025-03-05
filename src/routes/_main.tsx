@@ -38,8 +38,13 @@ export const Route = createFileRoute("/_main")({
     //         throw notFound()
     //     }
     // },
-    validateSearch: (params: { from?: string; to?: string; search?: string }) =>
-        params,
+    validateSearch: (params: {
+        from?: string
+        to?: string
+        search?: string
+        page_size?: number
+        page?: number
+    }) => params,
 })
 
 function RouteComponent() {

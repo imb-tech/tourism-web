@@ -1,5 +1,6 @@
 import DeleteModal from "@/components/custom/delete-modal"
 import Modal from "@/components/custom/modal"
+import ParamPagination from "@/components/param/pagination"
 import { Button } from "@/components/ui/button"
 import { DataTable } from "@/components/ui/datatable"
 import { ENTERANCES } from "@/constants/api-endpoints"
@@ -7,6 +8,7 @@ import { ENTERANCE_DATA } from "@/constants/localstorage-keys"
 import { useModal } from "@/hooks/use-modal"
 import { useStore } from "@/hooks/use-store"
 import { useGet } from "@/services/default-requests"
+import { useSearch } from "@tanstack/react-router"
 import { useState } from "react"
 import { useEnteranceColumns } from "../useCols"
 import EnteranceCreateEditForm from "./enterance-create-edit-form"
@@ -17,7 +19,13 @@ type EnteranceResponse = {
 }
 
 export default function Enterances() {
-    const { data: enteance, isLoading } = useGet<EnteranceResponse>(ENTERANCES)
+    const { page, page_size } = useSearch({ strict: false })
+    const { data: enteance, isLoading } = useGet<EnteranceResponse>(
+        ENTERANCES,
+        {
+            params: { page, page_size },
+        },
+    )
 
     const { openModal } = useModal(ENTERANCE_DATA)
     const { openModal: openDeleteModal } = useModal("enterance-delete")
@@ -58,6 +66,7 @@ export default function Enterances() {
                 onDelete={handleEnteranceDelete}
                 onEdit={handleEnteranceEdit}
             />
+            <ParamPagination totalPages={enteance?.total_pages} />
 
             <DeleteModal
                 path={ENTERANCES}

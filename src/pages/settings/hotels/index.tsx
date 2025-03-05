@@ -1,6 +1,7 @@
 import DeleteModal from "@/components/custom/delete-modal"
 import Modal from "@/components/custom/modal"
 import InitialDataBox from "@/components/elements/initial-data-box"
+import ParamPagination from "@/components/param/pagination"
 import { Button } from "@/components/ui/button"
 import { DataTable } from "@/components/ui/datatable"
 import { HOTELS } from "@/constants/api-endpoints"
@@ -9,12 +10,16 @@ import { useModal } from "@/hooks/use-modal"
 import { useStore } from "@/hooks/use-store"
 import axiosInstance from "@/services/axios-instance"
 import { useGet } from "@/services/default-requests"
+import { useSearch } from "@tanstack/react-router"
 import { useState } from "react"
 import { useHotelColumns } from "../useCols"
 import HotelCreateForm from "./hotel-create-form"
 
 export default function Hotels() {
-    const { data, isLoading } = useGet<ListResponse<Hotel>>(HOTELS)
+    const { page, page_size } = useSearch({ strict: false })
+    const { data, isLoading } = useGet<ListResponse<Hotel>>(HOTELS, {
+        params: { page, page_size },
+    })
 
     const { openModal } = useModal()
     const { openModal: openDeleteModal } = useModal("delete")
@@ -65,6 +70,8 @@ export default function Hotels() {
                 onDelete={handleHotelDelete}
                 onEdit={handleHotelEdit}
             />
+
+            <ParamPagination totalPages={data?.total_pages} />
 
             <DeleteModal path={HOTELS} id={deleteItem || ""} />
 

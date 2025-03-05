@@ -7,12 +7,17 @@ import { FOOD_DATA } from "@/constants/localstorage-keys"
 import { useModal } from "@/hooks/use-modal"
 import { useStore } from "@/hooks/use-store"
 import { useGet } from "@/services/default-requests"
+import { useSearch } from "@tanstack/react-router"
 import { useState } from "react"
 import { useFoodColumns } from "../useCols"
 import FoodCreateEdit from "./food-create-edit"
 
 export default function Foods() {
-    const { data: foods, isLoading } = useGet<Food[]>(FOODS)
+    const { search } = useSearch({ strict: false })
+    const { data: foods, isLoading } = useGet<Food[]>(FOODS, {
+        params: { search },
+    })
+
     const { openModal } = useModal(FOODS)
     const { openModal: openDeleteModal } = useModal("delete")
     const { remove, setStore, store } = useStore<Food>(FOOD_DATA)

@@ -48,6 +48,7 @@ export default function Settings() {
                         content: <FinancialCategoriesAndCategories />,
                     },
                 ]}
+                cleanOthers
             />
         </main>
     )

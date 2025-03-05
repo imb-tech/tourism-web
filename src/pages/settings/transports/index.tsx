@@ -1,5 +1,6 @@
 import DeleteModal from "@/components/custom/delete-modal"
 import Modal from "@/components/custom/modal"
+import ParamPagination from "@/components/param/pagination"
 import { Button } from "@/components/ui/button"
 import { DataTable } from "@/components/ui/datatable"
 import { TRANSPORTS } from "@/constants/api-endpoints"
@@ -7,12 +8,16 @@ import { TRANSPORT_DATA } from "@/constants/localstorage-keys"
 import { useModal } from "@/hooks/use-modal"
 import { useStore } from "@/hooks/use-store"
 import { useGet } from "@/services/default-requests"
+import { useSearch } from "@tanstack/react-router"
 import { useState } from "react"
 import { useTransportColumns } from "../useCols"
 import TransportCreateEdit from "./transport-create-edit"
 
 export default function Transports() {
-    const { data, isLoading } = useGet<ListResponse<Transport>>(TRANSPORTS)
+    const { page, page_size } = useSearch({ strict: false })
+    const { data, isLoading } = useGet<ListResponse<Transport>>(TRANSPORTS, {
+        params: { page, page_size },
+    })
 
     const { openModal } = useModal()
     const { openModal: openDeleteModal } = useModal("delete")
@@ -52,6 +57,7 @@ export default function Transports() {
                 onDelete={handleTransportDelete}
                 onEdit={handleTransportEdit}
             />
+            <ParamPagination totalPages={data?.total_pages} />
 
             <DeleteModal id={deleteItem ?? 0} path={TRANSPORTS} />
 
