@@ -84,7 +84,6 @@ export default function EnteranceCreateEditForm() {
                 label="Kirish narxi"
                 methods={form}
                 name="price"
-                required
             />
 
             <SelectField
