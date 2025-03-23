@@ -28,7 +28,7 @@ export default function EnteranceCreateEditForm() {
                     ...store,
                     city: store.city.id,
                 }
-            :   {},
+            :   { price: 0 },
     })
 
     function onSuccess() {
@@ -91,7 +91,6 @@ export default function EnteranceCreateEditForm() {
                 options={cities || []}
                 methods={form}
                 name="city"
-                required
             />
             <FormTextarea methods={form} name="desc" required label="Tavsif" />
 
