@@ -47,6 +47,10 @@ export default function EnteranceCreateEditForm() {
     const dirty = form.formState.dirtyFields
 
     function handleSubmit(vals: CreaateEnterance) {
+        const values = {
+            ...vals,
+            price: Number(vals.price) > 0 ? vals.price : "0",
+        }
         const formData = new FormData()
 
         for (const key in dirty) {
@@ -54,14 +58,14 @@ export default function EnteranceCreateEditForm() {
                 Object.prototype.hasOwnProperty.call(dirty, key) &&
                 dirty[key as keyof typeof dirty]
             ) {
-                const value = vals[key as keyof CreaateEnterance]
+                const value = values[key as keyof CreaateEnterance]
 
                 if (value && typeof value === "object" && value !== null) {
                     formData.append(key, value)
                 } else if (typeof value === "string") {
                     formData.append(key, value)
                 } else if (typeof value === "number") {
-                    formData.append(key, value.toString())
+                    formData.append(key, value > 0 ? value.toString() : "0")
                 }
             }
         }
@@ -91,8 +95,9 @@ export default function EnteranceCreateEditForm() {
                 options={cities || []}
                 methods={form}
                 name="city"
+                required
             />
-            <FormTextarea methods={form} name="desc" required label="Tavsif" />
+            <FormTextarea methods={form} name="desc" label="Tavsif" />
 
             <FormImagePicker
                 methods={form}
