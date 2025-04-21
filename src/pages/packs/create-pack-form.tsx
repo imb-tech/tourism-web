@@ -29,8 +29,10 @@ export default function CreatePackForm() {
     })
 
     const { data: countries, isLoading } = useGet<Country[]>(COUNTRIES)
-    const { data: managers, isLoading: isManagersLoading } =
-        useGet<Manager[]>(LIGHT)
+    const { data: managers, isLoading: isManagersLoading } = useGet<Manager[]>(
+        LIGHT,
+        { params: { role_id: 2 } },
+    )
 
     function onSuccess() {
         closeModal()
