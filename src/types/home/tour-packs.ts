@@ -36,7 +36,7 @@ type CreatePack = PackItem & {
 
 type PlanItem = {
     id: number
-    leaders_count: number
+    leaders_count: number | null
     tour: number
     tourists_count: number
     hotel_stars: number

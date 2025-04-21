@@ -31,6 +31,8 @@ export default function CreateTourForm() {
     })
 
     function handleSubmit(vals: PlanItem) {
+        vals.leaders_count = vals.leaders_count || 0
+
         if (store?.id) {
             patch(PLANS + `/${store.id}`, {
                 ...vals,
@@ -61,7 +63,6 @@ export default function CreateTourForm() {
 
                 <FormNumberInput
                     methods={form}
-                    required
                     name="leaders_count"
                     label="Liderlar soni"
                     placeholder="0"
