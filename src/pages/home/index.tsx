@@ -1,5 +1,5 @@
 import DownloadAsExcel from "@/components/custom/download-as-excel"
-import { DASHBOARD_STATUS } from "@/constants/api-endpoints"
+import { DASHBOARD_STATUS, STATUS_EXCEL } from "@/constants/api-endpoints"
 import { useGet } from "@/services/default-requests"
 import Statistics from "./dashboard-statistcis"
 import HomeTable from "./home-table"
@@ -16,7 +16,7 @@ const HomeMain = () => {
             <div className="bg-background p-3 rounded-md mt-3 flex flex-col gap-2">
                 <div className="flex items-center justify-between">
                     <p>Tur paketlar</p>
-                    <DownloadAsExcel url="" name="test" />
+                    <DownloadAsExcel url={STATUS_EXCEL} name="test" />
                 </div>
                 <HomeTable
                     enableColumnVisibility
