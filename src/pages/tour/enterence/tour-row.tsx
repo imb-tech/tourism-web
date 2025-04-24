@@ -1,4 +1,4 @@
-import { DETAIL, ENTERANCES } from "@/constants/api-endpoints"
+import { DETAIL, NEW_ENTERANCES } from "@/constants/api-endpoints"
 import { useGet } from "@/services/default-requests"
 import { TableColumns } from "@/types/table"
 import { useParams, useSearch } from "@tanstack/react-router"
@@ -43,7 +43,9 @@ export default function TourRow() {
             },
         },
     )
-    const { data: enterances } = useGet<ListResponse<Enterance>>(ENTERANCES)
+    const { data: enterances } = useGet<Record<string, Enterance[]>>(
+        NEW_ENTERANCES + `/${id}`,
+    )
 
     const renderedList = useMemo(
         () =>
@@ -70,7 +72,7 @@ export default function TourRow() {
                 <TourCol
                     key={item.day}
                     {...item}
-                    places={enterances?.results || []}
+                    places={enterances?.[item.day] || []}
                 />
             ))}
         </TourTableContainer>

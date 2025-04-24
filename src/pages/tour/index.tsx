@@ -49,9 +49,7 @@ export default function Tour() {
         [type],
     )
 
-    const { data } = useGet<{ editable: false }>(
-        TOUR + `/editable/${pack}/detail`,
-    )
+    const { data } = useGet<PlanDetail>(TOUR + `/editable/${pack}/detail`)
 
     return (
         <section className="p-3">

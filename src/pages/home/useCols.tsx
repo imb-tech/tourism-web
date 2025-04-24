@@ -59,7 +59,7 @@ export const useHomeColumn = () => {
                     header: "Actual cost",
                     accessorKey: "actual_cost",
                     cell: ({ row }: CellContext<HomeTableItem, ReactNode>) => {
-                        return formatMoney(row.original.expected_cost)
+                        return formatMoney(row.original.actual_cost)
                     },
                 },
                 {

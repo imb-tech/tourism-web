@@ -40,6 +40,7 @@ function PackCard({
     onSend,
     onFinish,
     onUndo,
+    tm_comment,
 }: PackCardProps) {
     const { total, current } = useMemo(
         () => calcProgress(start, end),
@@ -164,15 +165,10 @@ function PackCard({
                         </CardContent>
                     </Card>
                 </TooltipTrigger>
-                {Number(tm_status) == -1 ?
+                {tm_comment ?
                     <TooltipContent side="bottom" align="center">
-                        <p className="max-w-80">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Doloremque, molestias minima. Porro
-                            voluptatibus aliquid, enim nam odio deserunt
-                            cupiditate consequatur dolore eveniet rem excepturi
-                            dolor. Architecto nisi odio iure natus.
-                        </p>
+                        <p className="max-w-80">Izoh</p>
+                        <p className="max-w-80">{tm_comment}</p>
                     </TooltipContent>
                 :   ""}
             </Tooltip>

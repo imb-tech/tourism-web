@@ -4,6 +4,7 @@ import { ACCEPT, PDF_FILE, PLANS } from "@/constants/api-endpoints"
 import { PLAN_BENEFIT, TOUR_DATA } from "@/constants/localstorage-keys"
 import { useModal } from "@/hooks/use-modal"
 import { useStore } from "@/hooks/use-store"
+import { calcProgress } from "@/lib/calc-progress"
 import { cn } from "@/lib/utils"
 import { baseURL } from "@/services/axios-instance"
 import { usePost } from "@/services/default-requests"
@@ -18,7 +19,7 @@ import {
     Trash2,
     UsersRound,
 } from "lucide-react"
-import { memo } from "react"
+import { memo, useMemo } from "react"
 import Progress from "./progress"
 
 function TourCard(props: PlanItem) {
@@ -33,6 +34,12 @@ function TourCard(props: PlanItem) {
     const { setStore } = useStore<PlanItem>(TOUR_DATA)
     const queryClient = useQueryClient()
     const { openModal: openBenefitModal } = useModal(PLAN_BENEFIT)
+    const { start, end } = props
+
+    const { total, current } = useMemo(
+        () => calcProgress(start, end),
+        [start, end],
+    )
 
     const { pack } = useParams({ from: "/_main/packs/$pack/" })
 
@@ -102,10 +109,10 @@ function TourCard(props: PlanItem) {
         >
             <CardHeader className="flex flex-row items-center justify-between">
                 <div className="text-sm text-muted-foreground">#{id}</div>
-                <div className="font-medium">{"Xitoy"}</div>
+                <div className="font-medium">{props.country}</div>
             </CardHeader>
             <CardContent className="space-y-4 p-0">
-                <Progress size={4} finished={1} />
+                <Progress size={total} finished={current} />
                 <div className="space-y-2">
                     <div className="flex justify-between">
                         <span className="text-muted-foreground">

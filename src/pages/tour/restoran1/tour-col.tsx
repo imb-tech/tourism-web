@@ -2,6 +2,7 @@ import CustomTable from "@/components/custom/table"
 import EditableBox from "@/components/form/editaable-box"
 import SelectField from "@/components/form/select-field"
 import formatMoney from "@/lib/format-money"
+import { paymentTypes } from "@/lib/payment-types"
 import { useCallback } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 import CustomTableCol from "../custome-table-col"
@@ -74,14 +75,14 @@ export default function TourCol({
         })
     }
     return (
-        <CustomTable grid="grid-cols-6">
+        <CustomTable grid="grid-cols-7">
             <div className="flex flex-col justify-center">
                 <p className="text-primary">Day {day}</p>
             </div>
-            <div className="flex flex-col col-span-5">
+            <div className="flex flex-col col-span-6">
                 {fields?.map((el, i) => (
                     <CustomTableRow
-                        grid="grid-cols-5"
+                        grid="grid-cols-6"
                         in={i}
                         key={el.id}
                         rowId={el?.id}
@@ -166,6 +167,24 @@ export default function TourCol({
                             >
                                 {formatMoney(el.price)}
                             </EditableBox>
+                        </CustomTableCol>
+
+                        <CustomTableCol>
+                            <SelectField
+                                name={`data.${i}.payment_type`}
+                                methods={form}
+                                className="!border-none"
+                                wrapperClassName="!border-none w-auto"
+                                onBlur={(event) => onBlur(event, el?.field_id)}
+                                optionLabelKey="name"
+                                optionValueKey="value"
+                                placeholder="Tanlang"
+                                classNames={{
+                                    control: () => "!border-none w-auto",
+                                    indicatorsContainer: () => "!hidden",
+                                }}
+                                options={paymentTypes}
+                            />
                         </CustomTableCol>
 
                         <CustomTableCol>

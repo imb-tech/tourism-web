@@ -27,6 +27,7 @@ type PackItem = {
     country: Country
     tm_status: PackTMStatus
     plan_id: number
+    tm_comment?: string
 }
 
 type CreatePack = PackItem & {
@@ -42,4 +43,12 @@ type PlanItem = {
     hotel_stars: number
     accepted: boolean
     benefit: number
+    country: string
+    start: string
+    end: string
+}
+
+type PlanDetail = {
+    editable: boolean
+    start: string
 }

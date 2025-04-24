@@ -2,8 +2,10 @@ import CustomTable from "@/components/custom/table"
 import EditableBox from "@/components/form/editaable-box"
 import SelectField from "@/components/form/select-field"
 import { DatePicker } from "@/components/ui/date-picker"
+import { TOUR } from "@/constants/api-endpoints"
 import { paymentTypes } from "@/lib/payment-types"
-import { usePost } from "@/services/default-requests"
+import { useGet, usePost } from "@/services/default-requests"
+import { useParams } from "@tanstack/react-router"
 import { useCallback, useEffect, useState } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 import CustomTableCol from "../custome-table-col"
@@ -28,6 +30,7 @@ function TourCol({
 }) {
     const { save } = useEditableRequest()
     const [times, setTimes] = useState<Record<number, TrainTime[]>>({})
+    const { pack } = useParams({ from: "/_main/packs/$pack/tour/$id" })
 
     const { mutate, isPending } = usePost({
         onSuccess(
@@ -96,6 +99,17 @@ function TourCol({
             }
         },
         [fieldsValue, save],
+    )
+
+    const { data: detail } = useGet<PlanDetail>(
+        TOUR + `/editable/${pack}/detail`,
+        {
+            options: {
+                staleTime: Infinity,
+                gcTime: Infinity,
+                refetchOnMount: true,
+            },
+        },
     )
 
     const onBlur = useCallback(
@@ -169,6 +183,11 @@ function TourCol({
                                     )
                                     handleCityChange(el.field_id)
                                 }}
+                                defaultMonth={
+                                    detail?.start ?
+                                        new Date(detail?.start)
+                                    :   undefined
+                                }
                             />
                         </CustomTableCol>
                         <CustomTableCol className="flex-row items-center justify-start gap-2 truncate pr-2 col-span-2">

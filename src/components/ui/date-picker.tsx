@@ -75,7 +75,7 @@ export function DatePicker({
                         :   undefined
                     }
                     mode="single"
-                    defaultMonth={value}
+                    defaultMonth={calendarProps.defaultMonth ?? value}
                     selected={value}
                     onSelect={(newDate) => {
                         setOpen(false)

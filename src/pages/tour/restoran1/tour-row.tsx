@@ -26,6 +26,9 @@ export default function TourRow() {
             header: "Individual narxi",
         },
         {
+            header: "To'lov turi",
+        },
+        {
             header: "Jami",
         },
     ]
@@ -62,7 +65,7 @@ export default function TourRow() {
 
     return (
         <TourTableContainer loading={isFetching}>
-            <TourTableHeader columns={columns} grid={"grid-cols-6"} />
+            <TourTableHeader columns={columns} grid={"grid-cols-7"} />
             {renderedList?.map((item) => (
                 <TourCol
                     key={item.day}

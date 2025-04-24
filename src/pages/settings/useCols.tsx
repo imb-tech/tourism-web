@@ -84,8 +84,12 @@ export const useEnteranceColumns = () =>
                 ),
             },
             {
-                accessorKey: "desc",
                 header: "Tavsif",
+                cell: ({ row }) => (
+                    <div className="max-w-[100%] text-wrap">
+                        <p>{row.original.desc}</p>
+                    </div>
+                ),
             },
         ],
         [],

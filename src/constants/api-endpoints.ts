@@ -43,6 +43,7 @@ export const RESTAURANTS = SERVICES + "restaurants"
 export const DETAIL = TOURS + "details"
 export const CHANGE = DETAIL + "/change/"
 export const SELECTION = SERVICES + "selection/"
+export const NEW_ENTERANCES = SELECTION + "entrance"
 export const CHANGES = TOURS + "changers"
 
 export const DASHBOARD_STATUS = CHECKOUT + "dashboard/status"

@@ -54,7 +54,7 @@ export default function CustomTableRow({
                     <Trash2
                         size={16}
                         className="text-destructive cursor-pointer"
-                        onClick={handleDelete}
+                        onClick={() => handleDelete()}
                     />
                 </span>
             )}
