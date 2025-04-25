@@ -58,6 +58,8 @@ function PackCard({
         }
     }
 
+    const isFinish = Number(status) == 40
+
     return (
         <TooltipProvider>
             <Tooltip delayDuration={0}>
@@ -93,7 +95,8 @@ function PackCard({
                                     size={total}
                                     finished={current}
                                     className={
-                                        Number(tm_status) == -1 ?
+                                        isFinish ? "bg-secondary"
+                                        : Number(tm_status) == -1 ?
                                             "bg-destructive"
                                         :   undefined
                                     }
@@ -147,10 +150,13 @@ function PackCard({
                                     <Button
                                         className={cn(
                                             "w-full gap-1 font-light",
-                                            Number(tm_status) == -1 ?
-                                                "bg-destructive"
-                                            :   "",
                                         )}
+                                        variant={
+                                            isFinish ? "secondary"
+                                            : Number(tm_status) == -1 ?
+                                                "destructive"
+                                            :   "default"
+                                        }
                                     >
                                         <Eye size={18} className="font-light" />
                                         Tur paketlar
@@ -168,19 +174,21 @@ function PackCard({
                                         />
                                     </Button>
                                 )}
-                                <PackCardMenu
-                                    onDelete={onDelete}
-                                    onEdit={onEdit}
-                                    onSend={onSend}
-                                    onFinish={onFinish}
-                                    onUndo={onUndo}
-                                    status={status}
-                                    className={
-                                        Number(tm_status) == -1 ?
-                                            "bg-destructive text-white border-destructive"
-                                        :   ""
-                                    }
-                                />
+                                {!isFinish && (
+                                    <PackCardMenu
+                                        onDelete={onDelete}
+                                        onEdit={onEdit}
+                                        onSend={onSend}
+                                        onFinish={onFinish}
+                                        onUndo={onUndo}
+                                        status={status}
+                                        className={
+                                            Number(tm_status) == -1 ?
+                                                "bg-destructive text-white border-destructive"
+                                            :   ""
+                                        }
+                                    />
+                                )}
                             </div>
                         </div>
                     </div>
