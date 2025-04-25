@@ -112,18 +112,15 @@ function TourCol({
         },
     )
 
-    const onBlur = useCallback(
-        (event: React.FocusEvent<HTMLElement>, field_id: number) => {
-            handleSave({
-                ...event,
-                currentTarget: {
-                    ...event.currentTarget,
-                    textContent: field_id.toString(),
-                },
-            })
-        },
-        [],
-    )
+    function onBlur(event: React.FocusEvent<HTMLElement>, field_id: number) {
+        handleSave({
+            ...event,
+            currentTarget: {
+                ...event.currentTarget,
+                textContent: field_id.toString(),
+            },
+        })
+    }
 
     function handleCityChange(field_id: number) {
         const item = fieldsValue?.find((f) => f.field_id === field_id)

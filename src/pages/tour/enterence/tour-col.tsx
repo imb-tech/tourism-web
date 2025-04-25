@@ -106,8 +106,8 @@ export default function TourGidCard({
                                     const place = v as Enterance
                                     setFieldValue(
                                         `data.${i}.price`,
-                                        place.price,
-                                        field.key,
+                                        Number(place.price),
+                                        `data.${i}.room_id` + field.key,
                                     )
                                     form.setValue(
                                         `data.${i}.price`,
@@ -144,7 +144,7 @@ export default function TourGidCard({
                                 name={`data.${i}.price`}
                                 onBlur={handleSave}
                                 dayId={field.field_id}
-                                id={`data.${i}.room_id` + field.key}
+                                fieldKey={`data.${i}.room_id` + field.key}
                                 isNumber
                             >
                                 {field?.price}

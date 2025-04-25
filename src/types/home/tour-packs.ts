@@ -28,6 +28,7 @@ type PackItem = {
     tm_status: PackTMStatus
     plan_id: number
     tm_comment?: string
+    tm_contract: string | null
 }
 
 type CreatePack = PackItem & {

@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import {
     Tooltip,
     TooltipContent,
@@ -9,7 +8,7 @@ import {
 import { calcProgress } from "@/lib/calc-progress"
 import { cn } from "@/lib/utils"
 import { Link, useLocation } from "@tanstack/react-router"
-import { Eye } from "lucide-react"
+import { Download, Eye } from "lucide-react"
 import { memo, useMemo } from "react"
 import { getPackStatus, getPackTMStatus } from "./lib"
 import PackCardMenu from "./pack-card-menu"
@@ -41,6 +40,7 @@ function PackCard({
     onFinish,
     onUndo,
     tm_comment,
+    tm_contract,
 }: PackCardProps) {
     const { total, current } = useMemo(
         () => calcProgress(start, end),
@@ -52,15 +52,18 @@ function PackCard({
     const { title, color } = getPackTMStatus(tm_status || 0)
     const { title: statusTitle, color: statusColor } = getPackStatus(status)
 
+    function handleDownload() {
+        if (tm_contract) {
+            window.open(tm_contract)
+        }
+    }
+
     return (
         <TooltipProvider>
             <Tooltip delayDuration={0}>
                 <TooltipTrigger asChild>
-                    <Card className="w-full max-w-sm p-4 shadow-none">
-                        <CardHeader className="flex flex-row items-center">
-                            <div className="text-sm text-muted-foreground flex-1 ">
-                                #{id}
-                            </div>
+                    <div className="w-full max-w-sm p-4 shadow-none bg-background rounded-md flex flex-col gap-1">
+                        <div className="flex flex-row items-center gap-2">
                             {tm_status != null && (
                                 <span
                                     className={`border-${color} border px-1 text-${color} rounded-md text-xs lowercase`}
@@ -74,13 +77,18 @@ function PackCard({
                             >
                                 {statusTitle}
                             </span>
+                        </div>
+                        <div className="flex flex-row items-center gap-2">
+                            <div className="text-sm text-muted-foreground flex-1 ">
+                                #{id}
+                            </div>
 
                             <div className="font-medium text-end">
                                 {country.name}
                             </div>
-                        </CardHeader>
-                        <CardContent className="space-y-4 p-0">
-                            <div className="flex flex-col gap-1">
+                        </div>
+                        <div className="space-y-4 p-0">
+                            <div className="flex flex-col gap-1 pb-2">
                                 <Progress
                                     size={total}
                                     finished={current}
@@ -148,6 +156,18 @@ function PackCard({
                                         Tur paketlar
                                     </Button>
                                 </Link>
+                                {!!tm_contract && (
+                                    <Button
+                                        size="icon"
+                                        variant={"success-muted"}
+                                        onClick={handleDownload}
+                                    >
+                                        <Download
+                                            size={18}
+                                            className="font-light"
+                                        />
+                                    </Button>
+                                )}
                                 <PackCardMenu
                                     onDelete={onDelete}
                                     onEdit={onEdit}
@@ -162,8 +182,8 @@ function PackCard({
                                     }
                                 />
                             </div>
-                        </CardContent>
-                    </Card>
+                        </div>
+                    </div>
                 </TooltipTrigger>
                 {tm_comment ?
                     <TooltipContent side="bottom" align="center">

@@ -47,6 +47,13 @@ export default function ApproveCard({
         }
     }
 
+    const messages: Record<number, string> = {
+        10: "tayyorlandi",
+        20: "kontrakt yuklash uchun yuborildi",
+        30: "real xarajatlarga o'tkazish uchun yuborildi",
+        40: "yakunlash uchun yuborildi",
+    }
+
     return (
         <div className="flex items-center gap-3">
             <img src={FlashIcon} alt="" width={48} height={48} />
@@ -58,7 +65,7 @@ export default function ApproveCard({
                 >
                     <span className="text-primary">#{id}</span> tur paket{" "}
                     <span className="text-primary">{manager_name}</span>{" "}
-                    tomonidan tayyorlandi
+                    tomonidan {messages[status]}
                 </p>
             </div>
             <div className="flex items-center">
@@ -71,7 +78,7 @@ export default function ApproveCard({
                         <FileText size={18} className="text-primary" />
                     </Button>
                 )}
-                {[10, 40].includes(status) && (
+                {[10, 30, 40].includes(status) && (
                     <Button
                         size={"icon"}
                         variant={"ghost"}
