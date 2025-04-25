@@ -64,10 +64,15 @@ function PackCardMenu({
                             Yakunlash
                         </DropdownMenuItem>
                     )}
-                    <DropdownMenuItem className="text-primary" onClick={onSend}>
-                        <Send />
-                        TM ga yuborish
-                    </DropdownMenuItem>
+                    {Number(status) !== 20 && (
+                        <DropdownMenuItem
+                            className="text-primary"
+                            onClick={onSend}
+                        >
+                            <Send />
+                            TM ga yuborish
+                        </DropdownMenuItem>
+                    )}
                     {Number(status) < 20 && (
                         <DropdownMenuItem
                             className="text-primary"
