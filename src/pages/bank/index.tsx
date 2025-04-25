@@ -4,7 +4,11 @@ import InitialDataBox from "@/components/elements/initial-data-box"
 import ParamAnimatedTabs from "@/components/param/animated-tab"
 import ParamPagination from "@/components/param/pagination"
 import { Button } from "@/components/ui/button"
-import { PAYMENT_REQUESTS, TRANSACTIONS } from "@/constants/api-endpoints"
+import {
+    PAYMENT_REQUESTS,
+    TRANSACTIONS,
+    TRANSACTIONS_EXCEL,
+} from "@/constants/api-endpoints"
 import {
     DEFAULT_PAGE_SIZE,
     EXPENCE_TYPE,
@@ -123,7 +127,10 @@ export default function BankHome() {
             <div className="bg-background p-3 rounded-md mb-3">
                 <div className="flex items-center gap-2 mb-2">
                     <p className="font-semibold flex-1">Kirimlar</p>
-                    <DownloadAsExcel url="" name="file" />
+                    <DownloadAsExcel
+                        url={TRANSACTIONS_EXCEL + type + "/1"}
+                        name="file"
+                    />
                     <Button
                         size={"sm"}
                         onClick={() => {
@@ -153,7 +160,10 @@ export default function BankHome() {
             <div className="bg-background p-3 rounded-md mb-3">
                 <div className="flex items-center gap-2 mb-2">
                     <p className="font-semibold flex-1">Chiqimlar</p>
-                    <DownloadAsExcel url="" name="file" />
+                    <DownloadAsExcel
+                        url={TRANSACTIONS_EXCEL + type + "/0"}
+                        name="file"
+                    />
                     <Button
                         size={"sm"}
                         onClick={() => {
