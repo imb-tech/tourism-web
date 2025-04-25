@@ -154,7 +154,7 @@ export default function TourGidCard({ day, data }: TourGidItem) {
                                 methods={form}
                                 name={`data.${i}.desc`}
                                 onBlur={handleSave}
-                                dayId={field.id}
+                                dayId={field.field_id}
                             >
                                 {field?.desc}
                             </EditableBox>
