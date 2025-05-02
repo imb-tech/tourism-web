@@ -37,10 +37,7 @@ export default function Users() {
 
     return isSuccess ?
             <section className="p-3">
-                <PackDetailHeader
-                    title="Turistlar"
-                    backUrl={`/packs/${pack}`}
-                />
+                <PackDetailHeader title="Tourists" backUrl={`/packs/${pack}`} />
                 <div className="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 mt-3">
                     <AddButton
                         className="w-full max-w-sm"

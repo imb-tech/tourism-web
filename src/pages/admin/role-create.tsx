@@ -109,7 +109,7 @@ const RoleCreate = ({ id }: Props) => {
     return (
         <form onSubmit={form.handleSubmit(handleSubmit)}>
             <FormInput
-                label="Rol nomi"
+                label="Role name"
                 methods={form}
                 name="name"
                 wrapperClassName="mb-4"

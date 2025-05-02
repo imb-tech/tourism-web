@@ -28,7 +28,7 @@ const DownloadAsExcel = ({ url, name }: { url: string; name: string }) => {
             onClick={trigger}
             size={"sm"}
         >
-            Yuklab olish
+            Download
         </Button>
     )
 }

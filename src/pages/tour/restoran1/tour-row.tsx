@@ -20,7 +20,7 @@ export default function TourRow() {
             header: "Set",
         },
         {
-            header: "Turistlar",
+            header: "Tourists",
         },
         {
             header: "Individual narxi",

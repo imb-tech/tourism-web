@@ -14,8 +14,8 @@ export default function FormAction({
     loading,
     disabled,
     className,
-    submitName = "Saqlash",
-    cancelName = "Orqaga",
+    submitName = "Save",
+    cancelName = "Cancel",
 }: Props) {
     return (
         <div

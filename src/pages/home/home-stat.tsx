@@ -9,12 +9,13 @@ type Props = {
 }
 
 export default function HomeStat({ type, balance, expense }: Props) {
+    const typeLabel = type === "bank" ? "Bank" : "Cash"
     return (
         <div className="bg-background p-4 rounded-md flex flex-col gap-3 ">
             <div className="flex justify-between">
                 <div>
                     <p className="text-black/40 font-light">
-                        Balans {type === "bank" ? "bank" : "naqd"}
+                        {typeLabel} balance
                     </p>
                     <span>{formatMoney(balance)}</span>
                 </div>
@@ -27,7 +28,7 @@ export default function HomeStat({ type, balance, expense }: Props) {
             <div>
                 <div>
                     <p className="text-black/40 font-light">
-                        Shu oy sarflangan naqd
+                        {typeLabel} spent this month
                     </p>
                     <span>{formatMoney(expense)}</span>
                 </div>

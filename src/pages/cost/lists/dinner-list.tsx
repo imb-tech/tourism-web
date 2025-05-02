@@ -110,14 +110,14 @@ export function DinnerList() {
             <CostTableHeader
                 grid="grid-cols-8"
                 columns={[
-                    "Kun",
-                    "Nomi",
-                    "Turistlar",
+                    "day",
+                    "Name",
+                    "Tourists",
                     "Individual narxi",
-                    "Real xarajat",
-                    "Jami",
+                    "Real expense",
+                    "total",
                     "Chek",
-                    "To'lov turi",
+                    "Payment type",
                 ]}
             />
             <InitialDataBox isLoading={isLoading} />

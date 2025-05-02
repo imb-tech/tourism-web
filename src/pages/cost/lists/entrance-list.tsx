@@ -108,7 +108,7 @@ export function EntranceList() {
                 columns={[
                     "Kun",
                     "Nomi",
-                    "Turistlar",
+                    "Tourists",
                     "Individual narxi",
                     "Real xarajat",
                     "Jami",

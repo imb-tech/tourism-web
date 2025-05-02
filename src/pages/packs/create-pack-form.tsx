@@ -88,7 +88,7 @@ export default function CreatePackForm() {
                     required
                     methods={form}
                     name="start"
-                    label="Kelish sanasi"
+                    label="Date of arrival"
                     wrapperClassName={"w-full"}
                 />
 
@@ -97,7 +97,7 @@ export default function CreatePackForm() {
                     required
                     methods={form}
                     name="end"
-                    label="Ketish sanasi"
+                    label="Date of departure"
                     wrapperClassName={"w-full"}
                 />
             </div>
@@ -108,7 +108,7 @@ export default function CreatePackForm() {
                     required
                     name="days"
                     label="Kun"
-                    placeholder="Necha kun turishadi"
+                    placeholder="How many days will they stay?"
                     wrapperClassName={"w-full"}
                 />
 
@@ -117,7 +117,7 @@ export default function CreatePackForm() {
                     required
                     name="nights"
                     label="Tun"
-                    placeholder="Necha tun turishadi"
+                    placeholder="How many nights do they stay?"
                     wrapperClassName={"w-full"}
                 />
             </div>

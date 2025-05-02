@@ -23,7 +23,7 @@ export default function HomeBalance({
                         className="min-w-[44px] max-h-[44px]"
                     />
                     <div>
-                        <p className="text-black/40 font-light">Tushum</p>
+                        <p className="text-black/40 font-light">Income</p>
                         <span>{formatMoney(income)}</span>
                     </div>
                 </div>
@@ -34,7 +34,7 @@ export default function HomeBalance({
                         className="min-w-[44px] max-h-[44px]"
                     />
                     <div>
-                        <p className="text-black/40 font-light">Xarajat</p>
+                        <p className="text-black/40 font-light">Expense</p>
                         <span>{formatMoney(expense)}</span>
                     </div>
                 </div>
@@ -47,7 +47,7 @@ export default function HomeBalance({
                 />
                 <div>
                     <p className="text-black/40 font-light">
-                        Oy ohirigacha kutilayotgan xarajat
+                        Expected expenses by the end of the month
                     </p>
                     <span>{formatMoney(expected_expense)}</span>
                 </div>

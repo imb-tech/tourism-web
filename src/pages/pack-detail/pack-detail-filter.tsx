@@ -5,9 +5,9 @@ export default function PackDetailFilter() {
         <div>
             <ParamSelect
                 paramName="hotel"
-                label="Mehmonxona"
+                label="Hotel"
                 options={[
-                    { id: "all", name: "Mehmonxona" },
+                    { id: "all", name: "Hotel" },
                     { id: "uz", name: "O'zbekiston" },
                 ]}
             />

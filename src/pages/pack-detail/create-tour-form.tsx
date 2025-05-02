@@ -56,7 +56,7 @@ export default function CreateTourForm() {
                     methods={form}
                     required
                     name="tourists_count"
-                    label="Turistlar soni"
+                    label="Number of tourists"
                     placeholder="0"
                     wrapperClassName={"w-full"}
                 />
@@ -64,7 +64,7 @@ export default function CreateTourForm() {
                 <FormNumberInput
                     methods={form}
                     name="leaders_count"
-                    label="Liderlar soni"
+                    label="Number of leaders"
                     placeholder="0"
                     wrapperClassName={"w-full"}
                 />
@@ -72,9 +72,9 @@ export default function CreateTourForm() {
 
             <SelectField
                 name="hotel_stars"
-                label="Mexmonxona turi"
+                label="Hotel type"
                 required
-                placeholder="Mehmonxona turini tanlang"
+                placeholder="Select hotel type"
                 methods={form}
                 options={Array(5)
                     .fill(5)

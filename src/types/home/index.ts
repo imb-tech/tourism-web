@@ -1,7 +1,7 @@
 const packTabOptions = [
-    { id: "city", name: "Shahar" },
-    { id: "gid", name: "Gid" },
-    { id: "hotel", name: "Mehmonxona" },
+    { id: "city", name: "City" },
+    { id: "gid", name: "Guide" },
+    { id: "hotel", name: "Hotel" },
     { id: "transport1", name: "Transport 1" },
     { id: "transport2", name: "Transport 2" },
     { id: "restoran1", name: "Restoran 1" },

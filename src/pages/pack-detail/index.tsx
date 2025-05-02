@@ -40,7 +40,7 @@ export default function PackDetail() {
                     <AddButton
                         className="w-full max-w-sm"
                         onClick={handleAdd}
-                        label="Tarif qo'shish"
+                        label="Add plan"
                         icon={Grid2x2PlusIcon}
                     />
                     {data?.map((pack) => <TourCard key={pack.id} {...pack} />)}
@@ -49,7 +49,7 @@ export default function PackDetail() {
 
             <Modal
                 className="max-w-xl"
-                title={store ? "Tarifni o'zgartirish" : "Tarif qo'shish"}
+                title={store ? "Edit plan" : "Add plan"}
                 modalKey={TOUR_DATA}
             >
                 <CreateTourForm />
@@ -57,7 +57,7 @@ export default function PackDetail() {
 
             <Modal
                 className="max-w-xl font-bold"
-                title="Daromad foizi"
+                title="Revenue percent"
                 modalKey={PLAN_BENEFIT}
             >
                 <PackBenefitForm />

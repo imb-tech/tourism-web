@@ -137,7 +137,7 @@ export default function DocumentTab() {
 
                 {data?.hotel && (
                     <Grid>
-                        <Title>Mehmonxona:</Title>
+                        <Title>Hotel:</Title>
                         <Flex>
                             <Column>
                                 <Text head>Nomi</Text>

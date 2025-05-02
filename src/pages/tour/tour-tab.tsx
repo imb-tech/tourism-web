@@ -2,17 +2,17 @@ import ParamAnimatedTabs from "@/components/param/animated-tab"
 import useTourLoading from "./loading"
 
 const options: { id: packTab; name: string }[] = [
-    { id: "city", name: "Shahar" },
-    { id: "guide", name: "Gid" },
-    { id: "hotel", name: "Mehmonxona" },
+    { id: "city", name: "City" },
+    { id: "guide", name: "Guide" },
+    { id: "hotel", name: "Hotel" },
     { id: "trans_in", name: "Trans in" },
     { id: "trans_out", name: "Trans out" },
     { id: "dinner", name: "Dinner" },
     { id: "lunch", name: "Lunch" },
-    { id: "train", name: "Poyezd" },
-    { id: "plane", name: "Samolyot" },
+    { id: "train", name: "Train" },
+    { id: "plane", name: "Plane" },
     { id: "entrance", name: "Enterence" },
-    { id: "other", name: "Boshqa" },
+    { id: "other", name: "Other" },
     { id: "criteria", name: "Inclusion & Exclusion" },
 ]
 

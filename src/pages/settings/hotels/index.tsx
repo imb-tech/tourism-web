@@ -51,7 +51,7 @@ export default function Hotels() {
     return (
         <>
             <div className="flex justify-between items-center mb-2">
-                <h2 className="text-xl">Mehmonxonalar</h2>
+                <h2 className="text-xl">Hotels</h2>
                 <Button
                     onClick={() => {
                         remove()
@@ -76,9 +76,7 @@ export default function Hotels() {
             <DeleteModal path={HOTELS} id={deleteItem || ""} />
 
             <Modal
-                title={
-                    store ? "Mehmonxonani tahrirlash" : "Mehmonxonani qo'shish"
-                }
+                title={store ? "Edit Hotel" : "Add Hotel"}
                 className="max-w-4xl"
             >
                 {

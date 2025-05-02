@@ -18,11 +18,11 @@ export const useHomeColumn = () => {
                     accessorKey: "manager_name",
                 },
                 {
-                    header: "Klient",
+                    header: "Client",
                     accessorKey: "client",
                 },
                 {
-                    header: "Sana",
+                    header: "Dates",
                     accessorKey: "start",
                     cell: ({ row }: CellContext<HomeTableItem, ReactNode>) => {
                         return (
@@ -34,7 +34,7 @@ export const useHomeColumn = () => {
                     },
                 },
                 {
-                    header: "Turistlar soni",
+                    header: "Number of tourists",
                     accessorKey: "tourists_count",
                 },
                 {
@@ -63,14 +63,14 @@ export const useHomeColumn = () => {
                     },
                 },
                 {
-                    header: "Tushum",
+                    header: "Income",
                     accessorKey: "benefit",
                     cell: ({ row }: CellContext<HomeTableItem, ReactNode>) => {
                         return formatMoney(row.original.benefit, undefined, "%")
                     },
                 },
                 {
-                    header: "Tushum",
+                    header: "Income",
                     accessorKey: "benefit",
                     cell: ({ row }: CellContext<HomeTableItem, ReactNode>) => {
                         return formatMoney(
@@ -108,7 +108,7 @@ export const useHomeNestedColumn = () => {
                     },
                 },
                 {
-                    header: "Mehmonxona",
+                    header: "Hotel",
                     accessorKey: "hotel",
                     cell: ({ row }: CellContext<HomeNestedItem, ReactNode>) => {
                         return formatMoney(row.original.hotel)

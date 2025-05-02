@@ -11,13 +11,13 @@ import { TrainList } from "./lists/train-list"
 import { TransInList } from "./lists/transin-list"
 
 const options: { id: packTab; name: string; content?: ReactNode }[] = [
-    { id: "city", name: "Shahar", content: <CityList /> },
-    { id: "guide", name: "Gid", content: <GuideList /> },
-    { id: "hotel", name: "Mehmonxona", content: <HotelList /> },
-    { id: "trans_in", name: "Transport 1", content: <TransInList /> },
-    { id: "trans_out", name: "Transport 2", content: <TransInList /> },
-    { id: "dinner", name: "Restoran 1", content: <DinnerList /> },
-    { id: "lunch", name: "Restoran 2", content: <DinnerList /> },
+    { id: "city", name: "City", content: <CityList /> },
+    { id: "guide", name: "Guide", content: <GuideList /> },
+    { id: "hotel", name: "Hotel", content: <HotelList /> },
+    { id: "trans_in", name: "Trans in ", content: <TransInList /> },
+    { id: "trans_out", name: "Trans out ", content: <TransInList /> },
+    { id: "dinner", name: "Dinne", content: <DinnerList /> },
+    { id: "lunch", name: "Lunch", content: <DinnerList /> },
     { id: "train", name: "Poyezd", content: <TrainList /> },
     { id: "plane", name: "Samolyot", content: <PlaneList /> },
     { id: "entrance", name: "Enterence", content: <EntranceList /> },

@@ -24,7 +24,7 @@ export default function TourRow() {
             header: "Class",
         },
         {
-            header: "Turistlar soni",
+            header: "Number of tourists",
         },
         {
             header: "Narxi",

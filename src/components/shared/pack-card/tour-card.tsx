@@ -115,17 +115,13 @@ function TourCard(props: PlanItem) {
                 <Progress size={total} finished={current} />
                 <div className="space-y-2">
                     <div className="flex justify-between">
-                        <span className="text-muted-foreground">
-                            Turistlar:
-                        </span>
+                        <span className="text-muted-foreground">Tourists:</span>
                         <span>
                             {tourists_count} + {leaders_count}
                         </span>
                     </div>
                     <div className="flex justify-between">
-                        <span className="text-muted-foreground">
-                            Mexmonxona:
-                        </span>
+                        <span className="text-muted-foreground">Hotel:</span>
                         <div className="flex items-center gap-1">
                             <span>{hotel_stars}</span>
                             <svg
@@ -143,7 +139,7 @@ function TourCard(props: PlanItem) {
                         </div>
                     </div>
                     <div className="flex justify-between">
-                        <span className="text-muted-foreground">Daromad:</span>
+                        <span className="text-muted-foreground">Revenue:</span>
                         <span>{benefit} %</span>
                     </div>
                 </div>

@@ -113,7 +113,7 @@ function PackCard({
                             <div className="space-y-2">
                                 <div className="flex justify-between">
                                     <span className="text-muted-foreground">
-                                        Davomiyligi:
+                                        Duration:
                                     </span>
                                     <span>
                                         {days} / {nights}
@@ -121,13 +121,13 @@ function PackCard({
                                 </div>
                                 <div className="flex justify-between">
                                     <span className="text-muted-foreground">
-                                        Mijoz:
+                                        Client:
                                     </span>
                                     <span>{client}</span>
                                 </div>
                                 <div className="flex justify-between">
                                     <span className="text-muted-foreground">
-                                        Menejer:
+                                        Manager:
                                     </span>
                                     <span>
                                         {manager?.first_name}{" "}

@@ -11,32 +11,32 @@ import TourCol from "./tour-col"
 export default function TourRow() {
     const columns: TableColumns<TrainItem>[] = [
         {
-            header: "Kun",
+            header: "Day",
         },
         {
-            header: "Sana",
+            header: "Date",
         },
         {
-            header: "Shaxar",
+            header: "City",
             colSpan: 2,
         },
         {
-            header: "Vaqt",
+            header: "Time",
         },
         {
             header: "Class",
         },
         {
-            header: "Narxi",
+            header: "Price",
         },
         {
-            header: "To'lov turi",
+            header: "Payment type",
         },
         {
-            header: "Turistlar soni",
+            header: "Number of tourists",
         },
         {
-            header: "Jami",
+            header: "Total",
         },
     ]
 

@@ -14,37 +14,37 @@ export default function Settings() {
                 options={[
                     {
                         id: "settings",
-                        name: "Davlat va shaharlar",
+                        name: "Country and cities",
                         content: <CityAndCountries />,
                     },
                     {
                         id: "hotels",
-                        name: "Mehmonxonalar",
+                        name: "Hotels",
                         content: <Hotels />,
                     },
                     {
                         id: "entrances",
-                        name: "Joylar",
+                        name: "Entarnces",
                         content: <Enterances />,
                     },
                     {
                         id: "transports",
-                        name: "Transportlar",
+                        name: "Transports",
                         content: <Transports />,
                     },
                     {
                         id: "foods",
-                        name: "Taomlar",
+                        name: "Fodds",
                         content: <Foods />,
                     },
                     {
                         id: "restaurants",
-                        name: "Restoranlar",
+                        name: "Restaurants",
                         content: <Restaurans />,
                     },
                     {
                         id: "categories",
-                        name: "Kategoriyalar",
+                        name: "Categories",
                         content: <FinancialCategoriesAndCategories />,
                     },
                 ]}
