@@ -88,7 +88,7 @@ function TourCard(props: PlanItem) {
     }
 
     function handleDublicate() {
-        mutate(PLANS, props)
+        mutate(`tours/plans/copy/${props.id}`, {})
     }
 
     function handleSelect() {
