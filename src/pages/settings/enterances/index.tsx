@@ -46,7 +46,7 @@ export default function Enterances() {
     return (
         <>
             <div className="flex justify-between items-center mb-2">
-                <h2 className="text-xl">Joylar</h2>
+                <h2 className="text-xl">Entrances</h2>
                 <Button
                     onClick={() => {
                         remove()
@@ -54,7 +54,7 @@ export default function Enterances() {
                     }}
                 >
                     {" "}
-                    Qo'shish{" "}
+                    Add{" "}
                 </Button>
             </div>
             <DataTable
@@ -75,7 +75,7 @@ export default function Enterances() {
             />
 
             <Modal
-                title={store ? "Joy tahrirlash" : "Joy qo'shish"}
+                title={store ? "Edit place" : "Add place"}
                 className="max-w-xl"
                 modalKey={ENTERANCE_DATA}
             >

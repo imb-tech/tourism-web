@@ -63,7 +63,7 @@ export default function ParamInput({
         <>
             <Input
                 defaultValue={params[searchKey]}
-                placeholder={"Qidiruv..."}
+                placeholder={"Search..."}
                 type="search"
                 ref={inputRef}
                 onChange={handleInputChange}

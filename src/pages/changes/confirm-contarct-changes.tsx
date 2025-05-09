@@ -43,7 +43,7 @@ export default function ConfirmContractChanges() {
                 methods={form}
                 name="comment"
                 required
-                label="Tahrirlashni tasdiqlang"
+                label="Editni tasdiqlang"
             />
 
             <input

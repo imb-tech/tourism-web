@@ -38,7 +38,7 @@ export default function ConfirmChanges() {
                 methods={form}
                 name="comment"
                 required
-                label="Tahrirlashni tasdiqlang"
+                label="Editni tasdiqlang"
             />
             <FormAction
                 loading={isUpdating}

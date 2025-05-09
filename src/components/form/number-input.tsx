@@ -45,7 +45,7 @@ export default function FormNumberInput<IForm extends FieldValues>({
             validate: {
                 required: (val) => {
                     if (required && !val) {
-                        return `${label || props.placeholder}ni kiriting`
+                        return `Enter ${label || props.placeholder}`
                     }
                     return true
                 },

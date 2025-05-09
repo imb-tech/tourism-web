@@ -11,29 +11,29 @@ import TourCol from "./tour-col"
 export default function TourRow() {
     const columns: TableColumns<PlanListItemdetail>[] = [
         {
-            header: "Kun",
+            header: "Day",
         },
         {
-            header: "Shahar",
+            header: "City",
             colSpan: 2,
         },
         {
-            header: "Vaqt",
+            header: "Time",
         },
         {
             header: "Class",
         },
         {
-            header: "Number of tourists",
+            header: "Tourists count",
         },
         {
-            header: "Narxi",
+            header: "Price",
         },
         {
-            header: "To'lov turi",
+            header: "Payment type",
         },
         {
-            header: "Jami",
+            header: "Total",
         },
     ]
 

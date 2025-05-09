@@ -75,7 +75,7 @@ export default function CreatePackForm() {
 
             <SelectField
                 name="country"
-                label="Davlat"
+                label="Country"
                 required
                 methods={form}
                 isLoading={isLoading}
@@ -107,7 +107,7 @@ export default function CreatePackForm() {
                     methods={form}
                     required
                     name="days"
-                    label="Kun"
+                    label="Days"
                     placeholder="How many days will they stay?"
                     wrapperClassName={"w-full"}
                 />
@@ -116,7 +116,7 @@ export default function CreatePackForm() {
                     methods={form}
                     required
                     name="nights"
-                    label="Tun"
+                    label="Noghts"
                     placeholder="How many nights do they stay?"
                     wrapperClassName={"w-full"}
                 />

@@ -34,7 +34,7 @@ export default function Cities() {
     return (
         <>
             <div className="flex justify-between items-center mb-2">
-                <h2 className="text-xl">Shaharlar</h2>
+                <h2 className="text-xl">Cities</h2>
                 <Button
                     onClick={() => {
                         remove()
@@ -42,7 +42,7 @@ export default function Cities() {
                     }}
                 >
                     {" "}
-                    Qo'shish{" "}
+                    Add{" "}
                 </Button>
             </div>
             <DataTable
@@ -62,7 +62,7 @@ export default function Cities() {
             />
 
             <Modal
-                title={store?.id ? "Shahar tahrirlash" : "Shahar qo'shish"}
+                title={store?.id ? "Edit city" : "Add city"}
                 className="max-w-xl"
                 modalKey="city"
             >

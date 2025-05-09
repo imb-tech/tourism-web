@@ -33,7 +33,7 @@ export default function Countries() {
     return (
         <>
             <div className="flex justify-between items-center mb-2">
-                <h2 className="text-xl">Davlatlar</h2>
+                <h2 className="text-xl">Countries</h2>
                 <Button
                     onClick={() => {
                         remove()
@@ -41,7 +41,7 @@ export default function Countries() {
                     }}
                 >
                     {" "}
-                    Qo'shish{" "}
+                    Add{" "}
                 </Button>
             </div>
             <DataTable
@@ -61,7 +61,7 @@ export default function Countries() {
             />
 
             <Modal
-                title={store ? "Davlat tahrirlash" : "Davlat qo'shish"}
+                title={store ? "Edit country info" : "Add country"}
                 className="max-w-xl"
                 modalKey="country"
             >

@@ -73,7 +73,7 @@ export default function RestaurantCreateForm() {
                 methods={form}
                 name="name"
                 required
-                label="Restoran nomi"
+                label="Retaurant name"
             />
 
             <SelectField
@@ -81,7 +81,7 @@ export default function RestaurantCreateForm() {
                 methods={form}
                 name="city"
                 required
-                label="Shahar"
+                label="City"
                 options={cities || []}
             />
 
@@ -92,8 +92,8 @@ export default function RestaurantCreateForm() {
                             methods={form}
                             name={`sets.${index}.name`}
                             required
-                            label={index === 0 ? "Set nomi" : ""}
-                            placeholder="Set nomi"
+                            label={index === 0 ? "Name of set" : ""}
+                            placeholder="Name of set"
                         />
 
                         <FormNumberInput
@@ -101,8 +101,8 @@ export default function RestaurantCreateForm() {
                             methods={form}
                             name={`sets.${index}.price`}
                             required
-                            label={index === 0 ? "Set narxi" : ""}
-                            placeholder="Set narxi"
+                            label={index === 0 ? "Price of set" : ""}
+                            placeholder="Price of set"
                         />
 
                         <Button
@@ -166,7 +166,7 @@ export default function RestaurantCreateForm() {
                     })
                 }
             >
-                Set qo'shish
+                Add new
             </Button>
 
             <FormAction loading={isPending || isUpdating} />

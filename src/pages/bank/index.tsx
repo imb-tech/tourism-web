@@ -41,7 +41,7 @@ const columns: ColumnDef<Transaction>[] = [
         accessorKey: "through",
     },
     {
-        header: "Izoh",
+        header: "Comment",
         accessorKey: "comment",
     },
     {

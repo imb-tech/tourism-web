@@ -29,7 +29,7 @@ function UserCard(props: UserItemProps) {
 
     function handleCopy(type: "phone" | "pass") {
         navigator.clipboard.writeText(type === "pass" ? passcode : phone)
-        toast.success(`${type === "pass" ? passcode : phone} nusxalandi`)
+        toast.success(`${type === "pass" ? passcode : phone} copied`)
     }
 
     return (

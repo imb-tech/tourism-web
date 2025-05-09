@@ -42,7 +42,7 @@ export default function CountryCreateEditForm() {
                 methods={form}
                 name="name"
                 required
-                label="Davlat nomi"
+                label="Country name"
             />
             <FormAction loading={isPending || isUpdating} />
         </form>

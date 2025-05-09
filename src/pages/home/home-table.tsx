@@ -411,7 +411,7 @@ export default function HomeTable<TData extends object>({
                             ))
                         :   <div className={cn("grid", grid)}>
                                 <div className="h-24 text-center col-span-full">
-                                    Mavjud emas
+                                    Empty
                                 </div>
                             </div>
                         }

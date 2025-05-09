@@ -38,7 +38,7 @@ export function CityList() {
         <div className="bg-secondary p-3 flex flex-col gap-2 rounded-md">
             <CostTableHeader
                 grid="grid-cols-3"
-                columns={["Kun", "Shaxar", "Izoh"]}
+                columns={["Day", "Shaxar", "Comment"]}
             />
             <InitialDataBox isLoading={isLoading} />
             {list?.map((item) => <CostItem key={item.day} {...item} />)}

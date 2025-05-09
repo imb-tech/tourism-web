@@ -149,7 +149,7 @@ export default function FormAudioRecord<IForm extends FieldValues>({
             )}
             <div className="relative w-full rounded-md">
                 <Input
-                    placeholder="Izoh"
+                    placeholder="Comment"
                     fullWidth
                     suffix={
                         audioUrl ?

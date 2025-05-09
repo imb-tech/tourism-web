@@ -35,14 +35,14 @@ export default function Foods() {
     return (
         <div>
             <div className="flex justify-between items-center mb-2">
-                <h2 className="text-xl">Taomlar</h2>
+                <h2 className="text-xl">Foods</h2>
                 <Button
                     onClick={() => {
                         remove()
                         openModal()
                     }}
                 >
-                    Qo'shish
+                    Add
                 </Button>
             </div>
             <DataTable

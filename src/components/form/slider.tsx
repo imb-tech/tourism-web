@@ -30,7 +30,7 @@ export default function FormSlider<IForm extends FieldValues>({
         rules: {
             required: {
                 value: required,
-                message: `${label}ni tanlang`,
+                message: `Select ${label}`,
             },
         },
     })

@@ -10,4 +10,5 @@ type Transport = {
     price: number
     year: number
     images: TransportImage[]
+    type: number
 }

@@ -60,7 +60,7 @@ function CostItem({ day, data }: CostGeneratedItem) {
                         <CustomTableCol>
                             <FormNumberInput
                                 methods={form}
-                                placeholder="Real xarajat"
+                                placeholder="Real cost"
                                 className="border-none shadow-none text-xs"
                                 name={`day_${day}.${i}.real_cost`}
                                 onBlur={() => save(i, data[i].id)}
@@ -113,10 +113,10 @@ export function DinnerList() {
                     "day",
                     "Name",
                     "Tourists",
-                    "Individual narxi",
+                    "PPP",
                     "Real expense",
                     "total",
-                    "Chek",
+                    "Invoice",
                     "Payment type",
                 ]}
             />

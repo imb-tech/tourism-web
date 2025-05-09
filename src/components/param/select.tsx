@@ -58,7 +58,7 @@ export default function ParamSelect({
             disabled={disabled}
         >
             <SelectTrigger className={cn("w-max bg-transparent", className)}>
-                <SelectValue placeholder={label || "Tanlang"} />
+                <SelectValue placeholder={label || "Select"} />
             </SelectTrigger>
             <SelectContent>
                 <SelectGroup>

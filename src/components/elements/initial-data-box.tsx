@@ -11,7 +11,7 @@ interface InitialDataBoxProps {
 }
 
 const InitialDataBox: React.FC<InitialDataBoxProps> = ({
-    message = "Ma'lumotlarni olishda xatolik yuzaga keldi",
+    message = "An error occurred while fetching the data.",
     isError = false,
     isLoading,
 }) => {

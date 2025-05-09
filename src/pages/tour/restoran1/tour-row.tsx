@@ -11,10 +11,10 @@ import TourCol from "./tour-col"
 export default function TourRow() {
     const columns: TableColumns<Restaurant1Item>[] = [
         {
-            header: "Kun",
+            header: "Day",
         },
         {
-            header: "Nomi",
+            header: "Name",
         },
         {
             header: "Set",
@@ -23,13 +23,13 @@ export default function TourRow() {
             header: "Tourists",
         },
         {
-            header: "Individual narxi",
+            header: "PPP",
         },
         {
-            header: "To'lov turi",
+            header: "Payment type",
         },
         {
-            header: "Jami",
+            header: "Total",
         },
     ]
     const { id } = useParams({ from: "/_main/packs/$pack/tour/$id" })

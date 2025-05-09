@@ -98,7 +98,7 @@ export function Combobox({
                         </span>
                     )}
                     <CommandList>
-                        <CommandEmpty>Mavjud emas</CommandEmpty>
+                        <CommandEmpty>Empty</CommandEmpty>
                         <CommandGroup>
                             {sortedOptions?.map((d, i) => (
                                 <CommandItem

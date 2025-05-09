@@ -159,7 +159,7 @@ function PackCard({
                                         }
                                     >
                                         <Eye size={18} className="font-light" />
-                                        Tur paketlar
+                                        Tour packages
                                     </Button>
                                 </Link>
                                 {!!tm_contract && (
@@ -195,7 +195,7 @@ function PackCard({
                 </TooltipTrigger>
                 {tm_comment ?
                     <TooltipContent side="bottom" align="center">
-                        <p className="max-w-80">Izoh</p>
+                        <p className="max-w-80">Comment</p>
                         <p className="max-w-80">{tm_comment}</p>
                     </TooltipContent>
                 :   ""}

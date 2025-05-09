@@ -16,7 +16,7 @@ import SeeInView from "../ui/see-in-view"
 
 export default function FormImageInput<IForm extends FieldValues>({
     name,
-    label: labelName = "Rasm",
+    label: labelName = "Photo",
     disabled,
     methods,
     hideError = false,

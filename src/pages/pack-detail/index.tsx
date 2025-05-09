@@ -32,7 +32,7 @@ export default function PackDetail() {
 
     return (
         <div className="p-3">
-            <PackDetailHeader title="Tariflar" backUrl="/packs" />
+            <PackDetailHeader title="Plans" backUrl="/packs" />
 
             {isLoading ?
                 <InitialDataBox isLoading />

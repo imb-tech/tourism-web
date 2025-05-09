@@ -19,10 +19,8 @@ export default function FileInput({
     const [file, setFile] = useState<File | null>(null)
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-        {
-            /* eslint-disable-next-line @typescript-eslint/prefer-optional-chain */
-        }
-        if (e.target.files && e.target.files[0]) {
+        // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
+        if (e?.target?.files && e.target.files?.[0]) {
             setFile(e.target.files[0])
             handleChange?.(e.target.files[0])
         } else {
@@ -51,7 +49,7 @@ export default function FileInput({
                                 file.type?.split("/")[1]
                             :   String(ischecked).split(".").at(-1)}
                         </span>
-                    :   <span className="text-gray-700">Chek yuklang</span>}
+                    :   <span className="text-gray-700">Upload invoice</span>}
                 </div>
 
                 {/* eslint-disable-next-line @typescript-eslint/prefer-optional-chain */}

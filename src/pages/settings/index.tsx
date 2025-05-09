@@ -24,7 +24,7 @@ export default function Settings() {
                     },
                     {
                         id: "entrances",
-                        name: "Entarnces",
+                        name: "Entrances",
                         content: <Enterances />,
                     },
                     {
@@ -34,7 +34,7 @@ export default function Settings() {
                     },
                     {
                         id: "foods",
-                        name: "Fodds",
+                        name: "Foods",
                         content: <Foods />,
                     },
                     {

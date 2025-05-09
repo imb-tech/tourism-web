@@ -30,14 +30,14 @@ export default function Restaurans() {
     return (
         <section>
             <div className="flex justify-between items-center mb-2">
-                <h2 className="text-xl">Restarantlar</h2>
+                <h2 className="text-xl">Restaurants</h2>
                 <Button
                     onClick={() => {
                         remove()
                         openModal()
                     }}
                 >
-                    Qo'shish
+                    Add
                 </Button>
             </div>
             <DataTable

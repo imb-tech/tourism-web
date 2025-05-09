@@ -38,14 +38,14 @@ export default function Transports() {
     return (
         <>
             <div className="flex justify-between items-center mb-2">
-                <h2 className="text-xl">Transportlar</h2>
+                <h2 className="text-xl">Transports</h2>
                 <Button
                     onClick={() => {
                         remove()
                         openModal()
                     }}
                 >
-                    Qo'shish
+                    Add
                 </Button>
             </div>
             <DataTable
@@ -62,9 +62,7 @@ export default function Transports() {
             <DeleteModal id={deleteItem ?? 0} path={TRANSPORTS} />
 
             <Modal
-                title={
-                    store ? "Transportni o'zgartirish" : "Transport qo'shish"
-                }
+                title={store ? "Add new transport" : "Edit transport"}
                 className="max-w-xl"
             >
                 <TransportCreateEdit />

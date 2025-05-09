@@ -56,7 +56,7 @@ export default function CreateTourForm() {
                     methods={form}
                     required
                     name="tourists_count"
-                    label="Number of tourists"
+                    label="Tourists count"
                     placeholder="0"
                     wrapperClassName={"w-full"}
                 />

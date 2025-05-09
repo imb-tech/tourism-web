@@ -41,7 +41,7 @@ export default function Users() {
                 <div className="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 mt-3">
                     <AddButton
                         className="w-full max-w-sm"
-                        label="Turist qo'shish"
+                        label="Add tourists"
                         icon={UserRoundPlus}
                         onClick={handleAdd}
                     />
@@ -53,9 +53,7 @@ export default function Users() {
                 <DeleteModal path={TOURISTS} id={store?.id || ""} />
 
                 <Modal
-                    title={
-                        store?.id ? "Turistni tahrirlash" : "Turist qo'shish"
-                    }
+                    title={store?.id ? "Edit tourist info" : "Add tourist"}
                     className="max-w-xl"
                 >
                     <CreateEditUserForm />

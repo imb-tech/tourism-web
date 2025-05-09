@@ -35,14 +35,14 @@ export default function Categories() {
     return (
         <>
             <div className="flex justify-between items-center mb-2">
-                <h2 className="text-xl">Kategoriyalar</h2>
+                <h2 className="text-xl">Categories</h2>
                 <Button
                     onClick={() => {
                         remove()
                         openCategoryModal()
                     }}
                 >
-                    Qo'shish
+                    Add
                 </Button>
             </div>
             <DataTable
@@ -58,11 +58,7 @@ export default function Categories() {
             <DeleteModal path={CATEGORIES} id={deleteItem || ""} />
 
             <Modal
-                title={
-                    store?.id ?
-                        "Kategoryni o'zgartirish"
-                    :   "Kategoriya qo'shish"
-                }
+                title={store?.id ? "Category edit" : "Category create"}
                 className="max-w-xl"
                 modalKey={CATEGORIES}
             >

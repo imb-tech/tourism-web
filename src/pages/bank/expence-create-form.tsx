@@ -68,7 +68,7 @@ export default function ExpenceCreateForm() {
     return (
         <form onSubmit={form.handleSubmit(handleSubmit)} className="p-1 mt-2">
             <SelectField
-                label="Kategoriya"
+                label="Category"
                 methods={form}
                 required
                 name="category"
@@ -84,14 +84,14 @@ export default function ExpenceCreateForm() {
             />
 
             <FormTextarea
-                label="Izoh"
+                label="Comment"
                 methods={form}
                 name="comment"
                 wrapperClassName="mt-3"
             />
 
             <DropZone
-                label="Chek"
+                label="Invoice"
                 methods={form}
                 name="file"
                 required={type === "bank"}

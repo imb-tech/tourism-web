@@ -20,7 +20,7 @@ const PackFilters = () => {
             />
             <ParamSelect
                 paramName="country"
-                label="Davlat"
+                label="Country"
                 options={countries ?? []}
             />
         </div>

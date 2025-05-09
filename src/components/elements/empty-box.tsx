@@ -8,7 +8,7 @@ interface EmptyBoxProps {
 }
 
 const EmptyBox: React.FC<EmptyBoxProps> = ({
-    message = "Ma'lumot topilmadi",
+    message = "Data not found",
     count,
 }) => {
     return Number(count) < 1 ?

@@ -49,7 +49,7 @@ export default function TableActions({
                             className="!text-green-500"
                         >
                             <Eye width={16} />
-                            Ko'rish
+                            View
                         </DropdownMenuItem>
                     )}
                     {onEdit && (
@@ -58,7 +58,7 @@ export default function TableActions({
                             className="!text-primary"
                         >
                             <Edit width={16} />
-                            Tahrirlash
+                            Edit
                         </DropdownMenuItem>
                     )}
                     {onDelete && (
@@ -66,7 +66,7 @@ export default function TableActions({
                             onClick={onDelete}
                             className="!text-destructive"
                         >
-                            <Trash2 width={16} /> O'chirish
+                            <Trash2 width={16} /> Delete
                         </DropdownMenuItem>
                     )}
                     {onUndo && (
@@ -74,7 +74,7 @@ export default function TableActions({
                             onClick={onUndo}
                             className="!text-destructive"
                         >
-                            <Undo width={16} /> Qaytarish
+                            <Undo width={16} /> Undo
                         </DropdownMenuItem>
                     )}
                 </DropdownMenuContent>

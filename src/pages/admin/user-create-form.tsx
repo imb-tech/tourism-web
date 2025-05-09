@@ -45,7 +45,12 @@ export default function UserCreateForm() {
             onSubmit={form.handleSubmit(handleSubmit)}
             className="flex flex-col gap-4"
         >
-            <FormInput methods={form} name="first_name" required label="Ism" />
+            <FormInput
+                methods={form}
+                name="first_name"
+                required
+                label="Firstname"
+            />
 
             <FormInput methods={form} name="last_name" label="Familiya" />
 

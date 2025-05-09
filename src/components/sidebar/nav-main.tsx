@@ -32,7 +32,7 @@ export function NavMain() {
         {
             to: "/packs",
             icon: <Plane />,
-            title: "Tur paketlar",
+            title: "Tour packages",
             enabled: permissions?.tur_paketlar_faqat_korish,
         },
         {
@@ -46,13 +46,13 @@ export function NavMain() {
         {
             to: "/cost",
             icon: <HandCoins />,
-            title: "Real xarajat",
+            title: "Real cost",
             enabled: permissions?.real_xarajatlar_korish,
         },
         {
             to: "/changes",
             icon: <Clock4 />,
-            title: "O'zgarishlar",
+            title: "Changes",
             enabled: permissions?.ozgarishlar_korish,
         },
         {

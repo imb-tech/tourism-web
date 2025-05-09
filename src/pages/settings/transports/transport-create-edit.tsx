@@ -37,6 +37,7 @@ export default function TransportCreateEdit() {
                     size: 0,
                     price: 0,
                     year: 0,
+                    type: 1,
                     images: [
                         {
                             id: null,
@@ -114,11 +115,11 @@ export default function TransportCreateEdit() {
             onSubmit={form.handleSubmit(handleSubmit)}
             className="flex flex-col gap-5"
         >
-            <FormInput methods={form} name="name" label="Nomi" required />
+            <FormInput methods={form} name="name" label="Name" required />
 
             <FormNumberInput
                 thousandSeparator=" "
-                label="Sig'imi"
+                label="Capacity"
                 methods={form}
                 name="size"
                 required
@@ -126,7 +127,7 @@ export default function TransportCreateEdit() {
 
             <FormNumberInput
                 thousandSeparator=" "
-                label="Narxi"
+                label="Price"
                 methods={form}
                 name="price"
                 required
@@ -134,7 +135,7 @@ export default function TransportCreateEdit() {
 
             <FormNumberInput
                 thousandSeparator=""
-                label="Yili"
+                label="Year"
                 methods={form}
                 name="year"
                 required

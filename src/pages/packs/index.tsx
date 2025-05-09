@@ -92,7 +92,7 @@ const Packs = () => {
                 <AddButton
                     className="w-full max-w-sm"
                     onClick={openModal}
-                    label="Tur qo'shish"
+                    label="Create Tour"
                     icon={Grid2x2Plus}
                 />
                 {data?.results.map((pack) => (
@@ -107,7 +107,7 @@ const Packs = () => {
                     />
                 ))}
 
-                <Modal className="max-w-xl" title="Tur qo'shish">
+                <Modal className="max-w-xl" title="Create Tour">
                     <CreatePackForm />
                 </Modal>
 

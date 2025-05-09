@@ -79,11 +79,11 @@ export default function IncomeCreateForm() {
         () => [
             {
                 id: 1,
-                name: "Tur bo'yicha",
+                name: "By Tour",
                 content: (
                     <div className="p-1">
                         <FormNumberInput
-                            label="Tur paket ID"
+                            label="Tour ID"
                             methods={form}
                             required
                             name="tour"
@@ -100,11 +100,11 @@ export default function IncomeCreateForm() {
             },
             {
                 id: 2,
-                name: "Boshqa",
+                name: "Other",
                 content: (
                     <div className="p-1">
                         <SelectField
-                            label="Kategoriya"
+                            label="Category"
                             methods={form}
                             required
                             name="category"
@@ -131,14 +131,14 @@ export default function IncomeCreateForm() {
                 />
 
                 <FormTextarea
-                    label="Izoh"
+                    label="Comment"
                     methods={form}
                     name="comment"
                     wrapperClassName="mt-3"
                 />
 
                 <DropZone
-                    label="Chek"
+                    label="Invoice"
                     methods={form}
                     name="file"
                     required={type === "bank"}

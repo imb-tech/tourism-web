@@ -28,6 +28,7 @@ function TourCityCard(props: TourCityItem & { citiesList: City[] }) {
     const save = useCallback(() => {
         mutate(DETAIL + "/city", {
             ...formValues,
+            citiesList: undefined,
             plan_id: Number(planId),
         })
     }, [formValues])
@@ -41,8 +42,10 @@ function TourCityCard(props: TourCityItem & { citiesList: City[] }) {
                     name="cities"
                     methods={form}
                     className="!border-none"
+                    onMenuClose={save}
                     wrapperClassName="!border-none w-auto"
-                    onBlur={save}
+                    // onChange={save}
+                    // onChange={(v) => console.log(v)}
                     classNames={{
                         control: () => "!border-none w-auto",
                         indicatorsContainer: () => "!hidden",

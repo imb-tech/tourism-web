@@ -58,7 +58,7 @@ export default function Hotels() {
                         openModal()
                     }}
                 >
-                    Qo'shish
+                    Add
                 </Button>
             </div>
             <DataTable

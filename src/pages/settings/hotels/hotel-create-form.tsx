@@ -160,13 +160,13 @@ export default function HotelCreateForm() {
             onSubmit={form.handleSubmit(onSubmit)}
             className="flex flex-col gap-3"
         >
-            <FormInput methods={form} name="name" label="Nomi" required />
+            <FormInput methods={form} name="name" label="Name" required />
 
             <SelectField
                 name="city"
                 methods={form}
                 required
-                label="Shahar"
+                label="City"
                 options={cities || []}
             />
 

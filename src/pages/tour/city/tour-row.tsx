@@ -21,11 +21,11 @@ export default function TourCityRow() {
     const columns: TableColumns<TourCityItem>[] = [
         {
             flex: 0.3,
-            header: "Kun",
+            header: "Day",
         },
         {
             flex: 0.3,
-            header: "Shahar",
+            header: "City",
         },
         {
             flex: 0.4,

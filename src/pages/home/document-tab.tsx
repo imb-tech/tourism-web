@@ -119,9 +119,9 @@ export default function DocumentTab() {
                         <Title>Gid:</Title>
                         <Flex>
                             <Column>
-                                <Text head>Ismi</Text>
-                                <Text head>Telefon</Text>
-                                <Text head>Narxi</Text>
+                                <Text head>Firstname</Text>
+                                <Text head>Phone</Text>
+                                <Text head>Price</Text>
                             </Column>
 
                             {data?.guide?.map((u) => (
@@ -140,11 +140,11 @@ export default function DocumentTab() {
                         <Title>Hotel:</Title>
                         <Flex>
                             <Column>
-                                <Text head>Nomi</Text>
-                                <Text head>Xona turi</Text>
-                                <Text head>Narxi</Text>
-                                <Text head>Soni</Text>
-                                <Text head>Jami narxi</Text>
+                                <Text head>Name</Text>
+                                <Text head>Room type</Text>
+                                <Text head>Price</Text>
+                                <Text head>Quantity</Text>
+                                <Text head>Total pricei</Text>
                             </Column>
 
                             {data?.hotel?.map((u) => (
@@ -167,10 +167,10 @@ export default function DocumentTab() {
                         <Title>Transport (ichki):</Title>
                         <Flex>
                             <Column>
-                                <Text head>Haydovchi F.I.O</Text>
-                                <Text head>Telefon</Text>
-                                <Text head>Narxi</Text>
-                                <Text head>Transport turi</Text>
+                                <Text head>Driver</Text>
+                                <Text head>Phone</Text>
+                                <Text head>Price</Text>
+                                <Text head>Transport</Text>
                                 <Text head>Transport</Text>
                             </Column>
 
@@ -198,10 +198,10 @@ export default function DocumentTab() {
                         <Title>Transport (tashqi):</Title>
                         <Flex>
                             <Column>
-                                <Text head>Haydovchi F.I.O</Text>
-                                <Text head>Telefon</Text>
-                                <Text head>Narxi</Text>
-                                <Text head>Transport turi</Text>
+                                <Text head>Driver</Text>
+                                <Text head>Phone</Text>
+                                <Text head>Price</Text>
+                                <Text head>Transport</Text>
                                 <Text head>Transport</Text>
                             </Column>
 
@@ -229,8 +229,8 @@ export default function DocumentTab() {
                         <Title>Restoran (tushlik):</Title>
                         <Flex>
                             <Column>
-                                <Text head>Nomi</Text>
-                                <Text head>Narxi</Text>
+                                <Text head>Name</Text>
+                                <Text head>Price</Text>
                             </Column>
 
                             {data?.dinner?.map((u) => (
@@ -250,8 +250,8 @@ export default function DocumentTab() {
                         <Title>Restoran (tushlik):</Title>
                         <Flex>
                             <Column>
-                                <Text head>Nomi</Text>
-                                <Text head>Narxi</Text>
+                                <Text head>Name</Text>
+                                <Text head>Price</Text>
                             </Column>
 
                             {data?.lunch?.map((u) => (
@@ -271,11 +271,11 @@ export default function DocumentTab() {
                         <Title>Poyezd:</Title>
                         <Flex>
                             <Column>
-                                <Text head>Nomi</Text>
+                                <Text head>Name</Text>
                                 <Text head>Class</Text>
-                                <Text head>Narxi</Text>
-                                <Text head>Soni</Text>
-                                <Text head>Jami narxi</Text>
+                                <Text head>Price</Text>
+                                <Text head>Quantity</Text>
+                                <Text head>Total pricei</Text>
                             </Column>
 
                             {data?.train?.map((u) => (
@@ -303,11 +303,11 @@ export default function DocumentTab() {
                         <Title>Samalyot:</Title>
                         <Flex>
                             <Column>
-                                <Text head>Nomi</Text>
+                                <Text head>Name</Text>
                                 <Text head>Class</Text>
-                                <Text head>Narxi</Text>
-                                <Text head>Soni</Text>
-                                <Text head>Jami narxi</Text>
+                                <Text head>Price</Text>
+                                <Text head>Quantity</Text>
+                                <Text head>Total pricei</Text>
                             </Column>
 
                             {data?.plane?.map((u) => (
@@ -335,10 +335,10 @@ export default function DocumentTab() {
                         <Title>Entrances:</Title>
                         <Flex>
                             <Column>
-                                <Text head>Nomi</Text>
-                                <Text head>Soni</Text>
-                                <Text head>Narxi</Text>
-                                <Text head>Jami narx</Text>
+                                <Text head>Name</Text>
+                                <Text head>Quantity</Text>
+                                <Text head>Price</Text>
+                                <Text head>Total price</Text>
                             </Column>
 
                             {data?.entrance?.map((u) => (
@@ -364,10 +364,10 @@ export default function DocumentTab() {
                         <Title>Boshqa:</Title>
                         <Flex>
                             <Column>
-                                <Text head>Nomi</Text>
-                                <Text head>Izoh</Text>
-                                <Text head>Narxi</Text>
-                                <Text head>Jami narx</Text>
+                                <Text head>Name</Text>
+                                <Text head>Comment</Text>
+                                <Text head>Price</Text>
+                                <Text head>Total price</Text>
                             </Column>
 
                             {data?.other?.map((u) => (

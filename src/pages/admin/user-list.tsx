@@ -14,11 +14,11 @@ const useCols = () => {
     return useMemo<ColumnDef<User>[]>(
         () => [
             {
-                header: "Xodim ismi",
+                header: "Employee firstname",
                 accessorKey: "first_name",
             },
             {
-                header: "Familya",
+                header: "Lastname",
                 accessorKey: "last_name",
             },
             {
@@ -26,7 +26,7 @@ const useCols = () => {
                 accessorKey: "username",
             },
             {
-                header: "Rol",
+                header: "Role",
                 accessorKey: "role",
             },
         ],
@@ -74,7 +74,7 @@ export default function UsersList() {
             />
 
             <Button size={"sm"} onClick={handleCreate}>
-                Qo'shish
+                Add
             </Button>
 
             <DeleteModal
@@ -83,13 +83,7 @@ export default function UsersList() {
                 id={item?.id || -1}
             />
 
-            <Modal
-                title={
-                    store?.id ?
-                        "Xodim ma'lumotlarini tahrirlash"
-                    :   "Xodim qo'shish"
-                }
-            >
+            <Modal title={store?.id ? "Edit employee info" : "Add employee"}>
                 <UserCreateForm />
             </Modal>
         </div>

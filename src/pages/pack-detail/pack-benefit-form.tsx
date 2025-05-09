@@ -74,7 +74,7 @@ export default function PackBenefitForm() {
                         methods={form}
                         required
                         name="benefit"
-                        label="Foiz"
+                        label="Percentage"
                         placeholder="0"
                         className="font-medium"
                         wrapperClassName={"w-full"}
@@ -82,7 +82,7 @@ export default function PackBenefitForm() {
                     />
                 </div>
                 <p className="text-lg font-medium mt-1">
-                    Jami:
+                    Total:
                     <span className="font-light">
                         {formatMoney(totalAmount, undefined, "$")}
                     </span>

@@ -44,14 +44,14 @@ export default function FinancialCategories() {
     return (
         <>
             <div className="flex justify-between items-center mb-2">
-                <h2 className="text-xl">Finansial Kategoriyalar</h2>
+                <h2 className="text-xl">Financial Categories</h2>
                 <Button
                     onClick={() => {
                         remove()
                         openCategoryModal()
                     }}
                 >
-                    Qo'shish
+                    Add
                 </Button>
             </div>
             <DataTable

@@ -306,7 +306,7 @@ export function DataTable<TData extends object>({
                                     colSpan={columns?.length}
                                     className="h-24 text-center"
                                 >
-                                    Mavjud emas
+                                    Empty
                                 </TableCell>
                             </TableRow>
                         }

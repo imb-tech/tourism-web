@@ -42,7 +42,7 @@ export default function CategoryCreateEdit() {
                 methods={form}
                 name="name"
                 required
-                label="Kategoriya nomi"
+                label="Category name"
             />
             <FormAction loading={isCreating || isUpdating} />
         </form>

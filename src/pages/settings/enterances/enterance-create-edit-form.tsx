@@ -97,13 +97,13 @@ export default function EnteranceCreateEditForm() {
                 name="city"
                 required
             />
-            <FormTextarea methods={form} name="desc" label="Tavsif" />
+            <FormTextarea methods={form} name="desc" label="Description" />
 
             <FormImagePicker
                 methods={form}
                 name="image"
                 required
-                label="Rasm"
+                label="Photo"
             />
 
             <FormAction loading={isPending || isUpdating} />

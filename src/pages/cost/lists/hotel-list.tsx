@@ -57,7 +57,7 @@ function CostItem({ day, data }: CostGeneratedItem) {
                         <CustomTableCol>
                             <FormNumberInput
                                 methods={form}
-                                placeholder="Real xarajat"
+                                placeholder="Real cost"
                                 className="border-none shadow-none text-xs"
                                 name={`day_${day}.${i}.real_cost`}
                                 onBlur={() => save(i, data[i].id)}
@@ -108,15 +108,15 @@ export function HotelList() {
             <CostTableHeader
                 grid="grid-cols-9"
                 columns={[
-                    "Kun",
-                    "Nomi",
-                    "Xona turi",
-                    "Soni",
-                    "Individual narxi",
-                    "Real xarajat",
-                    "Jami",
-                    "Chek",
-                    "To'lov turi",
+                    "Day",
+                    "Name",
+                    "Room type",
+                    "Quantity",
+                    "PPP",
+                    "Real cost",
+                    "Total",
+                    "Invoice",
+                    "Payment type",
                 ]}
             />
             <InitialDataBox isLoading={isLoading} />

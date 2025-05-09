@@ -140,7 +140,7 @@ export default function FilterSelect({
                 classNames={{ ...defaultSelectClassNames, ...classNames }}
                 onChange={handleOnChange}
                 unstyled
-                noOptionsMessage={() => "Mavjud emas"}
+                noOptionsMessage={() => "Empty"}
                 hideSelectedOptions={false}
                 closeMenuOnSelect={!props.isMulti}
                 placeholder={label}
@@ -204,7 +204,7 @@ const MenuList = (props: MenuListProps<Option>) => {
                             }}
                             checked={val.length === options.length}
                         />{" "}
-                        Barchasini tanlash
+                        Select all
                     </p>
                     <Separator />
                 </>

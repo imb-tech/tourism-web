@@ -66,7 +66,7 @@ export default function FoodCreateEdit() {
                 methods={form}
                 name="image"
                 required
-                label="Rasm"
+                label="Photo"
             />
 
             <FormAction loading={isPending || isUpdating} />

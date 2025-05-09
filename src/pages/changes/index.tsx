@@ -15,15 +15,15 @@ const columns: ColumnDef<LogItem>[] = [
         accessorKey: "instance_pk",
     },
     {
-        header: "Turi",
+        header: "Type",
         accessorKey: "model",
     },
     {
-        header: "O'zgartiruvchi",
+        header: "Modified By",
         accessorKey: "user_name",
     },
     {
-        header: "Vaqdi",
+        header: "Time",
         accessorKey: "created_at",
         cell: ({ row }) => {
             return format(new Date(row.original.created_at), "dd/MM/yyyy HH:mm")
@@ -35,7 +35,7 @@ const columns: ColumnDef<LogItem>[] = [
     },
 
     {
-        header: "Izoh",
+        header: "Comment",
         accessorKey: "comment",
     },
 
@@ -85,7 +85,7 @@ const ChangesMain = () => {
             </div>
 
             <div className="bg-background p-3 rounded-md mt-3 flex flex-col gap-2 ">
-                <p className="text-xl">O'zgarishlar</p>
+                <p className="text-xl">Changes</p>
                 {isLoadingLogs ?
                     <InitialDataBox isLoading={isLoadingLogs} />
                 :   <ChangesTable

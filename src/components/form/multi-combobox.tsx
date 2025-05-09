@@ -32,7 +32,7 @@ export default function FormMultiCombobox<IForm extends FieldValues>({
         rules: {
             required: {
                 value: required,
-                message: `${label}ni tanlang`,
+                message: `Select ${label}`,
             },
         },
     })

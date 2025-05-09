@@ -12,7 +12,7 @@ function RouteComponent() {
     return (
         <main>
             <Header
-                links={[{ to: "/", label: "Tur paketlar" }]}
+                links={[{ to: "/", label: "Tour packages" }]}
                 rightRightChild={<PackFilters />}
             />
             <Layout>

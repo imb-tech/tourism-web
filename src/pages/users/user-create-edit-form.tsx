@@ -76,7 +76,7 @@ export default function CreateEditUserForm() {
                 <FormInput
                     methods={form}
                     name="full_name"
-                    label="To’liq ismi"
+                    label="Full name"
                     wrapperClassName={"w-full"}
                 />
 
@@ -91,8 +91,8 @@ export default function CreateEditUserForm() {
             <PhoneField
                 methods={form}
                 name="phone"
-                label="Telefon"
-                placeholder="Telefon raqam"
+                label="Phone"
+                placeholder="Phone"
             />
 
             <FormCheckbox methods={form} name="is_leader" label="Tour Leader" />
@@ -101,7 +101,7 @@ export default function CreateEditUserForm() {
                 className={"w-full rounded-md"}
                 methods={form}
                 name="photo"
-                label="Rasmni bu yerga tashlang yoki kompyuterdan yuklang"
+                label="Drag and drop an image here or upload from your computer."
                 labelClassName="border rounded-md w-full py-12 flex flex-col items-center justify-center gap-3"
             />
 

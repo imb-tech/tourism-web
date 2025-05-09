@@ -60,7 +60,7 @@ export default function ExclusionForm() {
 
     return (
         <div>
-            <p className="text-xl">Tur paket ichiga olmaydigan xususiyatlar</p>
+            <p className="text-xl">Features not included in the tour package</p>
             <CustomTable grid="grid-cols-1" className="p-0 mt-3">
                 <div className="flex flex-col">
                     {fields?.map((field, i) => (
@@ -86,7 +86,7 @@ export default function ExclusionForm() {
                         </CustomTableRow>
                     ))}
                     <Button onClick={handleAdd} loading={creating}>
-                        Qo'shish
+                        Add
                     </Button>
                 </div>
             </CustomTable>

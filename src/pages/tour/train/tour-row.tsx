@@ -33,7 +33,7 @@ export default function TourRow() {
             header: "Payment type",
         },
         {
-            header: "Number of tourists",
+            header: "Tourists count",
         },
         {
             header: "Total",

@@ -15,7 +15,7 @@ const HomeMain = () => {
 
             <div className="bg-background p-3 rounded-md mt-3 flex flex-col gap-2">
                 <div className="flex items-center justify-between">
-                    <p>Tur paketlar</p>
+                    <p>Tour packages</p>
                     <DownloadAsExcel url={STATUS_EXCEL} name="test" />
                 </div>
                 <HomeTable

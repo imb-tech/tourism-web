@@ -63,17 +63,12 @@ export default function CityCreateEdit() {
 
     return (
         <form onSubmit={form.handleSubmit(handleSubmit)}>
-            <FormInput
-                methods={form}
-                name="name"
-                required
-                label="Shahar nomi"
-            />
+            <FormInput methods={form} name="name" required label="City name" />
             <FormImagePicker
                 methods={form}
                 name="image"
                 required
-                label="Rasm"
+                label="Iamge"
             />
 
             <FormAction loading={isPending || isUpdating} />

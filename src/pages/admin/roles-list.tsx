@@ -12,7 +12,7 @@ const useCols = () => {
     return useMemo<ColumnDef<Role>[]>(
         () => [
             {
-                header: "Rol nomi",
+                header: "Role name",
                 accessorKey: "name",
             },
         ],
@@ -62,7 +62,7 @@ export default function RolesList() {
                     })
                 }
             >
-                Qo'shish
+                Add
             </Button>
 
             <DeleteModal path={ROLES} id={item?.id || -1} />

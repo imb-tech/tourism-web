@@ -13,7 +13,7 @@ export const useCountryColumns = () =>
             },
             {
                 accessorKey: "name",
-                header: "Nomi",
+                header: "Name",
             },
         ],
         [],
@@ -28,11 +28,11 @@ export const useCityColumns = () =>
             },
             {
                 accessorKey: "name",
-                header: "Nomi",
+                header: "Name",
             },
             {
                 accessorKey: "image",
-                header: "Rasm",
+                header: "Photo",
                 cell: ({ row }) => (
                     <SeeInView url={row.original?.image ?? ""}>
                         <Img
@@ -58,19 +58,19 @@ export const useEnteranceColumns = () =>
             },
             {
                 accessorKey: "name",
-                header: "Nomi",
+                header: "Name",
             },
             {
                 accessorKey: "city.name",
-                header: "Shahar",
+                header: "City",
             },
             {
                 accessorKey: "price",
-                header: "Narxi",
+                header: "Price",
             },
             {
                 accessorKey: "image",
-                header: "Rasmi",
+                header: "Image",
                 cell: ({ row }) => (
                     <SeeInView url={row.original.image ?? ""}>
                         <Img
@@ -84,7 +84,7 @@ export const useEnteranceColumns = () =>
                 ),
             },
             {
-                header: "Tavsif",
+                header: "Description",
                 cell: ({ row }) => (
                     <div className="max-w-[100%] text-wrap">
                         <p>{row.original.desc}</p>
@@ -104,15 +104,15 @@ export const useHotelColumns = () =>
             },
             {
                 accessorKey: "name",
-                header: "Nomi",
+                header: "Name",
             },
             {
                 accessorKey: "city.name",
-                header: "Shahar",
+                header: "City",
             },
             {
                 accessorKey: "star",
-                header: "Darajasi",
+                header: "Rate",
                 cell: ({ row }) => {
                     return (
                         <div className="flex items-center gap-1">
@@ -135,15 +135,15 @@ export const useTransportColumns = () =>
             },
             {
                 accessorKey: "name",
-                header: "Nomi",
+                header: "Name",
             },
             {
                 accessorKey: "size",
-                header: "Sig’imi",
+                header: "Capacity",
             },
             {
                 accessorKey: "price",
-                header: "Narxi",
+                header: "Price",
             },
             {
                 accessorKey: "year",
@@ -151,7 +151,7 @@ export const useTransportColumns = () =>
             },
             {
                 accessorKey: "images",
-                header: "Rasmlar",
+                header: "Photos",
                 cell: ({ row }) =>
                     row.original.images[0] ?
                         <SeeInView url={String(row.original.images[0].image)}>
@@ -178,11 +178,11 @@ export const useFoodColumns = () =>
             },
             {
                 accessorKey: "name",
-                header: "Nomi",
+                header: "Name",
             },
             {
                 accessorKey: "image",
-                header: "Rasmi",
+                header: "Image",
                 cell: ({ row }) => (
                     <SeeInView url={row.original.image}>
                         <Img
@@ -208,7 +208,7 @@ export const useCategoryColumns = () =>
             },
             {
                 accessorKey: "name",
-                header: "Nomi",
+                header: "Name",
             },
         ],
         [],
@@ -223,11 +223,11 @@ export const useRestaurantColumns = () =>
             },
             {
                 accessorKey: "name",
-                header: "Nomi",
+                header: "Name",
             },
             {
                 accessorKey: "city.name",
-                header: "Shahar",
+                header: "City",
             },
         ],
         [],

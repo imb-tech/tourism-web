@@ -128,7 +128,7 @@ export function MultiCombobox({
                         </span>
                     )}
                     <CommandList>
-                        <CommandEmpty>Mavjud emas</CommandEmpty>
+                        <CommandEmpty>Empty</CommandEmpty>
                         <CommandGroup className="!overflow-y-scroll">
                             {isWithImages ?
                                 sortedData?.map((d, i) => (

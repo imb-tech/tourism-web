@@ -39,7 +39,7 @@ export default function PatternField<IForm extends FieldValues>({
         rules: {
             required: {
                 value: required,
-                message: `${label}ni kiriting`,
+                message: `Enter ${label}`,
             },
         },
     })

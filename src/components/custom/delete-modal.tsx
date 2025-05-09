@@ -38,7 +38,7 @@ export default function DeleteModal({
 
     const { mutate, isPending } = useDelete({
         onSuccess: () => {
-            toast.success("Muvaffaqiyatli o'chirildi", { icon: "✅" })
+            toast.success("Successfully deleted!", { icon: "✅" })
             if (onSuccessAction) {
                 onSuccessAction()
             }
@@ -66,10 +66,10 @@ export default function DeleteModal({
         <Modal modalKey={modalKey}>
             <DialogHeader>
                 <DialogTitle className="font-normal">
-                    Siz haqiqatdan ham {name} o'chirishni xohlaysizmi ?
+                    Are you sure you want to delete {name}?
                 </DialogTitle>
                 <DialogDescription>
-                    Bu qaytarib bo'lmas jarayon!!!
+                    This action cannot be undone!
                 </DialogDescription>
             </DialogHeader>
             <DialogFooter className="grid grid-cols-2 gap-2">
@@ -78,14 +78,14 @@ export default function DeleteModal({
                     disabled={isPending}
                     onClick={closeModal}
                 >
-                    Orqaga
+                    Cancel
                 </Button>
                 <Button
                     variant={"destructive"}
                     onClick={handleDelete}
                     loading={isPending}
                 >
-                    O'chirish
+                    Delete
                 </Button>
             </DialogFooter>
         </Modal>

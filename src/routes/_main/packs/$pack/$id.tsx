@@ -12,7 +12,7 @@ function RouteComponent() {
         <div>
             <Header
                 links={[
-                    { to: "/", label: "Tur paketlar" },
+                    { to: "/", label: "Tour packages" },
                     { label: `#${pack}`, to: `/packs/${pack}` },
                     { label: `#${id}` },
                 ]}

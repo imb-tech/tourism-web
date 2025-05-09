@@ -21,7 +21,7 @@ const options: { id: packTab; name: string; content?: ReactNode }[] = [
     { id: "train", name: "Poyezd", content: <TrainList /> },
     { id: "plane", name: "Samolyot", content: <PlaneList /> },
     { id: "entrance", name: "Enterence", content: <EntranceList /> },
-    { id: "other", name: "Boshqa", content: <OtherList /> },
+    { id: "other", name: "Other", content: <OtherList /> },
 ]
 
 export default function CostTab() {

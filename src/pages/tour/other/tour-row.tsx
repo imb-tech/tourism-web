@@ -11,19 +11,19 @@ import TourCol from "./tour-col"
 export default function TourRow() {
     const columns: TableColumns<EnteranceListItem>[] = [
         {
-            header: "Kun",
+            header: "Day",
         },
         {
-            header: "Kategoriya",
+            header: "Category",
         },
         {
-            header: "Izoh",
+            header: "Comment",
         },
         {
-            header: "Narxi",
+            header: "Price",
         },
         {
-            header: "To'lov turi",
+            header: "Payment type",
         },
     ]
 

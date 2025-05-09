@@ -17,7 +17,7 @@ const HomeDocument = () => {
             <div className="bg-background p-3 rounded-md mt-3 flex flex-col gap-2">
                 <div className="flex items-center">
                     <BackBtn to={`/?cash_id=${plan}`} />
-                    <p className="flex-1">Tur paketlar</p>
+                    <p className="flex-1">Tour packages</p>
                     <DownloadAsExcel url={baseURL + STATUS_EXCEL} name="test" />
                 </div>
                 <DocumentTab />

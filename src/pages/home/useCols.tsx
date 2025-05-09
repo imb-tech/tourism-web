@@ -34,7 +34,7 @@ export const useHomeColumn = () => {
                     },
                 },
                 {
-                    header: "Number of tourists",
+                    header: "Tourists count",
                     accessorKey: "tourists_count",
                 },
                 {
@@ -93,7 +93,7 @@ export const useHomeNestedColumn = () => {
         () =>
             [
                 {
-                    header: "Kun",
+                    header: "Day",
                     accessorKey: "day",
                 },
                 {
@@ -171,7 +171,7 @@ export const useHomeNestedColumn = () => {
                     },
                 },
                 {
-                    header: "Jami",
+                    header: "Total",
                     accessorKey: "total",
                     cell: ({ row }: CellContext<HomeNestedItem, ReactNode>) => {
                         return formatMoney(row.original.total)

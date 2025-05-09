@@ -349,7 +349,7 @@ export default function HomeNestedTable<TData extends object>({
                                 }}
                             >
                                 <div className="h-24 text-center col-span-full">
-                                    Mavjud emas
+                                    Empty
                                 </div>
                             </div>
                         }

@@ -60,7 +60,7 @@ export default function InclusionForm() {
 
     return (
         <div>
-            <p className="text-xl">Tur paket ichiga oluvchi xususiyatlar</p>
+            <p className="text-xl">Features included in the tour package</p>
             <CustomTable grid="grid-cols-1" className="p-0 mt-3">
                 <div className="flex flex-col">
                     {fields?.map((field, i) => (
@@ -86,7 +86,7 @@ export default function InclusionForm() {
                         </CustomTableRow>
                     ))}
                     <Button onClick={handleAdd} loading={creating}>
-                        Qo'shish
+                        Add
                     </Button>
                 </div>
             </CustomTable>

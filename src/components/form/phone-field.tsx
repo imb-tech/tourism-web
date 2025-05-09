@@ -29,7 +29,7 @@ const phoneUtil = PhoneNumberUtil.getInstance()
 export default function PhoneField<IForm extends FieldValues>({
     methods,
     name,
-    label = "Telefon raqam",
+    label = "Phone number",
     required = false,
     wrapperClassName,
     className,
@@ -68,7 +68,7 @@ export default function PhoneField<IForm extends FieldValues>({
                 if (required) {
                     isValid = isPhoneValid(v)
                     if (!isValid) {
-                        err = "To'g'ri va to'liq to'ldiring"
+                        err = "Please fill in correctly and completely."
                     }
                 }
 

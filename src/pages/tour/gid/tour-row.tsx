@@ -38,25 +38,25 @@ export function groupByDay<
 export default function TourGidRow() {
     const columns: TableColumns<TourGidItem>[] = [
         {
-            header: "Kun",
+            header: "Day",
         },
         {
-            header: "Ismi",
+            header: "Firstname",
         },
         {
-            header: "Telefon",
+            header: "Phone",
         },
         {
-            header: "Kunlik narxi",
+            header: "Daily price",
         },
         {
-            header: "To'lov turi",
+            header: "Payment type",
         },
         {
-            header: "Tili",
+            header: "Language",
         },
         {
-            header: "Izoh",
+            header: "Comment",
         },
     ]
 

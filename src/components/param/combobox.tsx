@@ -108,7 +108,7 @@ export default function ParamCombobox({
                         )}
                     </div>
                     <CommandList>
-                        <CommandEmpty>Mavjud emas</CommandEmpty>
+                        <CommandEmpty>Empty</CommandEmpty>
                         <CommandGroup>
                             {sortedOptions?.map((d, i) => (
                                 <CommandItem
@@ -135,8 +135,8 @@ export default function ParamCombobox({
                                         })
                                     }
                                 >
-                                    <Plus width={20} className="pr-1" /> Yangi
-                                    qo'shish
+                                    <Plus width={20} className="pr-1" /> Create
+                                    new
                                     <CheckIcon
                                         className={cn("ml-auto h-4 w-4")}
                                     />

@@ -124,16 +124,10 @@ export default function SelectField<IForm extends FieldValues>({
                 isClearable
                 classNames={{ ...defaultSelectClassNames, ...classNames }}
                 unstyled
-                noOptionsMessage={() => (
-                    <p className="text-sm py-1">Mavjud emas</p>
-                )}
+                noOptionsMessage={() => <p className="text-sm py-1">Empty</p>}
                 hideSelectedOptions={false}
                 closeMenuOnSelect={!props.isMulti}
-                placeholder={
-                    props.isMulti ?
-                        "Bir yoki bir nechtasini tanlang"
-                    :   "Tanlang"
-                }
+                placeholder={props.isMulti ? "Select one or more" : "Select"}
                 value={props.isMulti ? multiCurrentVal : currentVal}
                 onChange={handleOnchange}
                 options={opts || []}

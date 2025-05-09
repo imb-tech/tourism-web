@@ -13,7 +13,7 @@ function RouteComponent() {
         <div>
             <Header
                 links={[
-                    { to: "/cost", label: "Real xarajat" },
+                    { to: "/cost", label: "Real cost" },
                     { label: `#${id}` },
                 ]}
             />

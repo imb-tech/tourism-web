@@ -9,7 +9,7 @@ const packTabOptions = [
     { id: "train", name: "Poyezd" },
     { id: "plane", name: "Samolyot" },
     { id: "enterence", name: "Enterence" },
-    { id: "other", name: "Boshqa" },
+    { id: "other", name: "Other" },
 ]
 
 type packTab =

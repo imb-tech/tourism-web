@@ -23,8 +23,8 @@ interface IProps {
 
 export default function ConfirmCancelModal({
     onSuccessAction,
-    title = "Siz rostdan ham buni bajarishni xohlaysizmi?",
-    description = "Bu amal qaytarib bo‘lmaydi!",
+    title = "Are you sure you want to do this?",
+    description = "This action cannot be undone!",
     modalKey = "confirm",
     refetch = true,
     refetchKey,
@@ -35,7 +35,7 @@ export default function ConfirmCancelModal({
     const handleConfirm = async () => {
         try {
             await onSuccessAction()
-            toast.success("Amal muvaffaqiyatli bajarildi", { icon: "✅" })
+            toast.success("Successfully done!", { icon: "✅" })
             if (refetch) {
                 queryClient.refetchQueries({
                     queryKey: refetchKey ? [refetchKey] : [],
@@ -48,7 +48,9 @@ export default function ConfirmCancelModal({
             }
             closeModal()
         } catch (error) {
-            toast.error("Amalni bajarishda xatolik yuz berdi", { icon: "❌" })
+            toast.error("Something went wrong while processing the action.", {
+                icon: "❌",
+            })
             closeModal()
         }
     }
@@ -61,9 +63,9 @@ export default function ConfirmCancelModal({
             </DialogHeader>
             <DialogFooter className="grid grid-cols-2 gap-2">
                 <Button variant="outline" onClick={closeModal}>
-                    Bekor qilish
+                    Cancel
                 </Button>
-                <Button onClick={handleConfirm}>Tasdiqlash</Button>
+                <Button onClick={handleConfirm}>Confirm</Button>
             </DialogFooter>
         </Modal>
     )

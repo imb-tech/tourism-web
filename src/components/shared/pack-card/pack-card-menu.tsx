@@ -61,7 +61,7 @@ function PackCardMenu({
                             onClick={onFinish}
                         >
                             <CheckCheck />
-                            Yakunlash
+                            Finish
                         </DropdownMenuItem>
                     )}
                     {Number(status) !== 20 && (
@@ -70,7 +70,7 @@ function PackCardMenu({
                             onClick={onSend}
                         >
                             <Send />
-                            TM ga yuborish
+                            Send to TM
                         </DropdownMenuItem>
                     )}
                     {Number(status) < 20 && (
@@ -79,7 +79,7 @@ function PackCardMenu({
                             onClick={onEdit}
                         >
                             <Pencil />
-                            Tahrirlash
+                            Edit
                         </DropdownMenuItem>
                     )}
                     {(status == "30" || status == "20") && (
@@ -88,7 +88,7 @@ function PackCardMenu({
                             onClick={onUndo}
                         >
                             <Undo2 />
-                            Qaytarish
+                            Reject
                         </DropdownMenuItem>
                     )}
 
@@ -97,7 +97,7 @@ function PackCardMenu({
                         onClick={onDelete}
                     >
                         <Trash />
-                        O'chirish
+                        Delete
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
             </DropdownMenuContent>

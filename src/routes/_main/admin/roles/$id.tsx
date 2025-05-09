@@ -12,7 +12,7 @@ function RouteComponent() {
     return (
         <main>
             <Header
-                links={[{ to: "/", label: "Rol tahrirlash" }]}
+                links={[{ to: "/", label: "Edit role" }]}
                 isSearch={false}
             />
             <Layout>
